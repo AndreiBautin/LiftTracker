@@ -1,0 +1,14 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LiftTracker.Data
+{
+    public class Exercise
+    {
+        [Key]
+        public int Id { get; set; }
+        public string? Name { get; set; }
+        public int? MuscleGroupId { get; set; }
+        public ExerciseType? ExerciseType { get; set; }
+        public bool IsCompound { get; set; }
+	}
+}

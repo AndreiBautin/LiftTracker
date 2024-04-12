@@ -1,0 +1,70 @@
+﻿@page "/CreateExercise/"
+@page "/CreateExercise/{SessionExerciseId}"
+@using LiftTracker.Data
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager;
+@inject IConfiguration Configuration;
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize];
+
+<div class="row">
+	<div class="col-1">
+	</div>
+	<div class="card schedule-table text-center col-10">
+		<h1 class="mt-2">Create Exercise: </h1>
+		<input @bind="NewExercise.Name" type="text" class="form-control bg-dark text-white my-2" placeholder="Name" aria-label="Name" aria-describedby="basic-addon1">
+		<select class="form-select d-inline-block col-6 my-2" @bind="NewExerciseMuscleGroupEnum">
+			<option value="">Muscle Group</option>
+			@foreach (var muscleGroupEnum in ((IEnumerable<MuscleGroupEnum>)Enum.GetValues(typeof(MuscleGroupEnum))))
+			{
+				<option value="@muscleGroupEnum">@muscleGroupEnum.ToString()</option>
+			}
+		</select>
+		<select class="form-select d-inline-block col-6 my-2" @bind="NewExerciseType">
+			<option value="0">Exercise Type</option>
+			@foreach (var exerciseType in ((IEnumerable<ExerciseType>)Enum.GetValues(typeof(ExerciseType))))
+			{
+				<option value="@exerciseType">@exerciseType.ToString()</option>
+			}
+		</select>
+		<div>
+			Is Compound?
+			<input class="form-check-input" id="isCompound" type="checkbox" @bind="NewExercise.IsCompound" />
+		</div>
+		<button class="btn-outline-light btn rounded-pill my-3" @onclick="Create">Create</button>
+	</div>
+	<div class="col-1">
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public string? SessionExerciseId { get; set; }
+	public Exercise? NewExercise { get; set; }
+	public MuscleGroupEnum? NewExerciseMuscleGroupEnum { get; set; }
+	public ExerciseType? NewExerciseType { get; set; }
+
+	protected override void OnInitialized()
+	{
+		using var context = new LiftTrackerContextBuilder(Configuration).Build();
+		NewExercise = new Exercise();
+
+		NewExerciseMuscleGroupEnum = 0;
+		NewExerciseType = 0;
+	}
+
+	protected void Create()
+	{
+		using var context = new LiftTrackerContextBuilder(Configuration).Build();
+		var muscleGroupId = context.MuscleGroups.SingleOrDefault(x => x.MuscleGroupEnum == NewExerciseMuscleGroupEnum)?.Id;
+		if (muscleGroupId != null)
+		{
+			NewExercise.MuscleGroupId = muscleGroupId;
+			NewExercise.ExerciseType = NewExerciseType;
+			context.Exercises.Add(NewExercise);
+			context.SaveChanges();
+			NavigationManager.NavigateTo("/Exercises");
+		}
+	}
+}

@@ -1,0 +1,161 @@
+﻿@page "/TrackSet/{SetId}"
+@page "/TrackSet"
+@using LiftTracker.Data
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using Microsoft.EntityFrameworkCore
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager;
+@inject IConfiguration Configuration;
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize];
+
+<div class="row">
+	<div class="col-3">
+	</div>
+	<div class="col-6">
+		<button class="btn-outline-light btn rounded-pill my-3" @onclick="BackToSession">Back To Session</button>
+	</div>
+	<div class="col-3">
+	</div>
+</div>
+<div class="row">
+	@if (Set != null)
+	{
+		<div class="col-3">
+		</div>
+		<div class="card schedule-table text-center col-6">
+			<h1>@ExerciseName</h1>
+			<h2>Load</h2>
+			<div class="input-group-sm my-3">
+				<input @bind="Set.Load" type="number" class="form-control bg-dark text-white" aria-label="Load" placeholder="@(PreviousSet != null && PreviousSet.Load != 0 ? PreviousSet.Load : "Load")" aria-describedby="basic-addon1">
+			</div>
+			<h2>Reps</h2>
+			<div class="input-group-sm my-3">
+				<input @bind="Set.Reps" type="number" class="form-control bg-dark text-white" placeholder="@(PreviousSet != null && PreviousSet.Reps != 0 ? PreviousSet.Reps : $"{RepRange?.Low}-{RepRange?.High}")" aria-label="Reps" aria-describedby="basic-addon1">
+			</div>
+			<h2>RPE</h2>
+			<div class="input-group-sm my-3">
+				<input @bind="Set.Rpe" type="number" class="form-control bg-dark text-white" placeholder="@(Set.TargetRpe)-@(Set.TargetRpe+1)" aria-label="RPE" aria-describedby="basic-addon1">
+			</div>
+			<button class="btn-outline-light btn rounded-pill my-3" @onclick="OnTrack">Track</button>
+			<button class="btn-outline-light btn rounded-pill my-3" @onclick="OnClear">Clear</button>
+			<button class="btn-outline-light btn rounded-pill my-3" @onclick="OnSkip">Skip</button>
+		</div>
+		<div class="col-3">
+		</div>
+	}
+</div>
+
+@code {
+	[Parameter]
+	public string? SetId { get; set; }
+	public Set? Set { get; set; }
+	public string? ExerciseName { get; set; }
+	public RepRange? RepRange { get; set; }
+	public Set? PreviousSet { get; set; }
+
+	protected override void OnInitialized()
+	{
+		using var context = new LiftTrackerContextBuilder(Configuration).Build();
+		if (SetId == null)
+		{
+			Set = context.Sets.Include(x => x.SessionExercise).ThenInclude(x => x.Sets).Include(x => x.SessionExercise).FirstOrDefault(x => !x.IsComplete);
+		}
+		else
+		{
+			Set = context.Sets.Include(x => x.SessionExercise).ThenInclude(x => x.Sets).FirstOrDefault(x => x.Id.ToString() == SetId);
+
+		}
+		ExerciseName = context.Exercises.FirstOrDefault(x => Set != null && Set.SessionExercise != null && x.Id == Set.SessionExercise.ExerciseId)?.Name;
+		RepRange = context.RepRanges.FirstOrDefault(x => Set != null && Set.SessionExercise != null && x.Id == Set.SessionExercise.RepRangeId);
+
+		var session = context.Sessions.Include(x => x.MicroCycle).SingleOrDefault(x => Set != null && Set.SessionExercise != null && x.Id == Set.SessionExercise.SessionId);
+		var microCycle = session?.MicroCycle;
+		var previousMicroCycle = context.MicroCycles.SingleOrDefault(x => microCycle != null && x.Id == microCycle.Id - 1);
+		var previousSession = context
+								.Sessions
+								.Include(x => x.MicroCycle)
+								.Include(x => x.SessionExercises)
+								.ThenInclude(x => x.Sets)
+								.SingleOrDefault(x => x.MicroCycle != null && previousMicroCycle != null && session != null && x.MicroCycle.Id == previousMicroCycle.Id && x.DayOfTheWeek == session.DayOfTheWeek);
+		var previousSessionSets = previousSession?
+									.SessionExercises?
+									.FirstOrDefault(x => x?.ExerciseId == Set?.SessionExercise?.ExerciseId)?
+									.Sets;
+		var sessionSets = Set?.SessionExercise?.Sets?.OrderBy(x => x.Id).ToList();
+		var sessionSetIndex = sessionSets?.FindIndex(x => x.Id == Set?.Id);
+		if (sessionSetIndex != null && previousSessionSets?.Count() > sessionSetIndex)
+		{
+			PreviousSet = previousSessionSets.ElementAt(sessionSetIndex.Value);
+		}
+	}
+
+	private void OnTrack()
+	{
+		using var context = new LiftTrackerContextBuilder(Configuration).Build();
+
+		if (SetId == null)
+		{
+			var set = context.Sets.Include(x => x.SessionExercise).FirstOrDefault(x => !x.IsComplete);
+			if (set != null)
+			{
+				set.Reps = Set?.Reps;
+				set.Load = Set?.Load;
+				set.Rpe = Set?.Rpe;
+				set.IsComplete = true;
+				context.SaveChanges();
+				NavigationManager.NavigateTo("/TrackWorkout");
+			}
+		}
+		else
+		{
+			var set = context.Sets.Include(x => x.SessionExercise).FirstOrDefault(x => x.Id.ToString() == SetId);
+			if (set != null)
+			{
+				set.Reps = Set?.Reps;
+				set.Load = Set?.Load;
+				set.Rpe = Set?.Rpe;
+				set.IsComplete = true;
+				context.SaveChanges();
+				NavigationManager.NavigateTo($"/TrackWorkout/{set?.SessionExercise?.SessionId}");
+			}
+		}
+	}
+
+	public void BackToSession()
+	{
+		using var context = new LiftTrackerContextBuilder(Configuration).Build();
+
+		if (SetId == null)
+		{
+			NavigationManager.NavigateTo("/TrackWorkout");
+		}
+		else
+		{
+			var set = context.Sets.Include(x => x.SessionExercise).FirstOrDefault(x => x.Id.ToString() == SetId);
+			NavigationManager.NavigateTo($"/TrackWorkout/{set?.SessionExercise?.SessionId}");
+		}
+	}
+
+	public void OnClear()
+	{
+		using var context = new LiftTrackerContextBuilder(Configuration).Build();
+		var record = context.Sets.FirstOrDefault(x => x.Id == Set.Id);
+		record.IsComplete = false;
+		record.Reps = null;
+		record.Load = null;
+		record.Rpe = null;
+		context.SaveChanges();
+		NavigationManager.NavigateTo($"/TrackSet/{SetId}", true);
+	}
+
+	public void OnSkip()
+	{
+		using var context = new LiftTrackerContextBuilder(Configuration).Build();
+		var record = context.Sets.FirstOrDefault(x => x.Id == Set.Id);
+		record.IsSkipped = true;
+		context.SaveChanges();
+		BackToSession();
+	}
+}
