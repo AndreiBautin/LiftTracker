@@ -5,7 +5,6 @@
 @attribute [StreamRendering]
 @rendermode InteractiveServer
 @inject NavigationManager NavigationManager;
-@inject ProtectedLocalStorage ProtectedLocalStorage;
 @inject IConfiguration Configuration;
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize];
@@ -76,18 +75,6 @@
 	{
 		using var context = new LiftTrackerContextBuilder(Configuration).Build();
 		Rows = context.MuscleGroups.ToList();
-	}
-
-	protected override async Task OnAfterRenderAsync(bool firstRender)
-	{
-		if (firstRender)
-		{
-			var loggedin = await ProtectedLocalStorage.GetAsync<bool>("loggedin");
-			if (!loggedin.Success)
-			{
-				NavigationManager.NavigateTo("/");
-			}
-		}
 	}
 
 	private void Update()

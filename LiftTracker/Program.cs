@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
-	.AddInteractiveWebAssemblyComponents();
+	.AddInteractiveServerComponents();
 
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
@@ -57,11 +57,14 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-app.MapRazorComponents<App>()
-	.AddInteractiveWebAssemblyRenderMode()
-	.AddAdditionalAssemblies(typeof(LiftTracker.Client._Imports).Assembly);
+//app.MapRazorComponents<App>()
+//	.AddInteractiveWebAssemblyRenderMode()
+//	.AddAdditionalAssemblies(typeof(LiftTracker.Client._Imports).Assembly);
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
+
+app.MapRazorComponents<App>()
+	.AddInteractiveServerRenderMode();
 
 app.Run();

@@ -27,7 +27,7 @@ namespace LiftTracker.Data
 					MEV = 10,
 					MRV = 20,
 					Frequency = 2,
-					ExercisesPerSession = 2
+					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 2,
@@ -37,7 +37,7 @@ namespace LiftTracker.Data
 					MEV = 10,
 					MRV = 20,
 					Frequency = 2,
-					ExercisesPerSession = 2
+					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 3,
@@ -57,7 +57,7 @@ namespace LiftTracker.Data
 					MEV = 10,
 					MRV = 20,
 					Frequency = 2,
-					ExercisesPerSession = 2
+					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 5,
@@ -67,7 +67,7 @@ namespace LiftTracker.Data
 					MEV = 10,
 					MRV = 20,
 					Frequency = 2,
-					ExercisesPerSession = 2
+					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 6,
@@ -87,7 +87,7 @@ namespace LiftTracker.Data
 					MEV = 10,
 					MRV = 20,
 					Frequency = 2,
-					ExercisesPerSession = 2
+					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 8,
@@ -97,7 +97,7 @@ namespace LiftTracker.Data
 					MEV = 10,
 					MRV = 20,
 					Frequency = 2,
-					ExercisesPerSession = 2
+					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 9,
@@ -126,7 +126,7 @@ namespace LiftTracker.Data
 					MV = 5,
 					MEV = 10,
 					MRV = 20,
-					Frequency = 1,
+					Frequency = 2,
 					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
@@ -136,7 +136,7 @@ namespace LiftTracker.Data
 					MV = 5,
 					MEV = 10,
 					MRV = 20,
-					Frequency = 1,
+					Frequency = 2,
 					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
@@ -157,14 +157,14 @@ namespace LiftTracker.Data
 					Id = 1,
 					MuscleGroupId = 1,
 					ExerciseType = ExerciseType.Primary,
-					Name = "Flat Bench",
+					Name = "Pause Bench Press",
 					IsCompound = true,
 				},
 				new Exercise(){
 					Id = 2,
 					MuscleGroupId = 1,
 					ExerciseType = ExerciseType.Supplemental,
-					Name = "Incline Bench Press",
+					Name = "Touch-And-Go Bench Press",
 					IsCompound = true,
 				},
 				new Exercise(){
@@ -208,7 +208,7 @@ namespace LiftTracker.Data
 					Id = 8,
 					MuscleGroupId = 2,
 					ExerciseType = ExerciseType.Accessory,
-					Name = "Rope Extension",
+					Name = "Overhead Rope Extension",
 					IsCompound = false,
 				},
 
@@ -216,16 +216,16 @@ namespace LiftTracker.Data
                 new Exercise(){
 					Id = 9,
 					MuscleGroupId = 10,
-					ExerciseType = ExerciseType.Supplemental,
-					Name = "Overhead Press",
+					ExerciseType = ExerciseType.Primary,
+					Name = "Dead Stop Overhead Press",
 					IsCompound= true,
 				},
 				new Exercise(){
 					Id = 10,
 					MuscleGroupId = 10,
 					ExerciseType = ExerciseType.Accessory,
-					Name = "DB Shoulder Press",
-					IsCompound= true,
+					Name = "DB Front Raise",
+					IsCompound= false,
 				},
 
                 //Side Delts
@@ -350,7 +350,7 @@ namespace LiftTracker.Data
 					Id = 26,
 					MuscleGroupId = 7,
 					ExerciseType = ExerciseType.Supplemental,
-					Name = "High Bar Pause Squat",
+					Name = "High Bar Squat",
 					IsCompound = true,
 				},
 				new Exercise(){
@@ -373,7 +373,7 @@ namespace LiftTracker.Data
 					Id = 29,
 					MuscleGroupId = 8,
 					ExerciseType = ExerciseType.Primary,
-					Name = "Sumo Deadlift",
+					Name = "Dead Stop Sumo Deadlift",
 					IsCompound = true,
 					
 				},
@@ -381,7 +381,7 @@ namespace LiftTracker.Data
 					Id = 30,
 					MuscleGroupId = 8,
 					ExerciseType = ExerciseType.Supplemental,
-					Name = "Paused Conventional Deadlift",
+					Name = "Touch-And-Go Conventional Deadlift",
 					IsCompound = true,
 				},
 				new Exercise(){
@@ -420,7 +420,7 @@ namespace LiftTracker.Data
 					Id = 35,
 					MuscleGroupId = 9,
 					ExerciseType = ExerciseType.Accessory,
-					Name = "Ab Wheel",
+					Name = "Hanging Leg Raise",
 					IsCompound = false,
 				},
 				new Exercise(){

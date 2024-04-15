@@ -4,6 +4,7 @@ using LiftTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiftTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240415001722_UpdateExerciseNames4")]
+    partial class UpdateExerciseNames4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,7 +121,7 @@ namespace LiftTracker.Migrations
                             ExerciseType = 0,
                             IsCompound = true,
                             MuscleGroupId = 1,
-                            Name = "Pause Bench Press"
+                            Name = "Comp Bench"
                         },
                         new
                         {
@@ -126,7 +129,7 @@ namespace LiftTracker.Migrations
                             ExerciseType = 1,
                             IsCompound = true,
                             MuscleGroupId = 1,
-                            Name = "Touch-And-Go Bench Press"
+                            Name = "Touch-And-Go Bench"
                         },
                         new
                         {
@@ -174,21 +177,21 @@ namespace LiftTracker.Migrations
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroupId = 2,
-                            Name = "Overhead Rope Extension"
+                            Name = "Rope Extension"
                         },
                         new
                         {
                             Id = 9,
-                            ExerciseType = 0,
+                            ExerciseType = 1,
                             IsCompound = true,
                             MuscleGroupId = 10,
-                            Name = "Dead Stop Overhead Press"
+                            Name = "Overhead Press"
                         },
                         new
                         {
                             Id = 10,
                             ExerciseType = 2,
-                            IsCompound = false,
+                            IsCompound = true,
                             MuscleGroupId = 10,
                             Name = "DB Front Raise"
                         },
@@ -613,7 +616,7 @@ namespace LiftTracker.Migrations
                         {
                             Id = 11,
                             ExercisesPerSession = 1,
-                            Frequency = 2,
+                            Frequency = 1,
                             MEV = 10,
                             MRV = 20,
                             MV = 5,
@@ -624,7 +627,7 @@ namespace LiftTracker.Migrations
                         {
                             Id = 12,
                             ExercisesPerSession = 1,
-                            Frequency = 2,
+                            Frequency = 1,
                             MEV = 10,
                             MRV = 20,
                             MV = 5,

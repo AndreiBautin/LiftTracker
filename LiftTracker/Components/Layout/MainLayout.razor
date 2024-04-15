@@ -370,6 +370,16 @@
 		/* transform: scale(1.1); */
 		cursor: pointer;
 	}
+
+	.blink_me {
+		animation: blinker 1s linear infinite;
+	}
+
+	@@keyframes blinker {
+	  50% {
+		opacity: 0;
+	  }
+}
 </style>
 
 <div class="bg"></div>

@@ -4,6 +4,7 @@ using LiftTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiftTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240413223619_UpdateBicepsExercisePerSession")]
+    partial class UpdateBicepsExercisePerSession
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,7 +121,7 @@ namespace LiftTracker.Migrations
                             ExerciseType = 0,
                             IsCompound = true,
                             MuscleGroupId = 1,
-                            Name = "Pause Bench Press"
+                            Name = "Flat Bench"
                         },
                         new
                         {
@@ -126,7 +129,7 @@ namespace LiftTracker.Migrations
                             ExerciseType = 1,
                             IsCompound = true,
                             MuscleGroupId = 1,
-                            Name = "Touch-And-Go Bench Press"
+                            Name = "Incline Bench Press"
                         },
                         new
                         {
@@ -174,23 +177,23 @@ namespace LiftTracker.Migrations
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroupId = 2,
-                            Name = "Overhead Rope Extension"
+                            Name = "Rope Extension"
                         },
                         new
                         {
                             Id = 9,
-                            ExerciseType = 0,
+                            ExerciseType = 1,
                             IsCompound = true,
                             MuscleGroupId = 10,
-                            Name = "Dead Stop Overhead Press"
+                            Name = "Overhead Press"
                         },
                         new
                         {
                             Id = 10,
                             ExerciseType = 2,
-                            IsCompound = false,
+                            IsCompound = true,
                             MuscleGroupId = 10,
-                            Name = "DB Front Raise"
+                            Name = "DB Shoulder Press"
                         },
                         new
                         {
@@ -318,7 +321,7 @@ namespace LiftTracker.Migrations
                             ExerciseType = 1,
                             IsCompound = true,
                             MuscleGroupId = 7,
-                            Name = "High Bar Squat"
+                            Name = "High Bar Pause Squat"
                         },
                         new
                         {
@@ -342,7 +345,7 @@ namespace LiftTracker.Migrations
                             ExerciseType = 0,
                             IsCompound = true,
                             MuscleGroupId = 8,
-                            Name = "Dead Stop Sumo Deadlift"
+                            Name = "Sumo Deadlift"
                         },
                         new
                         {
@@ -350,7 +353,7 @@ namespace LiftTracker.Migrations
                             ExerciseType = 1,
                             IsCompound = true,
                             MuscleGroupId = 8,
-                            Name = "Touch-And-Go Conventional Deadlift"
+                            Name = "Paused Conventional Deadlift"
                         },
                         new
                         {
@@ -390,7 +393,7 @@ namespace LiftTracker.Migrations
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroupId = 9,
-                            Name = "Hanging Leg Raise"
+                            Name = "Ab Wheel"
                         },
                         new
                         {
@@ -502,7 +505,7 @@ namespace LiftTracker.Migrations
                         new
                         {
                             Id = 1,
-                            ExercisesPerSession = 1,
+                            ExercisesPerSession = 2,
                             Frequency = 2,
                             MEV = 10,
                             MRV = 20,
@@ -535,7 +538,7 @@ namespace LiftTracker.Migrations
                         new
                         {
                             Id = 4,
-                            ExercisesPerSession = 1,
+                            ExercisesPerSession = 2,
                             Frequency = 2,
                             MEV = 10,
                             MRV = 20,
@@ -568,7 +571,7 @@ namespace LiftTracker.Migrations
                         new
                         {
                             Id = 7,
-                            ExercisesPerSession = 1,
+                            ExercisesPerSession = 2,
                             Frequency = 2,
                             MEV = 10,
                             MRV = 20,
@@ -579,7 +582,7 @@ namespace LiftTracker.Migrations
                         new
                         {
                             Id = 8,
-                            ExercisesPerSession = 1,
+                            ExercisesPerSession = 2,
                             Frequency = 2,
                             MEV = 10,
                             MRV = 20,
@@ -613,7 +616,7 @@ namespace LiftTracker.Migrations
                         {
                             Id = 11,
                             ExercisesPerSession = 1,
-                            Frequency = 2,
+                            Frequency = 1,
                             MEV = 10,
                             MRV = 20,
                             MV = 5,
@@ -624,7 +627,7 @@ namespace LiftTracker.Migrations
                         {
                             Id = 12,
                             ExercisesPerSession = 1,
-                            Frequency = 2,
+                            Frequency = 1,
                             MEV = 10,
                             MRV = 20,
                             MV = 5,

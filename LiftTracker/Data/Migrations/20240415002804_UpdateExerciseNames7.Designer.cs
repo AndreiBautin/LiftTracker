@@ -4,6 +4,7 @@ using LiftTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiftTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240415002804_UpdateExerciseNames7")]
+    partial class UpdateExerciseNames7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,7 +121,7 @@ namespace LiftTracker.Migrations
                             ExerciseType = 0,
                             IsCompound = true,
                             MuscleGroupId = 1,
-                            Name = "Pause Bench Press"
+                            Name = "Comp Bench Press"
                         },
                         new
                         {
@@ -174,15 +177,15 @@ namespace LiftTracker.Migrations
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroupId = 2,
-                            Name = "Overhead Rope Extension"
+                            Name = "Rope Extension"
                         },
                         new
                         {
                             Id = 9,
-                            ExerciseType = 0,
+                            ExerciseType = 1,
                             IsCompound = true,
                             MuscleGroupId = 10,
-                            Name = "Dead Stop Overhead Press"
+                            Name = "Overhead Press"
                         },
                         new
                         {
