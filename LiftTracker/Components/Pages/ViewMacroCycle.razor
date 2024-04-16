@@ -8,6 +8,7 @@
 @inject IConfiguration Configuration;
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize];
+@inject AuthenticationStateProvider AuthenticationStateProvider;
 
 <div class="row">
 	@if (MacroCycle?.TrainingBlocks != null) {
@@ -18,64 +19,62 @@
 				@foreach (var mesoCycle in trainingBlock.MesoCycles)
 				{
 				<div class="col-12">
-						<div class="col-12 @(trainingBlock.TrainingPhase == TrainingPhase.Hypertrophy ? "card" : trainingBlock.TrainingPhase == TrainingPhase.Strength ? "card2" : "card3") p-3 m-3">
-							<div class="row text-center mb-3">
-								<h1>
-									@trainingBlock.TrainingPhase
-								</h1>
-							</div>
-							@if (mesoCycle.MicroCycles != null) {
-								@foreach (var microCycle in mesoCycle.MicroCycles.Select((value, i) => new { i, value }))
-								{
-									<div class="row">
-										@if (microCycle.value.Sessions != null) {
-											@foreach (var session in microCycle.value.Sessions)
-											{
-												<div class="col-12 col-lg-2">
-													<div class="@(!session.IsComplete ? "card" : "card3") schedule-table text-center col-12 session-card my-3" @onclick="(() => OnSessionClick(session.Id))">
-														<h2>@session.DayOfTheWeek</h2>
-														<table>
-															@if (session.SessionExercises != null)
-															{
-																@foreach (var sessionExercise in session.SessionExercises)
-																{
-																	<tr>
-																		<td>
-																			@($"{new LiftTrackerContextBuilder(Configuration).Build().Exercises?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.ExerciseId)?.Name}")
-																			@if (session.IsComplete && sessionExercise?.Sets != null) {
-																				foreach (var set in sessionExercise.Sets)
-																				{
-																					<div>
-																						@($"{set?.Load?.ToString(set.Load.Value % 1 == 0 ? "0" : "0.0")} x {set?.Reps} reps @ {set?.Rpe} RPE")
-																					</div>
-																				}
-																			}
-																			else
-																			{
-																				<div class="statnum">
-																					@($"{sessionExercise?.Sets?.FirstOrDefault()?.TargetRpe}-{sessionExercise?.Sets?.FirstOrDefault()?.TargetRpe + 1} RPE")
-																				</div>
-																				@($"{sessionExercise?.Sets?.Count()} sets {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.Low} - {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.High} reps")
-																			}
-																		</td>
-																	</tr>
-																}
-															}
-														</table>
-													</div>
-												</div>
-											}
-										}
-									</div>
-									<div class="row text-center my-3">
-										<h2>
-											@($"Week {microCycle.i+1}")
-										</h2>
-									</div>
-								}
-							
-							}
+					<div class="row text-center mb-3">
+						<h1>
+							@trainingBlock.TrainingPhase
+						</h1>
 					</div>
+					@if (mesoCycle.MicroCycles != null) {
+						@foreach (var microCycle in mesoCycle.MicroCycles.Select((value, i) => new { i, value }))
+						{
+							<div class="row">
+								@if (microCycle.value.Sessions != null) {
+									@foreach (var session in microCycle.value.Sessions)
+									{
+										<div class="col-12 col-lg-2">
+											<div class="@(!session.IsComplete ? "card" : "card3") schedule-table text-center col-12 session-card my-3" @onclick="(() => OnSessionClick(session.Id))">
+												<h2>@session.DayOfTheWeek</h2>
+												<table>
+													@if (session.SessionExercises != null)
+													{
+														@foreach (var sessionExercise in session.SessionExercises)
+														{
+															<tr>
+																<td>
+																	@($"{new LiftTrackerContextBuilder(Configuration).Build().Exercises?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.ExerciseId)?.Name}")
+																	@if (session.IsComplete && sessionExercise?.Sets != null) {
+																		foreach (var set in sessionExercise.Sets)
+																		{
+																			<div>
+																				@($"{set?.Load?.ToString(set.Load.Value % 1 == 0 ? "0" : "0.0")} x {set?.Reps} reps @ {set?.Rpe} RPE")
+																			</div>
+																		}
+																	}
+																	else
+																	{
+																		<div class="statnum">
+																			@($"{sessionExercise?.Sets?.FirstOrDefault()?.TargetRpe}-{sessionExercise?.Sets?.FirstOrDefault()?.TargetRpe + 1} RPE")
+																		</div>
+																		@($"{sessionExercise?.Sets?.Count()} sets {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.Low} - {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.High} reps")
+																	}
+																</td>
+															</tr>
+														}
+													}
+												</table>
+											</div>
+										</div>
+									}
+								}
+							</div>
+							<div class="row text-center my-3">
+								<h2>
+									@($"Week {microCycle.i+1}")
+								</h2>
+							</div>
+						}
+							
+					}
 				</div>
 				}
 			}
@@ -87,8 +86,12 @@
 
 	private MacroCycle? MacroCycle;
 
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var user = authState.User;
+		var userId = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
+
 		using var context = new LiftTrackerContextBuilder(Configuration).Build();
 
 		MacroCycle = context.MacroCycles?
@@ -98,7 +101,7 @@
 			.ThenInclude(x => x.Sessions)
 			.ThenInclude(x => x.SessionExercises)
 			.ThenInclude(x => x.Sets)
-			.FirstOrDefault();
+			.FirstOrDefault(x => !x.IsComplete && x.ApplicationUserId == userId);
 	}
 
 	public void StartWorkout()

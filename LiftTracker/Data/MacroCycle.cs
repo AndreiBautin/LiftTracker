@@ -6,7 +6,8 @@ namespace LiftTracker.Data
     {
         [Key]
         public int Id { get; set; }
-        public IEnumerable<TrainingBlock>? TrainingBlocks { get; set; }
+		public string? ApplicationUserId { get; set; }
+		public IEnumerable<TrainingBlock>? TrainingBlocks { get; set; }
         public bool IsComplete { get; set; }
     }
 }

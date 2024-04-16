@@ -8,6 +8,7 @@
 @inject IConfiguration Configuration;
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize];
+@inject AuthenticationStateProvider AuthenticationStateProvider;
 
 <div class="row">
 	@if (TrainingBlock.MesoCycles != null)
@@ -15,7 +16,6 @@
 		@foreach (var mesoCycle in TrainingBlock.MesoCycles)
 		{
 		<div class="col-12">
-				<div class="col-12 @(TrainingBlock.TrainingPhase == TrainingPhase.Hypertrophy ? "card" : TrainingBlock.TrainingPhase == TrainingPhase.Strength ? "card2" : "card3") p-3 m-3">
 					<div class="row text-center mb-3">
 						<h1>
 							@TrainingBlock.TrainingPhase
@@ -72,7 +72,6 @@
 						}
 							
 					}
-			</div>
 		</div>
 		}
 	}
@@ -83,17 +82,22 @@
 
 	private TrainingBlock? TrainingBlock;
 
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var user = authState.User;
+		var userId = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
+
 		using var context = new LiftTrackerContextBuilder(Configuration).Build();
 
 		TrainingBlock = context.TrainingBlocks?
+			.Include(x => x.MacroCycle)
 			.Include(x => x.MesoCycles)
 			.ThenInclude(x => x.MicroCycles)
 			.ThenInclude(x => x.Sessions)
 			.ThenInclude(x => x.SessionExercises)
 			.ThenInclude(x => x.Sets)
-			.FirstOrDefault();
+			.FirstOrDefault(x => !x.IsComplete && x.MacroCycle.ApplicationUserId == userId);
 	}
 
 	public void StartWorkout()

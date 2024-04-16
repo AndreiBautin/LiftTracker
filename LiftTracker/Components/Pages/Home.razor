@@ -10,6 +10,7 @@
 @inject IConfiguration Configuration;
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize];
+@inject AuthenticationStateProvider AuthenticationStateProvider;
 
 <h2>Week @Week</h2>
 
@@ -173,19 +174,27 @@
 	private int? NewHypertrophyMesoCount { get; set; }
 	private bool IsGenerating { get; set; }
 
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var user = authState.User;
+		var userId = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
+
 		using var context = new LiftTrackerContextBuilder(Configuration).Build();
 
 		MuscleGroupVolumeModifiers = ((IEnumerable<MuscleGroupEnum>)Enum.GetValues(typeof(MuscleGroupEnum))).Select(x => new MuscleGroupVolumeModifiers() { 
 			MuscleGroup = x
 		}).ToList();
 
+
 		CurrentMicroCycle = context.MicroCycles
+								.Include(x => x.MesoCycle)
+								.ThenInclude(x => x.TrainingBlock)
+								.ThenInclude(x => x.MacroCycle)
 								.Include(x => x.Sessions)
 								.ThenInclude(x => x.SessionExercises)
 								.ThenInclude(x => x.Sets)
-								.FirstOrDefault(x => !x.IsComplete);
+								.FirstOrDefault(x => !x.IsComplete && x.MesoCycle.TrainingBlock.MacroCycle.ApplicationUserId == userId);
 
 		Week = context.MicroCycles?.ToList()?.Select((v, i) => new { value = v, index = i })?.FirstOrDefault(x => !x.value.IsComplete)?.index+1;
 
@@ -231,8 +240,12 @@
 		NavigationManager.NavigateTo("/", true);
 	}
 
-	private void Generate()
+	private async Task Generate()
 	{
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var user = authState.User;
+		var userId = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
+
 		IsGenerating = true;
 		StateHasChanged();
 		using var context = new LiftTrackerContextBuilder(Configuration).Build();
@@ -261,6 +274,7 @@
 				}
 			};
 		var macroCycle = new GenerateMacroCycleUseCase(Configuration).Generate(options);
+		macroCycle.ApplicationUserId = userId;
 		context.MacroCycles.Add(macroCycle);
 		context.SaveChanges();
 		NavigationManager.NavigateTo("/", true);

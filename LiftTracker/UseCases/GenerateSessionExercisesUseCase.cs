@@ -215,7 +215,13 @@ namespace LiftTracker.UseCases
             }
             else if (phase == TrainingPhase.Peaking)
             {
-				weeklyVolume = 6 - (weeklyChangeRate * (mesoWeek - 1));
+                if (exerciseType == ExerciseType.Primary)
+                {
+                    weeklyVolume = 6 - (weeklyChangeRate * (mesoWeek - 1));
+                }
+                else { 
+                    weeklyVolume = 6;
+				}
 			}
 			else if (phase == TrainingPhase.Strength)
 			{
