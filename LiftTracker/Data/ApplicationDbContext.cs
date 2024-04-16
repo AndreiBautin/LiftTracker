@@ -23,131 +23,66 @@ namespace LiftTracker.Data
 					Id = 1,
 					Name = "Chest",
 					MuscleGroupEnum = MuscleGroupEnum.Chest,
-					MV = 5,
-					MEV = 10,
-					MRV = 20,
-					Frequency = 2,
-					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 2,
 					Name = "Triceps",
 					MuscleGroupEnum= MuscleGroupEnum.Triceps,
-					MV = 5,
-					MEV = 10,
-					MRV = 20,
-					Frequency = 2,
-					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 3,
 					Name = "Side Delts",
 					MuscleGroupEnum= MuscleGroupEnum.SideDelts,
-					MV = 5,
-					MEV = 10,
-					MRV = 20,
-					Frequency = 2,
-					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 4,
 					Name = "Back",
 					MuscleGroupEnum= MuscleGroupEnum.Back,
-					MV = 5,
-					MEV = 10,
-					MRV = 20,
-					Frequency = 2,
-					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 5,
 					Name = "Biceps",
 					MuscleGroupEnum= MuscleGroupEnum.Biceps,
-					MV = 5,
-					MEV = 10,
-					MRV = 20,
-					Frequency = 2,
-					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 6,
 					Name = "Rear Delts",
 					MuscleGroupEnum= MuscleGroupEnum.RearDelts,
-					MV = 5,
-					MEV = 10,
-					MRV = 20,
-					Frequency = 2,
-					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 7,
 					Name = "Quads",
 					MuscleGroupEnum= MuscleGroupEnum.Quads,
-					MV = 5,
-					MEV = 10,
-					MRV = 20,
-					Frequency = 2,
-					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 8,
 					Name = "Hamstrings",
 					MuscleGroupEnum= MuscleGroupEnum.PosteriorChain,
-					MV = 5,
-					MEV = 10,
-					MRV = 20,
-					Frequency = 2,
-					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 9,
 					Name = "Core",
 					MuscleGroupEnum= MuscleGroupEnum.Core,
-					MV = 5,
-					MEV = 10,
-					MRV = 20,
-					Frequency = 2,
-					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 10,
 					Name = "Front Delts",
 					MuscleGroupEnum= MuscleGroupEnum.FrontDelts,
-					MV = 5,
-					MEV = 10,
-					MRV = 20,
-					Frequency = 2,
-					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 11,
 					Name = "Traps",
 					MuscleGroupEnum= MuscleGroupEnum.Traps,
-					MV = 5,
-					MEV = 10,
-					MRV = 20,
-					Frequency = 2,
-					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 12,
 					Name = "Forearms",
 					MuscleGroupEnum= MuscleGroupEnum.Forearms,
-					MV = 5,
-					MEV = 10,
-					MRV = 20,
-					Frequency = 2,
-					ExercisesPerSession = 1
 				},
 				new MuscleGroup(){
 					Id = 13,
 					Name = "Calves",
 					MuscleGroupEnum= MuscleGroupEnum.Calves,
-					MV = 5,
-					MEV = 10,
-					MRV = 20,
-					Frequency = 2,
-					ExercisesPerSession = 1
 				},
 			});
 
@@ -164,7 +99,7 @@ namespace LiftTracker.Data
 					Id = 2,
 					MuscleGroupId = 1,
 					ExerciseType = ExerciseType.Supplemental,
-					Name = "Touch-And-Go Bench Press",
+					Name = "DB Bench Press",
 					IsCompound = true,
 				},
 				new Exercise(){
@@ -177,9 +112,9 @@ namespace LiftTracker.Data
 				new Exercise(){
 					Id = 4,
 					MuscleGroupId = 1,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Pec Deck",
-					IsCompound = false,
+					ExerciseType = ExerciseType.Supplemental,
+					Name = "Touch-And-Go Bench Press",
+					IsCompound = true,
 				},
 
                 //Triceps
@@ -350,14 +285,14 @@ namespace LiftTracker.Data
 					Id = 26,
 					MuscleGroupId = 7,
 					ExerciseType = ExerciseType.Supplemental,
-					Name = "High Bar Squat",
+					Name = "Hack Squat",
 					IsCompound = true,
 				},
 				new Exercise(){
 					Id = 27,
 					MuscleGroupId = 7,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Split Squat",
+					ExerciseType = ExerciseType.Supplemental,
+					Name = "High Bar Squat",
 					IsCompound = true,
 				},
 				new Exercise(){
@@ -381,14 +316,14 @@ namespace LiftTracker.Data
 					Id = 30,
 					MuscleGroupId = 8,
 					ExerciseType = ExerciseType.Supplemental,
-					Name = "Touch-And-Go Conventional Deadlift",
+					Name = "DB RDL",
 					IsCompound = true,
 				},
 				new Exercise(){
 					Id = 31,
 					MuscleGroupId = 8,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Good Morning",
+					ExerciseType = ExerciseType.Supplemental,
+					Name = "Touch-And-Go Conventional Deadlift",
 					IsCompound = true,
 				},
 				new Exercise(){

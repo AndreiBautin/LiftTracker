@@ -4,6 +4,7 @@ using LiftTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiftTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240415015750_RemoveVolumeLandmarks")]
+    partial class RemoveVolumeLandmarks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,7 +129,7 @@ namespace LiftTracker.Migrations
                             ExerciseType = 1,
                             IsCompound = true,
                             MuscleGroupId = 1,
-                            Name = "DB Bench Press"
+                            Name = "Touch-And-Go Bench Press"
                         },
                         new
                         {
@@ -139,10 +142,10 @@ namespace LiftTracker.Migrations
                         new
                         {
                             Id = 4,
-                            ExerciseType = 1,
-                            IsCompound = true,
+                            ExerciseType = 2,
+                            IsCompound = false,
                             MuscleGroupId = 1,
-                            Name = "Touch-And-Go Bench Press"
+                            Name = "Pec Deck"
                         },
                         new
                         {
@@ -318,15 +321,15 @@ namespace LiftTracker.Migrations
                             ExerciseType = 1,
                             IsCompound = true,
                             MuscleGroupId = 7,
-                            Name = "Hack Squat"
+                            Name = "High Bar Squat"
                         },
                         new
                         {
                             Id = 27,
-                            ExerciseType = 1,
+                            ExerciseType = 2,
                             IsCompound = true,
                             MuscleGroupId = 7,
-                            Name = "High Bar Squat"
+                            Name = "Split Squat"
                         },
                         new
                         {
@@ -350,15 +353,15 @@ namespace LiftTracker.Migrations
                             ExerciseType = 1,
                             IsCompound = true,
                             MuscleGroupId = 8,
-                            Name = "DB RDL"
+                            Name = "Touch-And-Go Conventional Deadlift"
                         },
                         new
                         {
                             Id = 31,
-                            ExerciseType = 1,
+                            ExerciseType = 2,
                             IsCompound = true,
                             MuscleGroupId = 8,
-                            Name = "Touch-And-Go Conventional Deadlift"
+                            Name = "Good Morning"
                         },
                         new
                         {

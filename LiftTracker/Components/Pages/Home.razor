@@ -269,264 +269,264 @@
 	private void CompleteMicroCycle()
 	{
 		using var context = new LiftTrackerContextBuilder(Configuration).Build();
-		if (MuscleGroupVolumeModifiers != null)
-		{
-			foreach (var muscleGroupVolumeModifier in MuscleGroupVolumeModifiers)
-			{
-				var muscleGroup = context.MuscleGroups.FirstOrDefault(x => x.MuscleGroupEnum == muscleGroupVolumeModifier.MuscleGroup);
+		// if (MuscleGroupVolumeModifiers != null)
+		// {
+		// 	foreach (var muscleGroupVolumeModifier in MuscleGroupVolumeModifiers)
+		// 	{
+		// 		var muscleGroup = context.MuscleGroups.FirstOrDefault(x => x.MuscleGroupEnum == muscleGroupVolumeModifier.MuscleGroup);
 
-				if (muscleGroup != null) { 
-					switch (muscleGroupVolumeModifier.PumpRating)
-					{
-						case PumpRatingEnum.None:
-							if (Week == 1)
-							{
-								muscleGroup.MEV = muscleGroup.MEV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 2)
-							{
-								muscleGroup.MEV = muscleGroup.MEV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 3) { 
-								muscleGroup.MEV = muscleGroup.MEV + 1;
-								context.SaveChanges();
-								muscleGroup.MRV = muscleGroup.MRV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 4)
-							{
-								muscleGroup.MV = muscleGroup.MV + 1;
-								context.SaveChanges();
-							}
-							break;
-						case PumpRatingEnum.Low:
-							if (Week == 1)
-							{
-								muscleGroup.MEV = muscleGroup.MEV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 2)
-							{
-								muscleGroup.MEV = muscleGroup.MEV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 3)
-							{
-								muscleGroup.MEV = muscleGroup.MEV + 1;
-								context.SaveChanges();
-								muscleGroup.MRV = muscleGroup.MRV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 4)
-							{
-							}
-							break;
-						case PumpRatingEnum.Moderate:
-							if (Week == 1)
-							{
-							}
-							if (Week == 2)
-							{
-							}
-							if (Week == 3)
-							{
-								muscleGroup.MRV = muscleGroup.MRV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 4)
-							{
-								muscleGroup.MV = muscleGroup.MV - 1;
-								context.SaveChanges();
-							}
-							break;
-						case PumpRatingEnum.High:
-							if (Week == 1)
-							{
-								muscleGroup.MEV = muscleGroup.MEV - 1;
-								context.SaveChanges();
-							}
-							if (Week == 2)
-							{
-								muscleGroup.MEV = muscleGroup.MEV - 1;
-								context.SaveChanges();
-							}
-							if (Week == 3)
-							{
-							}
-							if (Week == 4)
-							{
-								muscleGroup.MV = muscleGroup.MV - 1;
-								context.SaveChanges();
-							}
-							break;
-						default:
-							break;
-					}
+		// 		if (muscleGroup != null) { 
+		// 			switch (muscleGroupVolumeModifier.PumpRating)
+		// 			{
+		// 				case PumpRatingEnum.None:
+		// 					if (Week == 1)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 2)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 3) { 
+		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
+		// 						context.SaveChanges();
+		// 						muscleGroup.MRV = muscleGroup.MRV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 4)
+		// 					{
+		// 						muscleGroup.MV = muscleGroup.MV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					break;
+		// 				case PumpRatingEnum.Low:
+		// 					if (Week == 1)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 2)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 3)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
+		// 						context.SaveChanges();
+		// 						muscleGroup.MRV = muscleGroup.MRV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 4)
+		// 					{
+		// 					}
+		// 					break;
+		// 				case PumpRatingEnum.Moderate:
+		// 					if (Week == 1)
+		// 					{
+		// 					}
+		// 					if (Week == 2)
+		// 					{
+		// 					}
+		// 					if (Week == 3)
+		// 					{
+		// 						muscleGroup.MRV = muscleGroup.MRV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 4)
+		// 					{
+		// 						muscleGroup.MV = muscleGroup.MV - 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					break;
+		// 				case PumpRatingEnum.High:
+		// 					if (Week == 1)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV - 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 2)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV - 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 3)
+		// 					{
+		// 					}
+		// 					if (Week == 4)
+		// 					{
+		// 						muscleGroup.MV = muscleGroup.MV - 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					break;
+		// 				default:
+		// 					break;
+		// 			}
 
-					switch (muscleGroupVolumeModifier.SorenessRating)
-					{
-						case SorenessRatingEnum.None:
-							if (Week == 1)
-							{
-								muscleGroup.MEV = muscleGroup.MEV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 2)
-							{
-								muscleGroup.MEV = muscleGroup.MEV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 3)
-							{
-								muscleGroup.MEV = muscleGroup.MEV + 1;
-								context.SaveChanges();
-								muscleGroup.MRV = muscleGroup.MRV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 4)
-							{
-							}
-							break;
-						case SorenessRatingEnum.Low:
-							if (Week == 1)
-							{
-								muscleGroup.MEV = muscleGroup.MEV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 2)
-							{
-								muscleGroup.MEV = muscleGroup.MEV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 3)
-							{
-								muscleGroup.MEV = muscleGroup.MEV + 1;
-								context.SaveChanges();
-								muscleGroup.MRV = muscleGroup.MRV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 4)
-							{
-								muscleGroup.MV = muscleGroup.MV - 1;
-								context.SaveChanges();
-							}
-							break;
-						case SorenessRatingEnum.Moderate:
-							if (Week == 1)
-							{
-							}
-							if (Week == 2)
-							{
-							}
-							if (Week == 3)
-							{
-								muscleGroup.MRV = muscleGroup.MRV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 4)
-							{
-								muscleGroup.MV = muscleGroup.MV - 1;
-								context.SaveChanges();
-							}
-							break;
-						case SorenessRatingEnum.High:
-							if (Week == 1)
-							{
-								muscleGroup.MEV = muscleGroup.MEV - 1;
-								context.SaveChanges();
-							}
-							if (Week == 2)
-							{
-								muscleGroup.MEV = muscleGroup.MEV - 1;
-								context.SaveChanges();
-							}
-							if (Week == 3)
-							{
-							}
-							if (Week == 4)
-							{
-								muscleGroup.MV = muscleGroup.MV - 1;
-								context.SaveChanges();
-							}
-							break;
-						default:
-							break;
-					}
+		// 			switch (muscleGroupVolumeModifier.SorenessRating)
+		// 			{
+		// 				case SorenessRatingEnum.None:
+		// 					if (Week == 1)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 2)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 3)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
+		// 						context.SaveChanges();
+		// 						muscleGroup.MRV = muscleGroup.MRV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 4)
+		// 					{
+		// 					}
+		// 					break;
+		// 				case SorenessRatingEnum.Low:
+		// 					if (Week == 1)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 2)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 3)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
+		// 						context.SaveChanges();
+		// 						muscleGroup.MRV = muscleGroup.MRV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 4)
+		// 					{
+		// 						muscleGroup.MV = muscleGroup.MV - 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					break;
+		// 				case SorenessRatingEnum.Moderate:
+		// 					if (Week == 1)
+		// 					{
+		// 					}
+		// 					if (Week == 2)
+		// 					{
+		// 					}
+		// 					if (Week == 3)
+		// 					{
+		// 						muscleGroup.MRV = muscleGroup.MRV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 4)
+		// 					{
+		// 						muscleGroup.MV = muscleGroup.MV - 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					break;
+		// 				case SorenessRatingEnum.High:
+		// 					if (Week == 1)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV - 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 2)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV - 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 3)
+		// 					{
+		// 					}
+		// 					if (Week == 4)
+		// 					{
+		// 						muscleGroup.MV = muscleGroup.MV - 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					break;
+		// 				default:
+		// 					break;
+		// 			}
 
-					switch (muscleGroupVolumeModifier.PerformanceRating)
-					{
-						case PerformanceRatingEnum.Low:
-							if (Week == 1)
-							{
-								muscleGroup.MEV = muscleGroup.MEV - 1;
-								context.SaveChanges();
-							}
-							if (Week == 2)
-							{
-								muscleGroup.MEV = muscleGroup.MEV - 1;
-								context.SaveChanges();
-							}
-							if (Week == 3)
-							{
-								muscleGroup.MEV = muscleGroup.MEV - 1;
-								context.SaveChanges();
-								muscleGroup.MRV = muscleGroup.MRV - 1;
-								context.SaveChanges();
-							}
-							if (Week == 4)
-							{
-								muscleGroup.MV = muscleGroup.MV - 1;
-								context.SaveChanges();
-							}
-							break;
-						case PerformanceRatingEnum.Moderate:
-							if (Week == 1)
-							{
-							}
-							if (Week == 2)
-							{
-							}
-							if (Week == 3)
-							{
-							}
-							if (Week == 4)
-							{
-							}
-							break;
-						case PerformanceRatingEnum.High:
-							if (Week == 1)
-							{
-								muscleGroup.MEV = muscleGroup.MEV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 2)
-							{
-								muscleGroup.MEV = muscleGroup.MEV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 3)
-							{
-								muscleGroup.MRV = muscleGroup.MRV + 1;
-								context.SaveChanges();
-								muscleGroup.MRV = muscleGroup.MRV + 1;
-								context.SaveChanges();
-							}
-							if (Week == 4)
-							{
-								muscleGroup.MV = muscleGroup.MV + 1;
-								context.SaveChanges();
-							}
-							break;
-						default:
-							break;
-					}
+		// 			switch (muscleGroupVolumeModifier.PerformanceRating)
+		// 			{
+		// 				case PerformanceRatingEnum.Low:
+		// 					if (Week == 1)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV - 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 2)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV - 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 3)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV - 1;
+		// 						context.SaveChanges();
+		// 						muscleGroup.MRV = muscleGroup.MRV - 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 4)
+		// 					{
+		// 						muscleGroup.MV = muscleGroup.MV - 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					break;
+		// 				case PerformanceRatingEnum.Moderate:
+		// 					if (Week == 1)
+		// 					{
+		// 					}
+		// 					if (Week == 2)
+		// 					{
+		// 					}
+		// 					if (Week == 3)
+		// 					{
+		// 					}
+		// 					if (Week == 4)
+		// 					{
+		// 					}
+		// 					break;
+		// 				case PerformanceRatingEnum.High:
+		// 					if (Week == 1)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 2)
+		// 					{
+		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 3)
+		// 					{
+		// 						muscleGroup.MRV = muscleGroup.MRV + 1;
+		// 						context.SaveChanges();
+		// 						muscleGroup.MRV = muscleGroup.MRV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					if (Week == 4)
+		// 					{
+		// 						muscleGroup.MV = muscleGroup.MV + 1;
+		// 						context.SaveChanges();
+		// 					}
+		// 					break;
+		// 				default:
+		// 					break;
+		// 			}
 
-				}
-			}
+		// 		}
+		// 	}
 
-		}
+		// }
 
 		var record = context.MicroCycles.FirstOrDefault(x => CurrentMicroCycle != null && x.Id == CurrentMicroCycle.Id);
 		if (record != null)

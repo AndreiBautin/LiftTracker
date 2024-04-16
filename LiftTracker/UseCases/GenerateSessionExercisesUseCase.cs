@@ -42,7 +42,10 @@ namespace LiftTracker.UseCases
 
 			if (sessionNumber == 1) {
                 if (phase == TrainingPhase.Hypertrophy) {
-					chestExercise = GenerateSessionExercise(MuscleGroupEnum.Chest, ExerciseType.Supplemental, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
+                    chestExercise = GenerateSessionExercise(MuscleGroupEnum.Chest, ExerciseType.Supplemental, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
+                }
+                else if (phase == TrainingPhase.Strength) { 
+                    chestExercise = GenerateSessionExercise(MuscleGroupEnum.Chest, ExerciseType.Supplemental, 2, phase, mesoLength, mesoWeek, 1, sessionNumber);
 				}
 				else { 
                     chestExercise = GenerateSessionExercise(MuscleGroupEnum.Chest, ExerciseType.Primary, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
@@ -61,11 +64,14 @@ namespace LiftTracker.UseCases
             {
                 if (phase == TrainingPhase.Hypertrophy)
                 {
-                    frontDeltExercise = GenerateSessionExercise(MuscleGroupEnum.FrontDelts, ExerciseType.Supplemental, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
+                    frontDeltExercise = GenerateSessionExercise(MuscleGroupEnum.FrontDelts, ExerciseType.Supplemental, 2, phase, mesoLength, mesoWeek, 1, sessionNumber);
                 }
-                else { 
-                    frontDeltExercise = GenerateSessionExercise(MuscleGroupEnum.FrontDelts, ExerciseType.Primary, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
+                else if (phase == TrainingPhase.Strength) { 
+                    frontDeltExercise = GenerateSessionExercise(MuscleGroupEnum.FrontDelts, ExerciseType.Supplemental, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
 				}
+				else {
+                    frontDeltExercise = GenerateSessionExercise(MuscleGroupEnum.FrontDelts, ExerciseType.Primary, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
+                }
 				chestExercise = GenerateSessionExercise(MuscleGroupEnum.Chest, ExerciseType.Accessory, 1, phase, mesoLength, mesoWeek, 1,sessionNumber);
 				sideDeltExercise = GenerateSessionExercise(MuscleGroupEnum.SideDelts, ExerciseType.Accessory, 2, phase, mesoLength, mesoWeek, 2, sessionNumber);
 				tricepExercise2 = GenerateSessionExercise(MuscleGroupEnum.Triceps, ExerciseType.Accessory, 2, phase, mesoLength, mesoWeek, 1, sessionNumber);
@@ -114,12 +120,15 @@ namespace LiftTracker.UseCases
 			if (sessionNumber == 1)
             {
                 if (phase == TrainingPhase.Hypertrophy) {
-					quadExercise = GenerateSessionExercise(MuscleGroupEnum.Quads, ExerciseType.Supplemental, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
+                    quadExercise = GenerateSessionExercise(MuscleGroupEnum.Quads, ExerciseType.Supplemental, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
+                }
+                else if (phase == TrainingPhase.Strength) { 
+                    quadExercise = GenerateSessionExercise(MuscleGroupEnum.Quads, ExerciseType.Supplemental, 2, phase, mesoLength, mesoWeek, 1, sessionNumber);
 				}
-				else { 
+				else {
                     quadExercise = GenerateSessionExercise(MuscleGroupEnum.Quads, ExerciseType.Primary, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
                 }
-                posteriorChainExercise = GenerateSessionExercise(MuscleGroupEnum.PosteriorChain, ExerciseType.Accessory, 2, phase, mesoLength, mesoWeek, 1, sessionNumber);
+                posteriorChainExercise = GenerateSessionExercise(MuscleGroupEnum.PosteriorChain, ExerciseType.Accessory, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
 				coreExercise = GenerateSessionExercise(MuscleGroupEnum.Core, ExerciseType.Accessory, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
 				calfExercise = GenerateSessionExercise(MuscleGroupEnum.Calves, ExerciseType.Accessory, 1, phase, mesoLength, mesoWeek, 2, sessionNumber);
                 return new List<SessionExercise?>() {
@@ -135,11 +144,15 @@ namespace LiftTracker.UseCases
 				{
 					posteriorChainExercise = GenerateSessionExercise(MuscleGroupEnum.PosteriorChain, ExerciseType.Supplemental, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
 				}
+				else if (phase == TrainingPhase.Strength)
+				{
+					posteriorChainExercise = GenerateSessionExercise(MuscleGroupEnum.PosteriorChain, ExerciseType.Supplemental, 2, phase, mesoLength, mesoWeek, 1, sessionNumber);
+				}
 				else
 				{
     				posteriorChainExercise = GenerateSessionExercise(MuscleGroupEnum.PosteriorChain, ExerciseType.Primary, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
 				}
-				quadExercise = GenerateSessionExercise(MuscleGroupEnum.Quads, ExerciseType.Accessory, 2, phase, mesoLength, mesoWeek, 1, sessionNumber);
+				quadExercise = GenerateSessionExercise(MuscleGroupEnum.Quads, ExerciseType.Accessory, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
 				coreExercise = GenerateSessionExercise(MuscleGroupEnum.Core, ExerciseType.Accessory, 2, phase, mesoLength, mesoWeek, 1, sessionNumber);
 				calfExercise = GenerateSessionExercise(MuscleGroupEnum.Calves, ExerciseType.Accessory, 2, phase, mesoLength, mesoWeek, 2, sessionNumber);
 				return new List<SessionExercise?>() {
@@ -193,33 +206,30 @@ namespace LiftTracker.UseCases
 				result.RepRangeId = repRange?.Id;
             }
 
-            var totalVolumeChange = muscleGroup?.MRV - muscleGroup?.MEV;
+            var totalVolumeChange = 4;
             var weeklyChangeRate = totalVolumeChange / (mesoLength - 2);
             int? weeklyVolume;
             if (mesoWeek == mesoLength)
             {
-                weeklyVolume = muscleGroup?.MV;
+                weeklyVolume = 4;
             }
             else if (phase == TrainingPhase.Peaking)
             {
-				weeklyVolume = muscleGroup?.MEV - (weeklyChangeRate * (mesoWeek - 1));
+				weeklyVolume = 6 - (weeklyChangeRate * (mesoWeek - 1));
 			}
 			else if (phase == TrainingPhase.Strength)
 			{
-				weeklyVolume = muscleGroup?.MEV;
+				weeklyVolume = 6;
 			}
 			else
             {
-                weeklyVolume = muscleGroup?.MEV + (weeklyChangeRate * (mesoWeek - 1));
+                weeklyVolume = 6 + (weeklyChangeRate * (mesoWeek - 1));
             }
-            var sessionVolume = weeklyVolume / muscleGroup?.Frequency;
-            if (sessionNumber % 2 == 1 && weeklyVolume % 2 == 1 && muscleGroup?.Frequency > 1) {
+            var sessionVolume = weeklyVolume / 2;
+            if (sessionNumber % 2 == 1 && weeklyVolume % 2 == 1) {
                 sessionVolume = sessionVolume + 1;
             }
-			var volume = sessionVolume / muscleGroup?.ExercisesPerSession;
-            if (muscleGroupOccurence % 2 == 1 && sessionVolume % 2 == 1 && muscleGroup?.ExercisesPerSession > 1) {
-                volume = volume + 1;
-            }
+			var volume = sessionVolume;
 
             var rpe = 9 - ((mesoLength - mesoWeek)-1);
             if (mesoWeek == mesoLength) {
