@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiftTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240417022647_InitialCreate")]
+    [Migration("20240417024750_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -121,7 +121,7 @@ namespace LiftTracker.Migrations
                             ExerciseType = 0,
                             IsCompound = true,
                             MuscleGroup = 0,
-                            Name = "Pause Bench Press"
+                            Name = "Flat Bench Press"
                         },
                         new
                         {
@@ -129,11 +129,27 @@ namespace LiftTracker.Migrations
                             ExerciseType = 1,
                             IsCompound = true,
                             MuscleGroup = 0,
-                            Name = "DB Bench Press"
+                            Name = "Incline DB Bench Press"
                         },
                         new
                         {
                             Id = 3,
+                            ExerciseType = 1,
+                            IsCompound = true,
+                            MuscleGroup = 0,
+                            Name = "Incline Bench Press"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ExerciseType = 2,
+                            IsCompound = false,
+                            MuscleGroup = 0,
+                            Name = "Pec Deck"
+                        },
+                        new
+                        {
+                            Id = 5,
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroup = 0,
@@ -141,15 +157,7 @@ namespace LiftTracker.Migrations
                         },
                         new
                         {
-                            Id = 4,
-                            ExerciseType = 1,
-                            IsCompound = true,
-                            MuscleGroup = 0,
-                            Name = "Touch-And-Go Bench Press"
-                        },
-                        new
-                        {
-                            Id = 5,
+                            Id = 6,
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroup = 1,
@@ -157,7 +165,7 @@ namespace LiftTracker.Migrations
                         },
                         new
                         {
-                            Id = 6,
+                            Id = 7,
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroup = 1,
@@ -165,19 +173,11 @@ namespace LiftTracker.Migrations
                         },
                         new
                         {
-                            Id = 7,
+                            Id = 8,
                             ExerciseType = 0,
                             IsCompound = true,
                             MuscleGroup = 9,
-                            Name = "Dead Stop Overhead Press"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            ExerciseType = 1,
-                            IsCompound = true,
-                            MuscleGroup = 9,
-                            Name = "Touch And Go Overhead Press"
+                            Name = "Military Press"
                         },
                         new
                         {
@@ -185,11 +185,19 @@ namespace LiftTracker.Migrations
                             ExerciseType = 1,
                             IsCompound = true,
                             MuscleGroup = 9,
-                            Name = "DB Shoulder Press"
+                            Name = "Seated Military Press"
                         },
                         new
                         {
                             Id = 10,
+                            ExerciseType = 1,
+                            IsCompound = true,
+                            MuscleGroup = 9,
+                            Name = "DB Shoulder Press"
+                        },
+                        new
+                        {
+                            Id = 11,
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroup = 9,
@@ -197,7 +205,7 @@ namespace LiftTracker.Migrations
                         },
                         new
                         {
-                            Id = 11,
+                            Id = 12,
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroup = 2,
@@ -205,19 +213,11 @@ namespace LiftTracker.Migrations
                         },
                         new
                         {
-                            Id = 12,
+                            Id = 13,
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroup = 2,
-                            Name = "Machine Lateral Raise"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            ExerciseType = 2,
-                            IsCompound = true,
-                            MuscleGroup = 3,
-                            Name = "DB Row"
+                            Name = "Upright Row"
                         },
                         new
                         {
@@ -225,15 +225,15 @@ namespace LiftTracker.Migrations
                             ExerciseType = 2,
                             IsCompound = true,
                             MuscleGroup = 3,
-                            Name = "Chin-Ups"
+                            Name = "DB Row"
                         },
                         new
                         {
                             Id = 15,
                             ExerciseType = 2,
-                            IsCompound = false,
-                            MuscleGroup = 4,
-                            Name = "Hammer Curl"
+                            IsCompound = true,
+                            MuscleGroup = 3,
+                            Name = "Chin-Ups"
                         },
                         new
                         {
@@ -241,15 +241,15 @@ namespace LiftTracker.Migrations
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroup = 4,
-                            Name = "DB Curl"
+                            Name = "Hammer Curl"
                         },
                         new
                         {
                             Id = 17,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroup = 5,
-                            Name = "Reverse Pec Deck"
+                            MuscleGroup = 4,
+                            Name = "Preacher Curl"
                         },
                         new
                         {
@@ -257,15 +257,15 @@ namespace LiftTracker.Migrations
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroup = 5,
-                            Name = "Face Pull"
+                            Name = "Reverse Pec Deck"
                         },
                         new
                         {
                             Id = 19,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroup = 10,
-                            Name = "DB Shrugs"
+                            MuscleGroup = 5,
+                            Name = "Face Pull"
                         },
                         new
                         {
@@ -273,15 +273,15 @@ namespace LiftTracker.Migrations
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroup = 10,
-                            Name = "Barbell Shrugs"
+                            Name = "DB Shrugs"
                         },
                         new
                         {
                             Id = 21,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroup = 11,
-                            Name = "DB Wrist Curl"
+                            MuscleGroup = 10,
+                            Name = "Barbell Shrugs"
                         },
                         new
                         {
@@ -289,11 +289,19 @@ namespace LiftTracker.Migrations
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroup = 11,
-                            Name = "Barbell Wrist Curl"
+                            Name = "DB Wrist Curl"
                         },
                         new
                         {
                             Id = 23,
+                            ExerciseType = 2,
+                            IsCompound = false,
+                            MuscleGroup = 11,
+                            Name = "Barbell Wrist Curl"
+                        },
+                        new
+                        {
+                            Id = 24,
                             ExerciseType = 0,
                             IsCompound = true,
                             MuscleGroup = 6,
@@ -301,7 +309,7 @@ namespace LiftTracker.Migrations
                         },
                         new
                         {
-                            Id = 24,
+                            Id = 25,
                             ExerciseType = 1,
                             IsCompound = true,
                             MuscleGroup = 6,
@@ -309,7 +317,7 @@ namespace LiftTracker.Migrations
                         },
                         new
                         {
-                            Id = 25,
+                            Id = 26,
                             ExerciseType = 1,
                             IsCompound = true,
                             MuscleGroup = 6,
@@ -317,7 +325,7 @@ namespace LiftTracker.Migrations
                         },
                         new
                         {
-                            Id = 26,
+                            Id = 27,
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroup = 6,
@@ -325,19 +333,11 @@ namespace LiftTracker.Migrations
                         },
                         new
                         {
-                            Id = 27,
+                            Id = 28,
                             ExerciseType = 0,
                             IsCompound = true,
                             MuscleGroup = 7,
-                            Name = "Dead Stop Sumo Deadlift"
-                        },
-                        new
-                        {
-                            Id = 28,
-                            ExerciseType = 1,
-                            IsCompound = true,
-                            MuscleGroup = 7,
-                            Name = "DB RDL"
+                            Name = "Sumo Deadlift"
                         },
                         new
                         {
@@ -345,11 +345,19 @@ namespace LiftTracker.Migrations
                             ExerciseType = 1,
                             IsCompound = true,
                             MuscleGroup = 7,
-                            Name = "Touch-And-Go Conventional Deadlift"
+                            Name = "RDL"
                         },
                         new
                         {
                             Id = 30,
+                            ExerciseType = 1,
+                            IsCompound = true,
+                            MuscleGroup = 7,
+                            Name = "Conventional Deadlift"
+                        },
+                        new
+                        {
+                            Id = 31,
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroup = 7,
@@ -357,7 +365,7 @@ namespace LiftTracker.Migrations
                         },
                         new
                         {
-                            Id = 31,
+                            Id = 32,
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroup = 12,
@@ -365,7 +373,7 @@ namespace LiftTracker.Migrations
                         },
                         new
                         {
-                            Id = 32,
+                            Id = 33,
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroup = 12,
@@ -373,7 +381,7 @@ namespace LiftTracker.Migrations
                         },
                         new
                         {
-                            Id = 33,
+                            Id = 34,
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroup = 8,
@@ -381,7 +389,7 @@ namespace LiftTracker.Migrations
                         },
                         new
                         {
-                            Id = 34,
+                            Id = 35,
                             ExerciseType = 2,
                             IsCompound = false,
                             MuscleGroup = 8,

@@ -72,8 +72,14 @@ namespace LiftTracker.UseCases
 				else {
                     frontDeltExercise = GenerateSessionExercise(MuscleGroupEnum.FrontDelts, ExerciseType.Primary, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
                 }
-				chestExercise = GenerateSessionExercise(MuscleGroupEnum.Chest, ExerciseType.Accessory, 1, phase, mesoLength, mesoWeek, 1,sessionNumber);
-				sideDeltExercise = GenerateSessionExercise(MuscleGroupEnum.SideDelts, ExerciseType.Accessory, 2, phase, mesoLength, mesoWeek, 2, sessionNumber);
+                if (phase == TrainingPhase.Peaking)
+                {
+                    chestExercise = GenerateSessionExercise(MuscleGroupEnum.Chest, ExerciseType.Accessory, 2, phase, mesoLength, mesoWeek, 1, sessionNumber);
+                }
+                else { 
+                    chestExercise = GenerateSessionExercise(MuscleGroupEnum.Chest, ExerciseType.Accessory, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
+                }
+                sideDeltExercise = GenerateSessionExercise(MuscleGroupEnum.SideDelts, ExerciseType.Accessory, 2, phase, mesoLength, mesoWeek, 2, sessionNumber);
 				tricepExercise2 = GenerateSessionExercise(MuscleGroupEnum.Triceps, ExerciseType.Accessory, 2, phase, mesoLength, mesoWeek, 1, sessionNumber);
 				return new List<SessionExercise?>() {
 					frontDeltExercise,
@@ -217,7 +223,7 @@ namespace LiftTracker.UseCases
                     weeklyVolume = 6 - (weeklyChangeRate * (mesoWeek - 1));
                 }
                 else { 
-                    weeklyVolume = 4;
+                    weeklyVolume = 6;
 				}
 			}
 			else if (phase == TrainingPhase.Strength)

@@ -23,41 +23,48 @@ namespace LiftTracker.Data
 					Id = 1,
 					MuscleGroup = MuscleGroupEnum.Chest,
 					ExerciseType = ExerciseType.Primary,
-					Name = "Pause Bench Press",
+					Name = "Flat Bench Press",
 					IsCompound = true,
 				},
 				new Exercise(){
 					Id = 2,
 					MuscleGroup = MuscleGroupEnum.Chest,
 					ExerciseType = ExerciseType.Supplemental,
-					Name = "DB Bench Press",
+					Name = "Incline DB Bench Press",
 					IsCompound = true,
 				},
 				new Exercise(){
 					Id = 3,
 					MuscleGroup = MuscleGroupEnum.Chest,
+					ExerciseType = ExerciseType.Supplemental,
+					Name = "Incline Bench Press",
+					IsCompound = true,
+				},
+                new Exercise(){
+                    Id = 4,
+                    MuscleGroup = MuscleGroupEnum.Chest,
+                    ExerciseType = ExerciseType.Accessory,
+                    Name = "Pec Deck",
+                    IsCompound = false,
+                },
+				new Exercise(){
+					Id = 5,
+					MuscleGroup = MuscleGroupEnum.Chest,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "Incline Fly",
 					IsCompound = false,
 				},
-				new Exercise(){
-					Id = 4,
-					MuscleGroup = MuscleGroupEnum.Chest,
-					ExerciseType = ExerciseType.Supplemental,
-					Name = "Touch-And-Go Bench Press",
-					IsCompound = true,
-				},
 
                 //Triceps
 				new Exercise(){
-					Id = 5,
+					Id = 6,
 					MuscleGroup = MuscleGroupEnum.Triceps,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "Rope Pushdown",
 					IsCompound = false,
 				},
 				new Exercise(){
-					Id = 6,
+					Id = 7,
 					MuscleGroup = MuscleGroupEnum.Triceps,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "Overhead Rope Extension",
@@ -66,28 +73,28 @@ namespace LiftTracker.Data
 
                 //Front Delts
                 new Exercise(){
-					Id = 7,
-					MuscleGroup = MuscleGroupEnum.FrontDelts,
-					ExerciseType = ExerciseType.Primary,
-					Name = "Dead Stop Overhead Press",
-					IsCompound= true,
-				},
-				new Exercise(){
 					Id = 8,
 					MuscleGroup = MuscleGroupEnum.FrontDelts,
-					ExerciseType = ExerciseType.Supplemental,
-					Name = "Touch And Go Overhead Press",
+					ExerciseType = ExerciseType.Primary,
+					Name = "Military Press",
 					IsCompound= true,
 				},
 				new Exercise(){
 					Id = 9,
 					MuscleGroup = MuscleGroupEnum.FrontDelts,
 					ExerciseType = ExerciseType.Supplemental,
-					Name = "DB Shoulder Press",
+					Name = "Seated Military Press",
 					IsCompound= true,
 				},
 				new Exercise(){
 					Id = 10,
+					MuscleGroup = MuscleGroupEnum.FrontDelts,
+					ExerciseType = ExerciseType.Supplemental,
+					Name = "DB Shoulder Press",
+					IsCompound= true,
+				},
+				new Exercise(){
+					Id = 11,
 					MuscleGroup = MuscleGroupEnum.FrontDelts,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "DB Front Raise",
@@ -96,30 +103,30 @@ namespace LiftTracker.Data
 
                 //Side Delts
 				new Exercise(){
-					Id = 11,
+					Id = 12,
 					MuscleGroup = MuscleGroupEnum.SideDelts,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "DB Lateral Raise",
 					IsCompound = false,
 				},
 				new Exercise(){
-					Id = 12,
+					Id = 13,
 					MuscleGroup = MuscleGroupEnum.SideDelts,
 					ExerciseType = ExerciseType.Accessory,
-					Name = "Machine Lateral Raise",
+					Name = "Upright Row",
 					IsCompound = false,
 				},
 
                 //Back
                 new Exercise(){
-					Id = 13,
+					Id = 14,
 					MuscleGroup = MuscleGroupEnum.Back,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "DB Row",
 					IsCompound = true,
 				},
 				new Exercise(){
-					Id = 14,
+					Id = 15,
 					MuscleGroup = MuscleGroupEnum.Back,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "Chin-Ups",
@@ -128,30 +135,30 @@ namespace LiftTracker.Data
 
                 //Biceps
                 new Exercise(){
-					Id = 15,
+					Id = 16,
 					MuscleGroup = MuscleGroupEnum.Biceps,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "Hammer Curl",
 					IsCompound = false,
 				},
 				new Exercise(){
-					Id = 16,
+					Id = 17,
 					MuscleGroup = MuscleGroupEnum.Biceps,
 					ExerciseType = ExerciseType.Accessory,
-					Name = "DB Curl",
+					Name = "Preacher Curl",
 					IsCompound = false,
 				},
 
                 //Rear Delts
                 new Exercise(){
-					Id = 17,
+					Id = 18,
 					MuscleGroup = MuscleGroupEnum.RearDelts,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "Reverse Pec Deck",
 					IsCompound = false,
 				},
 				new Exercise(){
-					Id = 18,
+					Id = 19,
 					MuscleGroup = MuscleGroupEnum.RearDelts,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "Face Pull",
@@ -160,14 +167,14 @@ namespace LiftTracker.Data
 
 				//Traps
 				new Exercise(){
-					Id = 19,
+					Id = 20,
 					MuscleGroup = MuscleGroupEnum.Traps,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "DB Shrugs",
 					IsCompound = false,
 				},
 				new Exercise(){
-					Id = 20,
+					Id = 21,
 					MuscleGroup = MuscleGroupEnum.Traps,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "Barbell Shrugs",
@@ -176,14 +183,14 @@ namespace LiftTracker.Data
 
 				//Forearms
 				new Exercise(){
-					Id = 21,
+					Id = 22,
 					MuscleGroup = MuscleGroupEnum.Forearms,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "DB Wrist Curl",
 					IsCompound = false,
 				},
 				new Exercise(){
-					Id = 22,
+					Id = 23,
 					MuscleGroup = MuscleGroupEnum.Forearms,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "Barbell Wrist Curl",
@@ -192,28 +199,28 @@ namespace LiftTracker.Data
 
                 //Quads
                 new Exercise(){
-					Id = 23,
+					Id = 24,
 					MuscleGroup = MuscleGroupEnum.Quads,
 					ExerciseType = ExerciseType.Primary,
 					Name = "Low Bar Squat",
 					IsCompound = true,
 				},
 				new Exercise(){
-					Id = 24,
+					Id = 25,
 					MuscleGroup = MuscleGroupEnum.Quads,
 					ExerciseType = ExerciseType.Supplemental,
 					Name = "Hack Squat",
 					IsCompound = true,
 				},
 				new Exercise(){
-					Id = 25,
+					Id = 26,
 					MuscleGroup = MuscleGroupEnum.Quads,
 					ExerciseType = ExerciseType.Supplemental,
 					Name = "High Bar Squat",
 					IsCompound = true,
 				},
 				new Exercise(){
-					Id = 26,
+					Id = 27,
 					MuscleGroup = MuscleGroupEnum.Quads,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "Leg Extension",
@@ -222,29 +229,29 @@ namespace LiftTracker.Data
 
                 //Posterior Chain
                 new Exercise(){
-					Id = 27,
-					MuscleGroup = MuscleGroupEnum.PosteriorChain,
-					ExerciseType = ExerciseType.Primary,
-					Name = "Dead Stop Sumo Deadlift",
-					IsCompound = true,
-					
-				},
-				new Exercise(){
 					Id = 28,
 					MuscleGroup = MuscleGroupEnum.PosteriorChain,
-					ExerciseType = ExerciseType.Supplemental,
-					Name = "DB RDL",
+					ExerciseType = ExerciseType.Primary,
+					Name = "Sumo Deadlift",
 					IsCompound = true,
+					
 				},
 				new Exercise(){
 					Id = 29,
 					MuscleGroup = MuscleGroupEnum.PosteriorChain,
 					ExerciseType = ExerciseType.Supplemental,
-					Name = "Touch-And-Go Conventional Deadlift",
+					Name = "RDL",
 					IsCompound = true,
 				},
 				new Exercise(){
 					Id = 30,
+					MuscleGroup = MuscleGroupEnum.PosteriorChain,
+					ExerciseType = ExerciseType.Supplemental,
+					Name = "Conventional Deadlift",
+					IsCompound = true,
+				},
+				new Exercise(){
+					Id = 31,
 					MuscleGroup = MuscleGroupEnum.PosteriorChain,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "Leg Curl",
@@ -253,14 +260,14 @@ namespace LiftTracker.Data
 
                 //Calves
                 new Exercise(){
-					Id = 31,
+					Id = 32,
 					MuscleGroup = MuscleGroupEnum.Calves,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "Standing Calf Raise",
 					IsCompound = false,
 				},
 				new Exercise(){
-					Id = 32,
+					Id = 33,
 					MuscleGroup = MuscleGroupEnum.Calves,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "Seated Calf Raise",
@@ -269,14 +276,14 @@ namespace LiftTracker.Data
 
 				//Core
 				new Exercise(){
-					Id = 33,
+					Id = 34,
 					MuscleGroup = MuscleGroupEnum.Core,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "Hanging Leg Raise",
 					IsCompound = false,
 				},
 				new Exercise(){
-					Id = 34,
+					Id = 35,
 					MuscleGroup = MuscleGroupEnum.Core,
 					ExerciseType = ExerciseType.Accessory,
 					Name = "Weighted Decline Situp",
