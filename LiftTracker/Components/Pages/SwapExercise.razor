@@ -59,7 +59,7 @@
 		if (SessionExercise != null)
 		{
 			OldExercise = context.Exercises.SingleOrDefault(x => x.Id == SessionExercise.ExerciseId);
-			Exercises = context.Exercises.Where(x => x.MuscleGroupId == OldExercise.MuscleGroupId && x.Id != OldExercise.Id).ToList();
+			Exercises = context.Exercises.Where(x => x.MuscleGroup == OldExercise.MuscleGroup && x.Id != OldExercise.Id).ToList();
 		}
 	}
 

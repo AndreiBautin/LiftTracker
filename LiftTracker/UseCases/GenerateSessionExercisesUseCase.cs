@@ -169,12 +169,9 @@ namespace LiftTracker.UseCases
             using var context = new LiftTrackerContextBuilder(Configuration).Build();
             var result = new SessionExercise();
 
-            var muscleGroupId = context.MuscleGroups.FirstOrDefault(x => x.MuscleGroupEnum == muscleGroupEnum)?.Id;
-            var muscleGroup = context.MuscleGroups.FirstOrDefault(x => x.MuscleGroupEnum == muscleGroupEnum);
-
             result.ExerciseId = context
                                     .Exercises?
-                                    .Where(x => x.MuscleGroupId == muscleGroupId && exerciseType == x.ExerciseType)?
+                                    .Where(x => x.MuscleGroup == muscleGroupEnum && exerciseType == x.ExerciseType)?
                                     .ElementAtOrDefault((exerciseTypeOccurence ?? 1) - 1)?
                                     .Id;
             var exercise = context.Exercises?.FirstOrDefault(x => x.Id == result.ExerciseId);
@@ -220,7 +217,7 @@ namespace LiftTracker.UseCases
                     weeklyVolume = 6 - (weeklyChangeRate * (mesoWeek - 1));
                 }
                 else { 
-                    weeklyVolume = 6;
+                    weeklyVolume = 4;
 				}
 			}
 			else if (phase == TrainingPhase.Strength)

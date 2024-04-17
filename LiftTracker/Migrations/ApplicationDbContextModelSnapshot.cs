@@ -4,7 +4,6 @@ using LiftTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,11 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiftTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240415012812_UpdateExerciseNames11")]
-    partial class UpdateExerciseNames11
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,7 +101,7 @@ namespace LiftTracker.Migrations
                     b.Property<bool>("IsCompound")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("MuscleGroupId")
+                    b.Property<int?>("MuscleGroup")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -120,7 +117,7 @@ namespace LiftTracker.Migrations
                             Id = 1,
                             ExerciseType = 0,
                             IsCompound = true,
-                            MuscleGroupId = 1,
+                            MuscleGroup = 0,
                             Name = "Pause Bench Press"
                         },
                         new
@@ -128,71 +125,71 @@ namespace LiftTracker.Migrations
                             Id = 2,
                             ExerciseType = 1,
                             IsCompound = true,
-                            MuscleGroupId = 1,
-                            Name = "Touch-And-Go Bench Press"
+                            MuscleGroup = 0,
+                            Name = "DB Bench Press"
                         },
                         new
                         {
                             Id = 3,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroupId = 1,
+                            MuscleGroup = 0,
                             Name = "Incline Fly"
                         },
                         new
                         {
                             Id = 4,
-                            ExerciseType = 2,
-                            IsCompound = false,
-                            MuscleGroupId = 1,
-                            Name = "Pec Deck"
+                            ExerciseType = 1,
+                            IsCompound = true,
+                            MuscleGroup = 0,
+                            Name = "Touch-And-Go Bench Press"
                         },
                         new
                         {
                             Id = 5,
-                            ExerciseType = 1,
-                            IsCompound = true,
-                            MuscleGroupId = 2,
-                            Name = "Close Grip Bench Press"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            ExerciseType = 1,
-                            IsCompound = true,
-                            MuscleGroupId = 2,
-                            Name = "Board Press"
-                        },
-                        new
-                        {
-                            Id = 7,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroupId = 2,
+                            MuscleGroup = 1,
                             Name = "Rope Pushdown"
                         },
                         new
                         {
-                            Id = 8,
+                            Id = 6,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroupId = 2,
+                            MuscleGroup = 1,
                             Name = "Overhead Rope Extension"
                         },
                         new
                         {
-                            Id = 9,
+                            Id = 7,
                             ExerciseType = 0,
                             IsCompound = true,
-                            MuscleGroupId = 10,
+                            MuscleGroup = 9,
                             Name = "Dead Stop Overhead Press"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ExerciseType = 1,
+                            IsCompound = true,
+                            MuscleGroup = 9,
+                            Name = "Touch And Go Overhead Press"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ExerciseType = 1,
+                            IsCompound = true,
+                            MuscleGroup = 9,
+                            Name = "DB Shoulder Press"
                         },
                         new
                         {
                             Id = 10,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroupId = 10,
+                            MuscleGroup = 9,
                             Name = "DB Front Raise"
                         },
                         new
@@ -200,7 +197,7 @@ namespace LiftTracker.Migrations
                             Id = 11,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroupId = 3,
+                            MuscleGroup = 2,
                             Name = "DB Lateral Raise"
                         },
                         new
@@ -208,7 +205,7 @@ namespace LiftTracker.Migrations
                             Id = 12,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroupId = 3,
+                            MuscleGroup = 2,
                             Name = "Machine Lateral Raise"
                         },
                         new
@@ -216,7 +213,7 @@ namespace LiftTracker.Migrations
                             Id = 13,
                             ExerciseType = 2,
                             IsCompound = true,
-                            MuscleGroupId = 4,
+                            MuscleGroup = 3,
                             Name = "DB Row"
                         },
                         new
@@ -224,183 +221,167 @@ namespace LiftTracker.Migrations
                             Id = 14,
                             ExerciseType = 2,
                             IsCompound = true,
-                            MuscleGroupId = 4,
+                            MuscleGroup = 3,
                             Name = "Chin-Ups"
                         },
                         new
                         {
                             Id = 15,
                             ExerciseType = 2,
-                            IsCompound = true,
-                            MuscleGroupId = 4,
-                            Name = "Neutral Grip Pulldown"
+                            IsCompound = false,
+                            MuscleGroup = 4,
+                            Name = "Hammer Curl"
                         },
                         new
                         {
                             Id = 16,
                             ExerciseType = 2,
-                            IsCompound = true,
-                            MuscleGroupId = 4,
-                            Name = "Seated Row"
+                            IsCompound = false,
+                            MuscleGroup = 4,
+                            Name = "DB Curl"
                         },
                         new
                         {
                             Id = 17,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroupId = 5,
-                            Name = "Hammer Curl"
+                            MuscleGroup = 5,
+                            Name = "Reverse Pec Deck"
                         },
                         new
                         {
                             Id = 18,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroupId = 5,
-                            Name = "DB Curl"
+                            MuscleGroup = 5,
+                            Name = "Face Pull"
                         },
                         new
                         {
                             Id = 19,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroupId = 5,
-                            Name = "Preacher Curl"
+                            MuscleGroup = 10,
+                            Name = "DB Shrugs"
                         },
                         new
                         {
                             Id = 20,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroupId = 5,
-                            Name = "Cable Curl"
+                            MuscleGroup = 10,
+                            Name = "Barbell Shrugs"
                         },
                         new
                         {
                             Id = 21,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroupId = 6,
-                            Name = "Reverse Pec Deck"
+                            MuscleGroup = 11,
+                            Name = "DB Wrist Curl"
                         },
                         new
                         {
                             Id = 22,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroupId = 6,
-                            Name = "Face Pull"
+                            MuscleGroup = 11,
+                            Name = "Barbell Wrist Curl"
                         },
                         new
                         {
                             Id = 23,
-                            ExerciseType = 2,
-                            IsCompound = false,
-                            MuscleGroupId = 11,
-                            Name = "DB Shrugs"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            ExerciseType = 2,
-                            IsCompound = false,
-                            MuscleGroupId = 12,
-                            Name = "DB Wrist Curl"
-                        },
-                        new
-                        {
-                            Id = 25,
                             ExerciseType = 0,
                             IsCompound = true,
-                            MuscleGroupId = 7,
+                            MuscleGroup = 6,
                             Name = "Low Bar Squat"
                         },
                         new
                         {
-                            Id = 26,
+                            Id = 24,
                             ExerciseType = 1,
                             IsCompound = true,
-                            MuscleGroupId = 7,
+                            MuscleGroup = 6,
+                            Name = "Hack Squat"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            ExerciseType = 1,
+                            IsCompound = true,
+                            MuscleGroup = 6,
                             Name = "High Bar Squat"
                         },
                         new
                         {
-                            Id = 27,
-                            ExerciseType = 2,
-                            IsCompound = true,
-                            MuscleGroupId = 7,
-                            Name = "Split Squat"
-                        },
-                        new
-                        {
-                            Id = 28,
+                            Id = 26,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroupId = 7,
+                            MuscleGroup = 6,
                             Name = "Leg Extension"
                         },
                         new
                         {
-                            Id = 29,
+                            Id = 27,
                             ExerciseType = 0,
                             IsCompound = true,
-                            MuscleGroupId = 8,
+                            MuscleGroup = 7,
                             Name = "Dead Stop Sumo Deadlift"
                         },
                         new
                         {
-                            Id = 30,
+                            Id = 28,
                             ExerciseType = 1,
                             IsCompound = true,
-                            MuscleGroupId = 8,
+                            MuscleGroup = 7,
+                            Name = "DB RDL"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            ExerciseType = 1,
+                            IsCompound = true,
+                            MuscleGroup = 7,
                             Name = "Touch-And-Go Conventional Deadlift"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            ExerciseType = 2,
+                            IsCompound = false,
+                            MuscleGroup = 7,
+                            Name = "Leg Curl"
                         },
                         new
                         {
                             Id = 31,
                             ExerciseType = 2,
-                            IsCompound = true,
-                            MuscleGroupId = 8,
-                            Name = "Good Morning"
+                            IsCompound = false,
+                            MuscleGroup = 12,
+                            Name = "Standing Calf Raise"
                         },
                         new
                         {
                             Id = 32,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroupId = 8,
-                            Name = "Leg Curl"
+                            MuscleGroup = 12,
+                            Name = "Seated Calf Raise"
                         },
                         new
                         {
                             Id = 33,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroupId = 13,
-                            Name = "Standing Calf Raise"
+                            MuscleGroup = 8,
+                            Name = "Hanging Leg Raise"
                         },
                         new
                         {
                             Id = 34,
                             ExerciseType = 2,
                             IsCompound = false,
-                            MuscleGroupId = 13,
-                            Name = "Seated Calf Raise"
-                        },
-                        new
-                        {
-                            Id = 35,
-                            ExerciseType = 2,
-                            IsCompound = false,
-                            MuscleGroupId = 9,
-                            Name = "Hanging Leg Raise"
-                        },
-                        new
-                        {
-                            Id = 36,
-                            ExerciseType = 2,
-                            IsCompound = false,
-                            MuscleGroupId = 9,
+                            MuscleGroup = 8,
                             Name = "Weighted Decline Situp"
                         });
                 });
@@ -466,185 +447,6 @@ namespace LiftTracker.Migrations
                     b.HasIndex("MesoCycleId");
 
                     b.ToTable("MicroCycles");
-                });
-
-            modelBuilder.Entity("LiftTracker.Data.MuscleGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ExercisesPerSession")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Frequency")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MEV")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MRV")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MV")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MuscleGroupEnum")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MuscleGroups");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ExercisesPerSession = 1,
-                            Frequency = 2,
-                            MEV = 10,
-                            MRV = 20,
-                            MV = 5,
-                            MuscleGroupEnum = 0,
-                            Name = "Chest"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ExercisesPerSession = 1,
-                            Frequency = 2,
-                            MEV = 10,
-                            MRV = 20,
-                            MV = 5,
-                            MuscleGroupEnum = 1,
-                            Name = "Triceps"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ExercisesPerSession = 1,
-                            Frequency = 2,
-                            MEV = 10,
-                            MRV = 20,
-                            MV = 5,
-                            MuscleGroupEnum = 2,
-                            Name = "Side Delts"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ExercisesPerSession = 1,
-                            Frequency = 2,
-                            MEV = 10,
-                            MRV = 20,
-                            MV = 5,
-                            MuscleGroupEnum = 3,
-                            Name = "Back"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            ExercisesPerSession = 1,
-                            Frequency = 2,
-                            MEV = 10,
-                            MRV = 20,
-                            MV = 5,
-                            MuscleGroupEnum = 4,
-                            Name = "Biceps"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            ExercisesPerSession = 1,
-                            Frequency = 2,
-                            MEV = 10,
-                            MRV = 20,
-                            MV = 5,
-                            MuscleGroupEnum = 5,
-                            Name = "Rear Delts"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            ExercisesPerSession = 1,
-                            Frequency = 2,
-                            MEV = 10,
-                            MRV = 20,
-                            MV = 5,
-                            MuscleGroupEnum = 6,
-                            Name = "Quads"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            ExercisesPerSession = 1,
-                            Frequency = 2,
-                            MEV = 10,
-                            MRV = 20,
-                            MV = 5,
-                            MuscleGroupEnum = 7,
-                            Name = "Hamstrings"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            ExercisesPerSession = 1,
-                            Frequency = 2,
-                            MEV = 10,
-                            MRV = 20,
-                            MV = 5,
-                            MuscleGroupEnum = 8,
-                            Name = "Core"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            ExercisesPerSession = 1,
-                            Frequency = 2,
-                            MEV = 10,
-                            MRV = 20,
-                            MV = 5,
-                            MuscleGroupEnum = 9,
-                            Name = "Front Delts"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            ExercisesPerSession = 1,
-                            Frequency = 2,
-                            MEV = 10,
-                            MRV = 20,
-                            MV = 5,
-                            MuscleGroupEnum = 10,
-                            Name = "Traps"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            ExercisesPerSession = 1,
-                            Frequency = 2,
-                            MEV = 10,
-                            MRV = 20,
-                            MV = 5,
-                            MuscleGroupEnum = 11,
-                            Name = "Forearms"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            ExercisesPerSession = 1,
-                            Frequency = 2,
-                            MEV = 10,
-                            MRV = 20,
-                            MV = 5,
-                            MuscleGroupEnum = 12,
-                            Name = "Calves"
-                        });
                 });
 
             modelBuilder.Entity("LiftTracker.Data.RepRange", b =>

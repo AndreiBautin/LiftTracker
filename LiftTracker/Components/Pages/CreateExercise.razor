@@ -57,10 +57,9 @@
 	protected void Create()
 	{
 		using var context = new LiftTrackerContextBuilder(Configuration).Build();
-		var muscleGroupId = context.MuscleGroups.SingleOrDefault(x => x.MuscleGroupEnum == NewExerciseMuscleGroupEnum)?.Id;
-		if (muscleGroupId != null)
+		if (NewExercise != null)
 		{
-			NewExercise.MuscleGroupId = muscleGroupId;
+			NewExercise.MuscleGroup = NewExerciseMuscleGroupEnum;
 			NewExercise.ExerciseType = NewExerciseType;
 			context.Exercises.Add(NewExercise);
 			context.SaveChanges();

@@ -13,7 +13,7 @@
 <div class="row">
 	@if (Rows != null)
 	{
-		@foreach (var groupedRows in Rows.GroupBy(x => x.MuscleGroupId))
+		@foreach (var groupedRows in Rows.GroupBy(x => x.MuscleGroup))
 		{
 			<div class="row">
 				<div class="col-1"></div>
@@ -21,7 +21,7 @@
 					<div class="col-12 card p-3">
 						<div class="row text-center mb-3">
 							<h1>
-								@(new LiftTrackerContextBuilder(Configuration).Build().MuscleGroups.SingleOrDefault(x => x.Id == groupedRows.Key)?.Name)
+								@groupedRows.Key.ToString()
 							</h1>
 							@foreach (var row in groupedRows)
 							{
