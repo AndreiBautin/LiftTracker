@@ -90,11 +90,9 @@
 			}
 			else
 			{
-				<label name="MesoLength">Meso Length</label>
-				<input @bind-value="NewMesoLength" type="number" name="MesoLength" />
-				<label name="NewHypertrophyMesoCount">Hypertrophy Meso Count</label>
-				<input @bind-value="NewHypertrophyMesoCount" type="number" name="NewHypertrophyMesoCount" />
-				<button class="btn-outline-light btn rounded-pill my-3" @onclick="Generate">Generate New Split</button>
+				<button class="btn-outline-light btn rounded-pill my-3" @onclick="() => Generate(4, 1)">Generate Recomp Program</button>
+				<button class="btn-outline-light btn rounded-pill my-3" @onclick="() => Generate(4, 3)">Generate Cutting Program</button>
+				<button class="btn-outline-light btn rounded-pill my-3" @onclick="() => Generate(4, 4)">Generate Bulking Program</button>
 			}
 		}
 	</div>
@@ -170,8 +168,6 @@
 	private IEnumerable<MuscleGroupVolumeModifiers>? MuscleGroupVolumeModifiers { get; set; }
 	private MicroCycle? CurrentMicroCycle { get; set; }
 	private int? Week { get; set; }
-	private int? NewMesoLength { get; set; }
-	private int? NewHypertrophyMesoCount { get; set; }
 	private bool IsGenerating { get; set; }
 
 	protected override async Task OnInitializedAsync()
@@ -240,7 +236,7 @@
 		NavigationManager.NavigateTo("/", true);
 	}
 
-	private async Task Generate()
+	private async Task Generate(int? NewMesoLength, int? NewHypertrophyMesoCount)
 	{
 		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 		var user = authState.User;

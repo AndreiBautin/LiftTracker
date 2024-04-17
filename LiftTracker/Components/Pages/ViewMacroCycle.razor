@@ -1,4 +1,4 @@
-﻿@page "/macrocycle"
+﻿@page "/calendar"
 @using LiftTracker.Data
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @using Microsoft.EntityFrameworkCore
@@ -16,17 +16,22 @@
 		{
 			if (trainingBlock.MesoCycles != null)
 			{
-				@foreach (var mesoCycle in trainingBlock.MesoCycles)
+				@foreach (var mesoCycle in trainingBlock.MesoCycles.Select((value, i) => new { i, value }))
 				{
 				<div class="col-12">
 					<div class="row text-center mb-3">
 						<h1>
-							@trainingBlock.TrainingPhase
+							@($"{trainingBlock.TrainingPhase} Cycle") @(trainingBlock.TrainingPhase == TrainingPhase.Hypertrophy && trainingBlock.MesoCycles.Count() > 1 ? $"{mesoCycle.i + 1}" : "") 
 						</h1>
 					</div>
-					@if (mesoCycle.MicroCycles != null) {
-						@foreach (var microCycle in mesoCycle.MicroCycles.Select((value, i) => new { i, value }))
+					@if (mesoCycle.value.MicroCycles != null) {
+						@foreach (var microCycle in mesoCycle.value.MicroCycles.Select((value, i) => new { i, value }))
 						{
+							<div class="row text-center my-3">
+								<h2>
+									@($"Week {microCycle.i + 1}") @(microCycle.i == mesoCycle.value.MicroCycles.Count() - 1 ? "(Deload)" : "")
+								</h2>
+							</div>
 							<div class="row">
 								@if (microCycle.value.Sessions != null) {
 									@foreach (var session in microCycle.value.Sessions)
@@ -66,11 +71,6 @@
 										</div>
 									}
 								}
-							</div>
-							<div class="row text-center my-3">
-								<h2>
-									@($"Week {microCycle.i+1}")
-								</h2>
 							</div>
 						}
 							
