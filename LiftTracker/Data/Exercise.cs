@@ -10,5 +10,6 @@ namespace LiftTracker.Data
         public MuscleGroupEnum? MuscleGroup { get; set; }
         public ExerciseType? ExerciseType { get; set; }
         public bool IsCompound { get; set; }
+        public string? ApplicationUserId { get; set; }
 	}
 }

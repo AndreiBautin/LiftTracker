@@ -6,6 +6,7 @@
 @inject IConfiguration Configuration;
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize];
+@inject AuthenticationStateProvider AuthenticationStateProvider;
 
 <div class="text-center">
 	<a href="/CreateExercise/">Create New</a>
@@ -39,9 +40,12 @@
 @code {
 	public IEnumerable<Exercise>? Rows { get; set; }
 
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var user = authState.User;
+		var userId = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
 		using var context = new LiftTrackerContextBuilder(Configuration).Build();
-		Rows = context.Exercises.ToList();
+		Rows = context.Exercises.Where(x => x.ApplicationUserId == null || x.ApplicationUserId == userId).ToList();
 	}
 }
