@@ -8,6 +8,7 @@
 @inject IConfiguration Configuration;
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize];
+@inject AuthenticationStateProvider AuthenticationStateProvider;
 
 <div class="row">
 	<div class="col-3">
@@ -54,11 +55,24 @@
 	public Exercise? Exercise { get; set; }
 	public IEnumerable<SessionExercise>? SessionExercises { get; set; }
 
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var user = authState.User;
+		var userId = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
+
 		using var context = new LiftTrackerContextBuilder(Configuration).Build();
 		Exercise = context.Exercises.SingleOrDefault(x => x.Id.ToString() == ExerciseId);
-		SessionExercises = context.SessionExercises.Include(x => x.Sets).Where(x => x.ExerciseId == Exercise.Id && x.Sets != null && x.Sets.All(x => x.IsComplete)).ToList();
+		SessionExercises = context
+			.SessionExercises
+			.Include(x => x.Sets)
+			.Include(x => x.Session)
+			.ThenInclude(x => x.MicroCycle)
+			.ThenInclude(x => x.MesoCycle)
+			.ThenInclude(x => x.TrainingBlock)
+			.ThenInclude(x => x.MacroCycle)
+			.Where(x => x.ExerciseId == Exercise.Id && x.Sets != null && x.Sets.All(x => x.IsComplete) && x.Session.MicroCycle.MesoCycle.TrainingBlock.MacroCycle.ApplicationUserId == userId)
+			.ToList();
 	}
 
 	private void BackToExercises()
