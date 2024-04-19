@@ -8,6 +8,5 @@ namespace LiftTracker.Data
         public int Id { get; set; }
         public TrainingBlock? TrainingBlock { get; set; }
         public IEnumerable<MicroCycle>? MicroCycles { get; set; }
-        public bool IsComplete { get; set; }
     }
 }

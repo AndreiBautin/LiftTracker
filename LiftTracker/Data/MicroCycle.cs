@@ -8,6 +8,5 @@ namespace LiftTracker.Data
         public int Id { get; set; }
         public MesoCycle? MesoCycle { get; set; }
         public IEnumerable<Session>? Sessions { get; set; }
-        public bool IsComplete { get; set; }
     }
 }

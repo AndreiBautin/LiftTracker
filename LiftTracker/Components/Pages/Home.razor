@@ -12,8 +12,6 @@
 @attribute [Authorize];
 @inject AuthenticationStateProvider AuthenticationStateProvider;
 
-<h2>Week @Week</h2>
-
 <div class="row">
 	<div class="col-12 col-lg-2">
 		@if (LastSession != null)
@@ -96,70 +94,6 @@
 			}
 		}
 	</div>
-
-	@if (CurrentMicroCycle?.Sessions != null && CurrentMicroCycle.Sessions.All(x => x.IsComplete) && !CurrentMicroCycle.IsComplete)
-	{
-		<div class="col-12 col-lg-4">
-			<div class="col-12">
-				<div class="card schedule-table text-center col-12 session-card my-3">
-					<h2 class="py-2">Microcycle Review</h2>
-					<table>
-						@if (MuscleGroupVolumeModifiers != null) { 
-							@foreach (var muscleGroupVolumeModifier in MuscleGroupVolumeModifiers)
-							{
-								<tr>
-									<td class="py-3">
-										@muscleGroupVolumeModifier.MuscleGroup.ToString()
-									</td>
-								</tr>
-								<tr>
-									<td class="p-2 row">
-										<div class="col-6">Pump</div>
-										<select class="form-select w-50 d-inline-block col-6" @bind="muscleGroupVolumeModifier.PumpRating">
-											@foreach (var pumpRating in ((IEnumerable<PumpRatingEnum>)Enum.GetValues(typeof(PumpRatingEnum)))) {
-												<option value="@pumpRating">@pumpRating.ToString()</option>
-											}
-										</select>
-									</td>
-								</tr>
-								<tr>
-									<td class="p-2 row">
-										<label class="col-6">Soreness</label>
-										<select class="form-select w-50 d-inline-block col-6" @bind="muscleGroupVolumeModifier.SorenessRating">
-											@foreach (var sorenessRating in ((IEnumerable<SorenessRatingEnum>)Enum.GetValues(typeof(SorenessRatingEnum))))
-											{
-												<option value="@sorenessRating">@sorenessRating.ToString()</option>
-											}
-										</select>
-									</td>
-								</tr>
-								<tr>
-									<td class="p-2 row">
-										<label class="col-6">Performance</label>
-										<select class="form-select w-50 d-inline-block col-6" @bind="muscleGroupVolumeModifier.PerformanceRating">
-											@foreach (var performanceRating in ((IEnumerable<PerformanceRatingEnum>)Enum.GetValues(typeof(PerformanceRatingEnum))))
-											{
-												<option value="@performanceRating">@performanceRating.ToString()</option>
-											}
-										</select>
-									</td>
-								</tr>
-							}
-						}
-					</table>
-					<div class="row">
-						<div class="col-3">
-						</div>
-						<div class="col-6">
-							<button class="btn-outline-light btn rounded-pill my-3" @onclick="CompleteMicroCycle">Complete Current Microcycle</button>
-						</div>
-						<div class="col-3">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	}
 </div>
 
 @code {
@@ -182,25 +116,22 @@
 			MuscleGroup = x
 		}).ToList();
 
-
-		CurrentMicroCycle = context.MicroCycles
-								.Include(x => x.MesoCycle)
-								.ThenInclude(x => x.TrainingBlock)
-								.ThenInclude(x => x.MacroCycle)
-								.Include(x => x.Sessions)
-								.ThenInclude(x => x.SessionExercises)
-								.ThenInclude(x => x.Sets)
-								.FirstOrDefault(x => !x.IsComplete && x.MesoCycle.TrainingBlock.MacroCycle.ApplicationUserId == userId);
-
-		Week = context.MicroCycles?.ToList()?.Select((v, i) => new { value = v, index = i })?.FirstOrDefault(x => !x.value.IsComplete)?.index+1;
-
-		LastSession = CurrentMicroCycle?
+		var userSessions = context
 			.Sessions?
+			.Include(x => x.MicroCycle)
+			.ThenInclude(x => x.MesoCycle)
+			.ThenInclude(x => x.TrainingBlock)
+			.ThenInclude(x => x.MacroCycle)
+			.Include(x => x.SessionExercises)
+			.ThenInclude(x => x.Sets)
+			.Where(x => x.MicroCycle.MesoCycle.TrainingBlock.MacroCycle.ApplicationUserId == userId)
 			.OrderBy(x => x.Id)
+			.ToList();
+
+		LastSession = userSessions
 			.LastOrDefault(x => x.IsComplete);
 
-		NextSession = CurrentMicroCycle?
-			.Sessions?
+		NextSession = userSessions
 			.FirstOrDefault(x => !x.IsComplete);
 	}
 
@@ -238,314 +169,49 @@
 
 	private async Task Generate(int? NewMesoLength, int? NewHypertrophyMesoCount)
 	{
-		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-		var user = authState.User;
-		var userId = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
-
-		IsGenerating = true;
-		StateHasChanged();
-		using var context = new LiftTrackerContextBuilder(Configuration).Build();
-		var options = new MacroCycleOptions()
-			{
-				TrainingBlockOptions = new List<TrainingBlockOptions>()
-				{
-					new TrainingBlockOptions()
-					{
-						MesoLength = NewMesoLength ?? 4,
-						MesoCount = NewHypertrophyMesoCount ?? 3,
-						Phase = TrainingPhase.Hypertrophy
-					},
-					new TrainingBlockOptions()
-					{
-						MesoLength = NewMesoLength ?? 4,
-						MesoCount = 1,
-						Phase = TrainingPhase.Strength
-					},
-					new TrainingBlockOptions()
-					{
-						MesoLength = NewMesoLength ?? 4,
-						MesoCount = 1,
-						Phase = TrainingPhase.Peaking
-					},
-				}
-			};
-		var macroCycle = new GenerateMacroCycleUseCase(Configuration).Generate(options);
-		macroCycle.ApplicationUserId = userId;
-		context.MacroCycles.Add(macroCycle);
-		context.SaveChanges();
-		NavigationManager.NavigateTo("/", true);
-	}
-
-	private void CompleteMicroCycle()
-	{
-		using var context = new LiftTrackerContextBuilder(Configuration).Build();
-		// if (MuscleGroupVolumeModifiers != null)
-		// {
-		// 	foreach (var muscleGroupVolumeModifier in MuscleGroupVolumeModifiers)
-		// 	{
-		// 		var muscleGroup = context.MuscleGroups.FirstOrDefault(x => x.MuscleGroupEnum == muscleGroupVolumeModifier.MuscleGroup);
-
-		// 		if (muscleGroup != null) { 
-		// 			switch (muscleGroupVolumeModifier.PumpRating)
-		// 			{
-		// 				case PumpRatingEnum.None:
-		// 					if (Week == 1)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 2)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 3) { 
-		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
-		// 						context.SaveChanges();
-		// 						muscleGroup.MRV = muscleGroup.MRV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 4)
-		// 					{
-		// 						muscleGroup.MV = muscleGroup.MV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					break;
-		// 				case PumpRatingEnum.Low:
-		// 					if (Week == 1)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 2)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 3)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
-		// 						context.SaveChanges();
-		// 						muscleGroup.MRV = muscleGroup.MRV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 4)
-		// 					{
-		// 					}
-		// 					break;
-		// 				case PumpRatingEnum.Moderate:
-		// 					if (Week == 1)
-		// 					{
-		// 					}
-		// 					if (Week == 2)
-		// 					{
-		// 					}
-		// 					if (Week == 3)
-		// 					{
-		// 						muscleGroup.MRV = muscleGroup.MRV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 4)
-		// 					{
-		// 						muscleGroup.MV = muscleGroup.MV - 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					break;
-		// 				case PumpRatingEnum.High:
-		// 					if (Week == 1)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV - 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 2)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV - 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 3)
-		// 					{
-		// 					}
-		// 					if (Week == 4)
-		// 					{
-		// 						muscleGroup.MV = muscleGroup.MV - 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					break;
-		// 				default:
-		// 					break;
-		// 			}
-
-		// 			switch (muscleGroupVolumeModifier.SorenessRating)
-		// 			{
-		// 				case SorenessRatingEnum.None:
-		// 					if (Week == 1)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 2)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 3)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
-		// 						context.SaveChanges();
-		// 						muscleGroup.MRV = muscleGroup.MRV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 4)
-		// 					{
-		// 					}
-		// 					break;
-		// 				case SorenessRatingEnum.Low:
-		// 					if (Week == 1)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 2)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 3)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
-		// 						context.SaveChanges();
-		// 						muscleGroup.MRV = muscleGroup.MRV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 4)
-		// 					{
-		// 						muscleGroup.MV = muscleGroup.MV - 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					break;
-		// 				case SorenessRatingEnum.Moderate:
-		// 					if (Week == 1)
-		// 					{
-		// 					}
-		// 					if (Week == 2)
-		// 					{
-		// 					}
-		// 					if (Week == 3)
-		// 					{
-		// 						muscleGroup.MRV = muscleGroup.MRV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 4)
-		// 					{
-		// 						muscleGroup.MV = muscleGroup.MV - 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					break;
-		// 				case SorenessRatingEnum.High:
-		// 					if (Week == 1)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV - 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 2)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV - 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 3)
-		// 					{
-		// 					}
-		// 					if (Week == 4)
-		// 					{
-		// 						muscleGroup.MV = muscleGroup.MV - 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					break;
-		// 				default:
-		// 					break;
-		// 			}
-
-		// 			switch (muscleGroupVolumeModifier.PerformanceRating)
-		// 			{
-		// 				case PerformanceRatingEnum.Low:
-		// 					if (Week == 1)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV - 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 2)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV - 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 3)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV - 1;
-		// 						context.SaveChanges();
-		// 						muscleGroup.MRV = muscleGroup.MRV - 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 4)
-		// 					{
-		// 						muscleGroup.MV = muscleGroup.MV - 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					break;
-		// 				case PerformanceRatingEnum.Moderate:
-		// 					if (Week == 1)
-		// 					{
-		// 					}
-		// 					if (Week == 2)
-		// 					{
-		// 					}
-		// 					if (Week == 3)
-		// 					{
-		// 					}
-		// 					if (Week == 4)
-		// 					{
-		// 					}
-		// 					break;
-		// 				case PerformanceRatingEnum.High:
-		// 					if (Week == 1)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 2)
-		// 					{
-		// 						muscleGroup.MEV = muscleGroup.MEV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 3)
-		// 					{
-		// 						muscleGroup.MRV = muscleGroup.MRV + 1;
-		// 						context.SaveChanges();
-		// 						muscleGroup.MRV = muscleGroup.MRV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					if (Week == 4)
-		// 					{
-		// 						muscleGroup.MV = muscleGroup.MV + 1;
-		// 						context.SaveChanges();
-		// 					}
-		// 					break;
-		// 				default:
-		// 					break;
-		// 			}
-
-		// 		}
-		// 	}
-
-		// }
-
-		var record = context.MicroCycles.FirstOrDefault(x => CurrentMicroCycle != null && x.Id == CurrentMicroCycle.Id);
-		if (record != null)
+		try
 		{
-			record.IsComplete = true;
-			context.SaveChanges();
-		
-		}
+			var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+			var user = authState.User;
+			var userId = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
 
-		NavigationManager.NavigateTo("/", true);
+			IsGenerating = true;
+			StateHasChanged();
+			using var context = new LiftTrackerContextBuilder(Configuration).Build();
+			var options = new MacroCycleOptions()
+				{
+					TrainingBlockOptions = new List<TrainingBlockOptions>()
+			{
+				new TrainingBlockOptions()
+				{
+					MesoLength = NewMesoLength ?? 4,
+					MesoCount = NewHypertrophyMesoCount ?? 3,
+					Phase = TrainingPhase.Hypertrophy
+				},
+				new TrainingBlockOptions()
+				{
+					MesoLength = NewMesoLength ?? 4,
+					MesoCount = 1,
+					Phase = TrainingPhase.Strength
+				},
+				new TrainingBlockOptions()
+				{
+					MesoLength = NewMesoLength ?? 4,
+					MesoCount = 1,
+					Phase = TrainingPhase.Peaking
+				},
+			}
+				};
+			var macroCycle = new GenerateMacroCycleUseCase(Configuration).Generate(options);
+			macroCycle.ApplicationUserId = userId;
+			context.MacroCycles.Add(macroCycle);
+			context.SaveChanges();
+			NavigationManager.NavigateTo("/", true);
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"An error occurred: {ex.Message}");
+		}
 	}
+
 }

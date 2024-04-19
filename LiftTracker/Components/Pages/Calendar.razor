@@ -1,4 +1,4 @@
-﻿@page "/trainingblock"
+﻿@page "/calendar"
 @using LiftTracker.Data
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @using Microsoft.EntityFrameworkCore
@@ -11,19 +11,27 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider;
 
 <div class="row">
-	@if (TrainingBlock.MesoCycles != null)
-	{
-		@foreach (var mesoCycle in TrainingBlock.MesoCycles)
+	@if (MacroCycle?.TrainingBlocks != null) {
+		@foreach (var trainingBlock in MacroCycle.TrainingBlocks)
 		{
-		<div class="col-12">
+			if (trainingBlock.MesoCycles != null)
+			{
+				@foreach (var mesoCycle in trainingBlock.MesoCycles.Select((value, i) => new { i, value }))
+				{
+				<div class="col-12">
 					<div class="row text-center mb-3">
 						<h1>
-							@TrainingBlock.TrainingPhase
+							@($"{trainingBlock.TrainingPhase} Cycle") @(trainingBlock.TrainingPhase == TrainingPhase.Hypertrophy && trainingBlock.MesoCycles.Count() > 1 ? $"{mesoCycle.i + 1}" : "") 
 						</h1>
 					</div>
-					@if (mesoCycle.MicroCycles != null) {
-						@foreach (var microCycle in mesoCycle.MicroCycles.Select((value, i) => new { i, value }))
+					@if (mesoCycle.value.MicroCycles != null) {
+						@foreach (var microCycle in mesoCycle.value.MicroCycles.Select((value, i) => new { i, value }))
 						{
+							<div class="row text-center my-3">
+								<h2>
+									@($"Week {microCycle.i + 1}") @(microCycle.i == mesoCycle.value.MicroCycles.Count() - 1 ? "(Deload)" : "")
+								</h2>
+							</div>
 							<div class="row">
 								@if (microCycle.value.Sessions != null) {
 									@foreach (var session in microCycle.value.Sessions)
@@ -64,23 +72,19 @@
 									}
 								}
 							</div>
-							<div class="row text-center my-3">
-								<h2>
-									@($"Week {microCycle.i+1}")
-								</h2>
-							</div>
 						}
 							
 					}
-		</div>
+				</div>
+				}
+			}
 		}
 	}
-	
 </div>
 
 @code {
 
-	private TrainingBlock? TrainingBlock;
+	private MacroCycle? MacroCycle;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -90,14 +94,18 @@
 
 		using var context = new LiftTrackerContextBuilder(Configuration).Build();
 
-		TrainingBlock = context.TrainingBlocks?
-			.Include(x => x.MacroCycle)
-			.Include(x => x.MesoCycles)
-			.ThenInclude(x => x.MicroCycles)
-			.ThenInclude(x => x.Sessions)
-			.ThenInclude(x => x.SessionExercises)
-			.ThenInclude(x => x.Sets)
-			.FirstOrDefault(x => !x.IsComplete && x.MacroCycle.ApplicationUserId == userId);
+		var userMacroCycles = context.MacroCycles?
+								.Include(x => x.TrainingBlocks)?
+								.ThenInclude(x => x.MesoCycles)
+								.ThenInclude(x => x.MicroCycles)
+								.ThenInclude(x => x.Sessions)
+								.ThenInclude(x => x.SessionExercises)
+								.ThenInclude(x => x.Sets)
+								.Where(x => x.ApplicationUserId == userId)
+								.ToList();
+
+		MacroCycle = userMacroCycles
+			.SingleOrDefault(x => x.TrainingBlocks.Any(x => x.MesoCycles.Any(x => x.MicroCycles.Any(x => x.Sessions.Any( x => !x.IsComplete)))));
 	}
 
 	public void StartWorkout()

@@ -9,6 +9,7 @@
 @inject IConfiguration Configuration;
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize];
+@inject AuthenticationStateProvider AuthenticationStateProvider;
 
 <div class="row">
 	<div class="col-3">
@@ -55,8 +56,12 @@
 	public RepRange? RepRange { get; set; }
 	public Set? PreviousSet { get; set; }
 
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var user = authState.User;
+		var userId = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
+
 		using var context = new LiftTrackerContextBuilder(Configuration).Build();
 		if (SetId == null)
 		{
@@ -72,13 +77,23 @@
 
 		var session = context.Sessions.Include(x => x.MicroCycle).SingleOrDefault(x => Set != null && Set.SessionExercise != null && x.Id == Set.SessionExercise.SessionId);
 		var microCycle = session?.MicroCycle;
-		var previousMicroCycle = context.MicroCycles.SingleOrDefault(x => microCycle != null && x.Id == microCycle.Id - 1);
-		var previousSession = context
-								.Sessions
-								.Include(x => x.MicroCycle)
-								.Include(x => x.SessionExercises)
-								.ThenInclude(x => x.Sets)
-								.SingleOrDefault(x => x.MicroCycle != null && previousMicroCycle != null && session != null && x.MicroCycle.Id == previousMicroCycle.Id && x.DayOfTheWeek == session.DayOfTheWeek);
+		var userMicroCycles = context
+									.MicroCycles
+									.Include(x => x.MesoCycle)
+									.ThenInclude(x => x.TrainingBlock)
+									.Include(x => x.Sessions)
+									.ThenInclude(x => x.SessionExercises)
+									.ThenInclude(x => x.Sets)
+									.Where(x => x.MesoCycle.TrainingBlock.MacroCycle.ApplicationUserId == userId)
+									.OrderBy(x => x.Id)
+									.ToList();
+		var microCycleIndex = userMicroCycles
+									.FindIndex(x => x.Id == microCycle?.Id);
+		var previousMicroCycle = userMicroCycles
+									.ElementAtOrDefault(microCycleIndex-1);
+		var previousSession = previousMicroCycle?
+								.Sessions?
+								.SingleOrDefault(x => x.DayOfTheWeek == session?.DayOfTheWeek);
 		var previousSessionSets = previousSession?
 									.SessionExercises?
 									.FirstOrDefault(x => x?.ExerciseId == Set?.SessionExercise?.ExerciseId)?
