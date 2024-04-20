@@ -49,7 +49,7 @@
 	protected override void OnInitialized()
 	{
 		using var context = new LiftTrackerContextBuilder(Configuration).Build();
-		NewExercise = new CustomExercise();
+		NewExercise = new Exercise();
 
 		NewExerciseMuscleGroupEnum = 0;
 		NewExerciseType = 0;
