@@ -6,7 +6,7 @@ namespace LiftTracker.UseCases
 {
     public class GenerateSessionExercisesUseCase
     {
-        private IConfiguration Configuration;
+        private IConfiguration Configuration; 
         public GenerateSessionExercisesUseCase(IConfiguration configuration) {
             Configuration = configuration;   
         }
