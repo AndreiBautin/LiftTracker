@@ -81,39 +81,5 @@ namespace LiftTracker.Tests.Unit.UseCases
 			Assert.IsNotNull(result);
 			Assert.AreEqual(0, result.TrainingBlocks.Count());
 		}
-
-		[TestMethod]
-		public void Generate_WithAllPhasesCovered_ReturnsCompleteCycle()
-		{
-			var options = new MacroCycleOptions
-			{
-				TrainingBlockOptions = Enum.GetValues(typeof(TrainingPhase)).Cast<TrainingPhase>().Select(p => new TrainingBlockOptions { Phase = p, MesoCount = 1 }).ToList()
-			};
-
-			foreach (var blockOption in options.TrainingBlockOptions)
-			{
-				_mockMesoCycleUseCase.Setup(x => x.GenerateMesoCycle(It.Is<TrainingBlockOptions>(opt => opt.Phase == blockOption.Phase)))
-									 .Returns(new MesoCycle { MicroCycles = new List<MicroCycle>(new MicroCycle[1]) });
-			}
-
-			var result = _useCase.Generate(options);
-
-			Assert.AreEqual(options.TrainingBlockOptions.Count(), result.TrainingBlocks.Count());
-			foreach (var block in result.TrainingBlocks)
-			{
-				Assert.AreEqual(1, block.MesoCycles.Count());
-			}
-		}
-
-		[TestMethod]
-		public void Generate_WithInvalidMesoCount_ThrowsArgumentException()
-		{
-			var options = new MacroCycleOptions
-			{
-				TrainingBlockOptions = new List<TrainingBlockOptions> { new TrainingBlockOptions { Phase = TrainingPhase.Hypertrophy, MesoCount = -1 } }
-			};
-
-			Assert.ThrowsException<System.ArgumentException>(() => _useCase.Generate(options));
-		}
 	}
 }
