@@ -202,7 +202,8 @@
 				},
 			}
 				};
-			var macroCycle = new GenerateMacroCycleUseCase(Configuration).Generate(options);
+			// var macroCycle = new GenerateMacroCycleUseCase(Configuration).Generate(options);
+			var macroCycle = new MacroCycle();
 			macroCycle.ApplicationUserId = userId;
 			context.MacroCycles.Add(macroCycle);
 			context.SaveChanges();
