@@ -2,6 +2,7 @@ using LiftTracker.Client.Pages;
 using LiftTracker.Components;
 using LiftTracker.Components.Account;
 using LiftTracker.Data;
+using LiftTracker.UseCases.Implementation;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
 
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
@@ -25,17 +27,16 @@ builder.Services.AddAuthentication(options =>
 })
     .AddIdentityCookies();
 
-//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//    options.UseSqlServer(connectionString));
-//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
 builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.AddSingleton<IGenerateMacroCycleUseCase, GenerateMacroCycleUseCase>();
+builder.Services.AddSingleton<IGenerateMesoCycleUseCase, GenerateMesoCycleUseCase>();
+builder.Services.AddSingleton<IGenerateMicroCycleUseCase, GenerateMicroCycleUseCase>();
+builder.Services.AddSingleton<IGenerateSessionExerciseUseCase, GenerateSessionExercisesUseCase>();
 
 var connection = String.Empty;
 if (builder.Environment.IsDevelopment())

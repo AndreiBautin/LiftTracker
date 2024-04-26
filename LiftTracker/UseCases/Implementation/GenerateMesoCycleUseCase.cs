@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using LiftTracker.Data;
 
-namespace LiftTracker.UseCases
+namespace LiftTracker.UseCases.Implementation
 {
     public class GenerateMesoCycleUseCase : IGenerateMesoCycleUseCase
     {

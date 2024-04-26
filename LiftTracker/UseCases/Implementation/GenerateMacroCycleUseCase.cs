@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.Extensions.Configuration;
 using LiftTracker.Data;
 
-namespace LiftTracker.UseCases
+namespace LiftTracker.UseCases.Implementation
 {
     public class GenerateMacroCycleUseCase : IGenerateMacroCycleUseCase
     {

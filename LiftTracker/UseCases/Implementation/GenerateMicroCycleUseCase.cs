@@ -4,7 +4,7 @@ using LiftTracker.Data;
 using System.Collections.Generic;
 using LiftTracker.UseCases.Implementation;
 
-namespace LiftTracker.UseCases
+namespace LiftTracker.UseCases.Implementation
 {
     public class GenerateMicroCycleUseCase : IGenerateMicroCycleUseCase
     {
