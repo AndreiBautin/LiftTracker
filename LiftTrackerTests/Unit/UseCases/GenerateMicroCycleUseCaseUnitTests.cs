@@ -1,9 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using LiftTracker.UseCases;
+﻿using Moq;
 using LiftTracker.Data;
-using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
+using LiftTracker.UseCases.Implementation;
 
 namespace LiftTracker.Tests.Unit.UseCases
 {
@@ -27,7 +25,7 @@ namespace LiftTracker.Tests.Unit.UseCases
             var result = _useCase.GenerateMicroCycle(options, 1);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(6, result.Sessions.Count());
+            Assert.AreEqual(6, result.Sessions?.Count());
             foreach (var session in result.Sessions)
             {
                 Assert.IsNotNull(session.SessionExercises);

@@ -1,10 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using LiftTracker.UseCases;
+﻿using Moq;
 using LiftTracker.Data;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Extensions.Configuration;
+using LiftTracker.UseCases.Implementation;
 
 namespace LiftTracker.Tests.Unit.UseCases
 {
@@ -62,8 +59,6 @@ namespace LiftTracker.Tests.Unit.UseCases
 
 			Console.WriteLine("Test complete.");
 		}
-
-
 
 		[TestMethod]
 		public void Generate_WithNullOptions_ThrowsNullReferenceException()
