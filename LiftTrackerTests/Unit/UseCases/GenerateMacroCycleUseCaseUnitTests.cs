@@ -76,5 +76,47 @@ namespace LiftTracker.Tests.Unit.UseCases
 			Assert.IsNotNull(result);
 			Assert.AreEqual(0, result.TrainingBlocks.Count());
 		}
-	}
+
+        [TestMethod]
+        public void Generate_WithThreeTrainingOptionsWithNonZeroValues_ReturnsNonEmptyResult()
+        {
+            // Arrange
+            var mockConfiguration = new Mock<IConfiguration>();
+            var mockMesoUseCase = new Mock<IGenerateMesoCycleUseCase>();
+            mockMesoUseCase.Setup(x => x.GenerateMesoCycle(It.IsAny<TrainingBlockOptions>()))
+                .Returns(new MesoCycle());
+
+            var options = new MacroCycleOptions
+            {
+                TrainingBlockOptions = new List<TrainingBlockOptions>
+                {
+                    new TrainingBlockOptions { Phase = TrainingPhase.Hypertrophy, MesoCount = 2 },
+                    new TrainingBlockOptions { Phase = TrainingPhase.Strength, MesoCount = 3 },
+                    new TrainingBlockOptions { Phase = TrainingPhase.Peaking, MesoCount = 1 }
+                }
+            };
+
+            var useCase = new GenerateMacroCycleUseCase(mockConfiguration.Object, mockMesoUseCase.Object);
+
+            // Act
+            var result = useCase.Generate(options);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.TrainingBlocks.Count() > 0);
+            Assert.AreEqual(3, result.TrainingBlocks.Count());
+
+            var accumulationBlock = result.TrainingBlocks.ToArray()[0];
+            Assert.AreEqual(TrainingPhase.Hypertrophy, accumulationBlock.TrainingPhase);
+            Assert.AreEqual(2, accumulationBlock.MesoCycles.Count());
+
+            var intensificationBlock = result.TrainingBlocks.ToArray()[1];
+            Assert.AreEqual(TrainingPhase.Strength, intensificationBlock.TrainingPhase);
+            Assert.AreEqual(3, intensificationBlock.MesoCycles.Count());
+
+            var realizationBlock = result.TrainingBlocks.ToArray()[2];
+            Assert.AreEqual(TrainingPhase.Peaking, realizationBlock.TrainingPhase);
+            Assert.AreEqual(1, realizationBlock.MesoCycles.Count());
+        }
+    }
 }

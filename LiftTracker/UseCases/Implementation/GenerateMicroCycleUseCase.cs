@@ -9,16 +9,24 @@ namespace LiftTracker.UseCases.Implementation
     public class GenerateMicroCycleUseCase : IGenerateMicroCycleUseCase
     {
         private IConfiguration Configuration;
+        private IGenerateSessionExerciseUseCase SessionExerciseUseCase;
 
-        public GenerateMicroCycleUseCase(IConfiguration configuration)
+        public GenerateMicroCycleUseCase(IConfiguration configuration, IGenerateSessionExerciseUseCase sessionExerciseUseCase)
         {
             Configuration = configuration;
+            SessionExerciseUseCase = sessionExerciseUseCase;
         }
 
         public MicroCycle GenerateMicroCycle(TrainingBlockOptions options, int week)
         {
-            using var context = new LiftTrackerContextBuilder(Configuration).Build();
-            var result = new MicroCycle();
+            var result = new MicroCycle() {
+                Sessions = new List<Session>()
+            };
+
+            if (options == null) {
+                return result;
+            }
+
             var sessions = new List<Session>
             {
                 new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Monday },
@@ -31,7 +39,7 @@ namespace LiftTracker.UseCases.Implementation
 
             foreach (var session in sessions)
             {
-                session.SessionExercises = new GenerateSessionExercisesUseCase(Configuration).Generate(session.DayOfTheWeek, options?.Phase, options?.MesoLength, week);
+                session.SessionExercises = SessionExerciseUseCase.Generate(session.DayOfTheWeek, options?.Phase, options?.MesoLength, week);
             }
 
             result.Sessions = sessions;

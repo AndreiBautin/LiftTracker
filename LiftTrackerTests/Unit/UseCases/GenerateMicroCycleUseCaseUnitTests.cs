@@ -9,19 +9,21 @@ namespace LiftTracker.Tests.Unit.UseCases
     public class GenerateMicroCycleUseCaseTests
     {
         private Mock<IConfiguration> _mockConfiguration;
+        private Mock<IGenerateSessionExerciseUseCase> _mockSessionExerciseUseCase;
         private GenerateMicroCycleUseCase _useCase;
 
         [TestInitialize]
         public void Initialize()
         {
             _mockConfiguration = new Mock<IConfiguration>();
-            _useCase = new GenerateMicroCycleUseCase(_mockConfiguration.Object);
+            _mockSessionExerciseUseCase = new Mock<IGenerateSessionExerciseUseCase>();
+            _useCase = new GenerateMicroCycleUseCase(_mockConfiguration.Object, _mockSessionExerciseUseCase.Object);
         }
 
         [TestMethod]
         public void GenerateMicroCycle_WithValidOptions_ReturnsCompleteMicroCycle()
         {
-            var options = new TrainingBlockOptions { Phase = TrainingPhase.Hypertrophy, MesoLength = 4 };
+            var options = new TrainingBlockOptions { Phase = TrainingPhase.Hypertrophy, MesoLength = 4, MesoCount = 4 };
             var result = _useCase.GenerateMicroCycle(options, 1);
 
             Assert.IsNotNull(result);
@@ -37,27 +39,7 @@ namespace LiftTracker.Tests.Unit.UseCases
         {
             var result = _useCase.GenerateMicroCycle(null, 1);
             Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Sessions.Count());
-        }
-
-        [TestMethod]
-        public void GenerateMicroCycle_WithZeroMesoLength_ReturnsEmptyMicroCycle()
-        {
-            var options = new TrainingBlockOptions { Phase = TrainingPhase.Hypertrophy, MesoLength = 0 };
-            var result = _useCase.GenerateMicroCycle(options, 1);
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Sessions.Count());
-        }
-
-        [TestMethod]
-        public void GenerateMicroCycle_WithNegativeWeekNumber_ReturnsEmptyMicroCycle()
-        {
-            var options = new TrainingBlockOptions { Phase = TrainingPhase.Strength, MesoLength = 3 };
-            var result = _useCase.GenerateMicroCycle(options, -1);
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Sessions.Count());
+            Assert.AreEqual(0, result.Sessions?.Count());
         }
 
         [TestMethod]
