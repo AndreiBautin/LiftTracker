@@ -14,7 +14,6 @@
     @if (Session != null)
     {
         <div class="row">
-            <button class="btn-outline-light btn rounded-pill my-3" @onclick="BackToCalendar">Back Home</button>
             @if (Session.SessionExercises != null && Session.SessionExercises.Any(x => x?.Sets != null && x.Sets.Any(x => !x.IsComplete && !x.IsSkipped)))
             {
                 <button class="btn-outline-light btn rounded-pill my-3" @onclick="StartSet">Start Next Set</button>
@@ -26,10 +25,10 @@
                     <button class="btn-outline-light btn rounded-pill my-3" @onclick="FinishSession">Finish Session</button>
                 }
             }
-            @if (!Session.IsComplete)
-            {
-                <button class="btn-outline-light btn rounded-pill my-3" @onclick="SkipRestOfSession">Skip Rest Of Session</button>
-            }
+            <div class="exercise-navigation text-center my-3">
+                <button class="btn-outline-light btn rounded-pill mx-2" @onclick="PreviousExercise" disabled="@(_currentExerciseIndex <= 0)">← Prev</button>
+                <button class="btn-outline-light btn rounded-pill mx-2" @onclick="NextExercise" disabled="@(_currentExerciseIndex >= Session.SessionExercises.Count() - 1)">Next →</button>
+            </div>
         </div>
         @if (Session.SessionExercises != null)
         {
@@ -85,10 +84,6 @@
                 <div class="col-1"></div>
             </div>
         }
-        <div class="exercise-navigation text-center my-3">
-            <button class="btn-outline-light btn rounded-pill mx-2" @onclick="PreviousExercise" disabled="@(_currentExerciseIndex <= 0)">← Prev</button>
-            <button class="btn-outline-light btn rounded-pill mx-2" @onclick="NextExercise" disabled="@(_currentExerciseIndex >= Session.SessionExercises.Count() - 1)">Next →</button>
-        </div>
     }
 </div>
 
@@ -178,23 +173,5 @@
     public void OnSwapExerciseClick(int sessionExerciseId)
     {
         NavigationManager.NavigateTo($"/SwapExercise/{sessionExerciseId}");
-    }
-
-    public void SkipRestOfSession()
-    {
-        using var context = new LiftTrackerContextBuilder(Configuration).Build();
-        if (Session != null)
-        {
-            foreach (var exercise in Session.SessionExercises)
-            {
-                foreach (var set in exercise.Sets)
-                {
-                    set.IsSkipped = true;
-                }
-            }
-            Session.IsComplete = true;
-            context.SaveChanges();
-            NavigationManager.NavigateTo("/");
-        }
     }
 }
