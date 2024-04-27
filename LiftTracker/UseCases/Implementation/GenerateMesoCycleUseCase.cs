@@ -21,7 +21,7 @@ namespace LiftTracker.UseCases.Implementation
             for (int i = 1; i <= options?.MesoLength; i++)
             {
                 var microCycle = MicroUseCase.GenerateMicroCycle(options, i);
-                result.MicroCycles.ToList().Add(microCycle);
+                result.MicroCycles = result.MicroCycles.Append(microCycle).ToList();
             }
             return result;
         }

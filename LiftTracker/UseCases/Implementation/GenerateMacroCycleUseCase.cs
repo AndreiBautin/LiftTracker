@@ -35,9 +35,9 @@ namespace LiftTracker.UseCases.Implementation
                     for (int i = 0; i < trainingBlockOptions.MesoCount; i++)
                     {
                         var mesoCycle = MesoUseCase.GenerateMesoCycle(trainingBlockOptions);
-                        trainingBlock.MesoCycles.ToList().Add(mesoCycle);
+                        trainingBlock.MesoCycles = trainingBlock.MesoCycles.Append(mesoCycle).ToList();
                     }
-                    result.TrainingBlocks.ToList().Add(trainingBlock);
+                    result.TrainingBlocks = result.TrainingBlocks.Append(trainingBlock).ToList();
                 }
             }
 
