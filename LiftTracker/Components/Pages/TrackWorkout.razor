@@ -13,77 +13,55 @@
 <div class="row">
     @if (Session != null)
     {
-        <div class="row">
-            @if (Session.SessionExercises != null && Session.SessionExercises.Any(x => x?.Sets != null && x.Sets.Any(x => !x.IsComplete && !x.IsSkipped)))
-            {
-                <button class="btn-outline-light btn rounded-pill my-3" @onclick="StartSet">Start Next Set</button>
-            }
-            else
-            {
-                @if (!Session.IsComplete)
+        <div class="col-12">
+            <div class="card p-3">
+                <div class="row text-center mb-3">
+                    <h1>@(Session.SessionExercises != null && Session.SessionExercises.Any() ? new LiftTrackerContextBuilder(Configuration).Build().Exercises.FirstOrDefault(x => x.Id == Session.SessionExercises.ToArray()[_currentExerciseIndex].ExerciseId)?.Name : "No Exercise")</h1>
+                </div>
+                @if (Session.SessionExercises != null)
                 {
-                    <button class="btn-outline-light btn rounded-pill my-3" @onclick="FinishSession">Finish Session</button>
-                }
-            }
-            <div class="exercise-navigation text-center my-3">
-                <button class="btn-outline-light btn rounded-pill mx-2" @onclick="PreviousExercise" disabled="@(_currentExerciseIndex <= 0)">← Prev</button>
-                <button class="btn-outline-light btn rounded-pill mx-2" @onclick="NextExercise" disabled="@(_currentExerciseIndex >= Session.SessionExercises.Count() - 1)">Next →</button>
-            </div>
-        </div>
-        @if (Session.SessionExercises != null)
-        {
-            var sessionExercise = Session.SessionExercises.ToArray()[_currentExerciseIndex];
-            <div class="row">
-                <div class="col-1"></div>
-                <div class="col-10 my-3">
-                    <div class="col-12 card p-3">
-                        <div class="row text-center mb-3">
-                            <h1>
-                                @(new LiftTrackerContextBuilder(Configuration).Build().Exercises.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.ExerciseId)?.Name)
-                            </h1>
-                        </div>
-                        @if (sessionExercise?.Sets != null)
+                    var sessionExercise = Session.SessionExercises.ToArray()[_currentExerciseIndex];
+                    if (sessionExercise?.Sets != null)
+                    {
+                        foreach (var set in sessionExercise.Sets.Select((value, i) => new { i, value }))
                         {
-                            @foreach (var set in sessionExercise.Sets.Select((value, i) => new { i, value }))
-                            {
-                                <div class="row my-3">
-                                    <div class="col-1"></div>
-                                    <div class="@(set.value.IsComplete || set.value.IsSkipped ? "card3" : "card") text-center col-10 session-card p-3" @onclick="(() => OnSetClick(set.value.Id))">
+                            <div class="row justify-content-center my-2">
+                                <div class="col-10 text-center p-2 @(set.value.IsComplete || set.value.IsSkipped ? "card3" : "card")">
+                                    <h5>
                                         @if (set.value.IsComplete)
                                         {
-                                            <div class="statnum">
-                                                <h2>
-                                                    @($"{set.value.Load?.ToString(set.value.Load % 1 == 0 ? "0" : "0.0")} x {set.value.Reps} @ {set.value.Rpe} RPE")
-                                                </h2>
-                                            </div>
+                                            @($"{set.value.Load?.ToString(set.value.Load % 1 == 0 ? "0" : "0.0")} x {set.value.Reps} @ {set.value.Rpe} RPE")
+                                       }
+                                        else if (set.value.IsSkipped)
+                                        {
+                                            @("Skipped")
                                         }
                                         else
                                         {
-                                            <div class="statnum">
-                                                <h2>
-                                                    @if (set.value.IsSkipped)
-                                                    {
-                                                        @("Skipped")
-                                                    }
-                                                    else
-                                                    {
-                                                        @($"Set {set.i + 1}")
-                                                    }
-                                                </h2>
-                                            </div>
+                                            @($"Set {set.i + 1}")
                                         }
-                                    </div>
-                                    <div class="col-1"></div>
+                                    </h5>
                                 </div>
-                            }
+                            </div>
                         }
-                        <button class="btn-outline-light btn rounded-pill my-3" @onclick="(() => OnSkipClick(sessionExercise.Id))">Skip</button>
-                        <button class="btn-outline-light btn rounded-pill my-3" @onclick="(() => OnSwapExerciseClick(sessionExercise.Id))">Swap Exercise</button>
+                    }
+                    <div class="text-center my-3">
+                        <button class="btn-outline-light btn rounded-pill px-2 mx-2" @onclick="PreviousExercise" disabled="@(_currentExerciseIndex <= 0)">← Prev</button>
+                        <button class="btn-outline-light btn rounded-pill px-2 mx-2" @onclick="NextExercise" disabled="@(_currentExerciseIndex >= Session.SessionExercises.Count() - 1)">Next →</button>
+                        @if (sessionExercise.Sets.Any(x => !x.IsComplete && !x.IsSkipped))
+                        {
+                            <button class="btn-outline-light btn rounded-pill px-2 mx-2" @onclick="StartSet">Start Next Set</button>
+                        }
+                        <button class="btn-outline-light btn rounded-pill px-2 mx-2" @onclick="() => OnSkipClick(sessionExercise.Id)">Skip</button>
+                        <button class="btn-outline-light btn rounded-pill px-2 mx-2" @onclick="() => OnSwapExerciseClick(sessionExercise.Id)">Swap Exercise</button>
+                        @if (Session.SessionExercises.All(x => x.Sets.All(s => s.IsComplete || s.IsSkipped)))
+                        {
+                            <button class="btn-outline-light btn rounded-pill px-2 mx-2" @onclick="FinishSession">Finish Session</button>
+                        }
                     </div>
-                </div>
-                <div class="col-1"></div>
+                }
             </div>
-        }
+        </div>
     }
 </div>
 
@@ -103,6 +81,12 @@
         else
         {
             Session = context.Sessions?.Include(x => x.SessionExercises).ThenInclude(x => x.Sets).FirstOrDefault(x => !x.IsComplete);
+        }
+
+        if (Session?.SessionExercises != null)
+        {
+            _currentExerciseIndex = Session.SessionExercises.ToList().FindIndex(x => x.Sets.Any(s => !s.IsComplete && !s.IsSkipped));
+            if (_currentExerciseIndex == -1) _currentExerciseIndex = 0;  // Default to zero if all exercises are complete
         }
     }
 
@@ -138,17 +122,12 @@
         }
     }
 
-    private void BackToCalendar()
-    {
-        NavigationManager.NavigateTo("/");
-    }
-
-    public void OnSetClick(int setId)
+    private void OnSetClick(int setId)
     {
         NavigationManager.NavigateTo($"/TrackSet/{setId}");
     }
 
-    public void OnSkipClick(int sessionExerciseId)
+    private void OnSkipClick(int sessionExerciseId)
     {
         using var context = new LiftTrackerContextBuilder(Configuration).Build();
         var record = context.SessionExercises.Include(x => x.Sets).FirstOrDefault(x => x.Id == sessionExerciseId);
@@ -159,18 +138,11 @@
                 set.IsSkipped = true;
             }
             context.SaveChanges();
-            if (SessionId != null)
-            {
-                NavigationManager.NavigateTo($"/TrackWorkout/{SessionId}", true);
-            }
-            else
-            {
-                NavigationManager.NavigateTo($"/TrackWorkout", true);
-            }
+            NavigationManager.NavigateTo($"/TrackWorkout/{SessionId}", true);
         }
     }
 
-    public void OnSwapExerciseClick(int sessionExerciseId)
+    private void OnSwapExerciseClick(int sessionExerciseId)
     {
         NavigationManager.NavigateTo($"/SwapExercise/{sessionExerciseId}");
     }
