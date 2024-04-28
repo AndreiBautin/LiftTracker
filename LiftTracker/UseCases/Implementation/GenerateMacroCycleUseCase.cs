@@ -23,7 +23,7 @@ namespace LiftTracker.UseCases.Implementation
 
             foreach (var trainingPhase in trainingPhases)
             {
-                var trainingBlockOptions = options.TrainingBlockOptions.FirstOrDefault(x => x.Phase == trainingPhase);
+                var trainingBlockOptions = options.TrainingBlockOptions.FirstOrDefault(x => x.TrainingPhase == trainingPhase);
                 if (trainingBlockOptions != null)
                 {
                     var trainingBlock = new TrainingBlock

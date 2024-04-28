@@ -39,7 +39,7 @@ namespace LiftTracker.UseCases.Implementation
 
             foreach (var session in sessions)
             {
-                session.SessionExercises = SessionExerciseUseCase.Generate(session.DayOfTheWeek, options?.Phase, options?.MesoLength, week);
+                session.SessionExercises = SessionExerciseUseCase.Generate(session.DayOfTheWeek, options?.TrainingPhase, options?.MesoLength, week, options.TrainingSplit);
             }
 
             result.Sessions = sessions;

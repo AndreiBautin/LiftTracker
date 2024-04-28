@@ -12,8 +12,26 @@ namespace LiftTracker.UseCases.Implementation
             Configuration = configuration;
         }
 
-        public IEnumerable<SessionExercise?> Generate(DayOfTheWeek? dayOfTheWeek, TrainingPhase? phase, int? mesoLength, int? mesoWeek)
+        public IEnumerable<SessionExercise?> Generate(DayOfTheWeek? dayOfTheWeek, TrainingPhase? phase, int? mesoLength, int? mesoWeek, TrainingSplit trainingSplit)
         {
+            if (trainingSplit == TrainingSplit.UpperLower) {
+				switch (dayOfTheWeek)
+				{
+					case DayOfTheWeek.Monday:
+						return GenerateUpper(1, phase, mesoLength, mesoWeek);
+					case DayOfTheWeek.Tuesday:
+						return GenerateLegs(1, phase, mesoLength, mesoWeek);
+					case DayOfTheWeek.Thursday:
+						return GenerateUpper(2, phase, mesoLength, mesoWeek);
+					case DayOfTheWeek.Friday:
+						return GenerateLegs(2, phase, mesoLength, mesoWeek);
+					case DayOfTheWeek.Saturday:
+					case DayOfTheWeek.Wednesday:
+					case DayOfTheWeek.Sunday:
+					default:
+						return new List<SessionExercise>();
+				}
+			}
             switch (dayOfTheWeek)
             {
                 case DayOfTheWeek.Monday:
@@ -186,7 +204,78 @@ namespace LiftTracker.UseCases.Implementation
 
         }
 
-        public SessionExercise? GenerateSessionExercise(MuscleGroupEnum? muscleGroupEnum, ExerciseType? exerciseType, int? exerciseTypeOccurence, TrainingPhase? phase, int? mesoLength, int? mesoWeek, int? muscleGroupOccurence, int? sessionNumber)
+		public IEnumerable<SessionExercise?> GenerateUpper(int sessionNumber, TrainingPhase? phase, int? mesoLength, int? mesoWeek)
+		{
+			using var context = new LiftTrackerContextBuilder(Configuration).Build();
+
+			var chestExercise = new SessionExercise();
+			var frontDeltExercise = new SessionExercise();
+			var tricepExercise = new SessionExercise();
+			var sideDeltExercise = new SessionExercise();
+			var backExercise = GenerateSessionExercise(MuscleGroupEnum.Back, ExerciseType.Accessory, sessionNumber, phase, mesoLength, mesoWeek, 1, sessionNumber);
+			var rearDeltExercise = GenerateSessionExercise(MuscleGroupEnum.RearDelts, ExerciseType.Accessory, sessionNumber, phase, mesoLength, mesoWeek, 1, sessionNumber);
+			var bicepExercise = GenerateSessionExercise(MuscleGroupEnum.Biceps, ExerciseType.Accessory, sessionNumber, phase, mesoLength, mesoWeek, 1, sessionNumber);
+
+			if (sessionNumber == 1)
+			{
+				if (phase == TrainingPhase.Hypertrophy)
+				{
+					chestExercise = GenerateSessionExercise(MuscleGroupEnum.Chest, ExerciseType.Supplemental, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
+				}
+				else if (phase == TrainingPhase.Strength)
+				{
+					chestExercise = GenerateSessionExercise(MuscleGroupEnum.Chest, ExerciseType.Supplemental, 2, phase, mesoLength, mesoWeek, 1, sessionNumber);
+				}
+				else
+				{
+					chestExercise = GenerateSessionExercise(MuscleGroupEnum.Chest, ExerciseType.Primary, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
+				}
+				sideDeltExercise = GenerateSessionExercise(MuscleGroupEnum.SideDelts, ExerciseType.Accessory, 1, phase, mesoLength, mesoWeek, 2, sessionNumber);
+				tricepExercise = GenerateSessionExercise(MuscleGroupEnum.Triceps, ExerciseType.Accessory, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
+				return new List<SessionExercise?>() {
+					chestExercise,
+                    backExercise,
+					tricepExercise,
+                    bicepExercise,
+					sideDeltExercise,
+                    rearDeltExercise
+				};
+			}
+			else
+			{
+				if (phase == TrainingPhase.Hypertrophy)
+				{
+					frontDeltExercise = GenerateSessionExercise(MuscleGroupEnum.FrontDelts, ExerciseType.Supplemental, 2, phase, mesoLength, mesoWeek, 1, sessionNumber);
+				}
+				else if (phase == TrainingPhase.Strength)
+				{
+					frontDeltExercise = GenerateSessionExercise(MuscleGroupEnum.FrontDelts, ExerciseType.Supplemental, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
+				}
+				else
+				{
+					frontDeltExercise = GenerateSessionExercise(MuscleGroupEnum.FrontDelts, ExerciseType.Primary, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
+				}
+				if (phase == TrainingPhase.Peaking)
+				{
+					chestExercise = GenerateSessionExercise(MuscleGroupEnum.Chest, ExerciseType.Accessory, 2, phase, mesoLength, mesoWeek, 1, sessionNumber);
+				}
+				else
+				{
+					chestExercise = GenerateSessionExercise(MuscleGroupEnum.Chest, ExerciseType.Accessory, 1, phase, mesoLength, mesoWeek, 1, sessionNumber);
+				}
+				tricepExercise = GenerateSessionExercise(MuscleGroupEnum.Triceps, ExerciseType.Accessory, 2, phase, mesoLength, mesoWeek, 1, sessionNumber);
+				return new List<SessionExercise?>() {
+					frontDeltExercise,
+                    backExercise,
+					tricepExercise,
+                    bicepExercise,
+					chestExercise,
+                    rearDeltExercise,
+				};
+			}
+		}
+
+		public SessionExercise? GenerateSessionExercise(MuscleGroupEnum? muscleGroupEnum, ExerciseType? exerciseType, int? exerciseTypeOccurence, TrainingPhase? phase, int? mesoLength, int? mesoWeek, int? muscleGroupOccurence, int? sessionNumber)
         {
             using var context = new LiftTrackerContextBuilder(Configuration).Build();
             var result = new SessionExercise();

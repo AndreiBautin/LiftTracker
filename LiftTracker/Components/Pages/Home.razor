@@ -89,6 +89,15 @@
 			}
 			else
 			{
+				<div class="row">
+					<label for="split">Split</label>
+					<select name="split" class="form-select d-inline-block col-6 my-2" @bind="TrainingSplit">
+						@foreach (var trainingSplit in ((IEnumerable<TrainingSplit>)Enum.GetValues(typeof(TrainingSplit))))
+						{
+							<option value="@trainingSplit">@trainingSplit.ToString()</option>
+						}
+					</select>
+				</div>
 				<button class="btn-outline-light btn rounded-pill my-3" @onclick="() => Generate(4, 1)">Generate Recomp Program</button>
 				<button class="btn-outline-light btn rounded-pill my-3" @onclick="() => Generate(4, 3)">Generate Cutting Program</button>
 				<button class="btn-outline-light btn rounded-pill my-3" @onclick="() => Generate(4, 4)">Generate Bulking Program</button>
@@ -104,6 +113,7 @@
 	private MicroCycle? CurrentMicroCycle { get; set; }
 	private int? Week { get; set; }
 	private bool IsGenerating { get; set; }
+	private TrainingSplit TrainingSplit { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -187,19 +197,22 @@
 				{
 					MesoLength = NewMesoLength ?? 4,
 					MesoCount = NewHypertrophyMesoCount ?? 3,
-					Phase = TrainingPhase.Hypertrophy
+					TrainingPhase = TrainingPhase.Hypertrophy,
+					TrainingSplit = TrainingSplit
 				},
 				new TrainingBlockOptions()
 				{
 					MesoLength = NewMesoLength ?? 4,
 					MesoCount = 1,
-					Phase = TrainingPhase.Strength
+					TrainingPhase = TrainingPhase.Strength,
+					TrainingSplit = TrainingSplit
 				},
 				new TrainingBlockOptions()
 				{
 					MesoLength = NewMesoLength ?? 4,
 					MesoCount = 1,
-					Phase = TrainingPhase.Peaking
+					TrainingPhase = TrainingPhase.Peaking,
+					TrainingSplit = TrainingSplit
 				},
 			}
 				};

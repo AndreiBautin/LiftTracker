@@ -11,7 +11,7 @@ public interface IGenerateSessionExerciseUseCase
 	/// <param name="mesoLength">Length of the mesocycle in weeks.</param>
 	/// <param name="mesoWeek">Current week number within the mesocycle.</param>
 	/// <returns>An enumerable of session exercises.</returns>
-	IEnumerable<SessionExercise?> Generate(DayOfTheWeek? dayOfTheWeek, TrainingPhase? phase, int? mesoLength, int? mesoWeek);
+	IEnumerable<SessionExercise?> Generate(DayOfTheWeek? dayOfTheWeek, TrainingPhase? phase, int? mesoLength, int? mesoWeek, TrainingSplit trainingSplit);
 
 	/// <summary>
 	/// Generates "push" session exercises based on provided criteria.
@@ -42,4 +42,14 @@ public interface IGenerateSessionExerciseUseCase
 	/// <param name="mesoWeek">Week number in the mesocycle.</param>
 	/// <returns>An enumerable of session exercises for leg workouts.</returns>
 	IEnumerable<SessionExercise?> GenerateLegs(int sessionNumber, TrainingPhase? phase, int? mesoLength, int? mesoWeek);
+
+	/// <summary>
+	/// Generates "upper" session exercises based on provided criteria.
+	/// </summary>
+	/// <param name="sessionNumber">Session number (1 or 2).</param>
+	/// <param name="phase">Training phase.</param>
+	/// <param name="mesoLength">Mesocycle length.</param>
+	/// <param name="mesoWeek">Week number in the mesocycle.</param>
+	/// <returns>An enumerable of session exercises for leg workouts.</returns>
+	IEnumerable<SessionExercise?> GenerateUpper(int sessionNumber, TrainingPhase? phase, int? mesoLength, int? mesoWeek);
 }
