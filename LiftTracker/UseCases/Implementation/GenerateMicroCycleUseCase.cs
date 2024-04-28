@@ -27,17 +27,30 @@ namespace LiftTracker.UseCases.Implementation
                 return result;
             }
 
-            var sessions = new List<Session>
-            {
-                new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Monday },
-                new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Tuesday },
-                new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Wednesday },
-                new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Thursday },
-                new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Friday },
-                new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Saturday },
-            };
+            List<Session> sessions;
+            if (options.TrainingSplit == TrainingSplit.PPL) { 
+                sessions = new List<Session>
+                {
+                    new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Monday },
+                    new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Tuesday },
+                    new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Wednesday },
+                    new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Thursday },
+                    new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Friday },
+                    new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Saturday },
+                };            
+            }
+			else
+			{
+				sessions = new List<Session>
+				{
+					new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Monday },
+					new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Tuesday },
+					new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Thursday },
+					new Session { MicroCycle = result, SessionExercises = new List<SessionExercise>(), DayOfTheWeek = DayOfTheWeek.Friday },
+				};
+			}
 
-            foreach (var session in sessions)
+			foreach (var session in sessions)
             {
                 session.SessionExercises = SessionExerciseUseCase.Generate(session.DayOfTheWeek, options?.TrainingPhase, options?.MesoLength, week, options.TrainingSplit);
             }
