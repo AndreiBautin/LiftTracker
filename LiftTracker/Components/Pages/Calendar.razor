@@ -41,6 +41,7 @@
             <div class="@(!session.IsComplete ? "card" : "card3") schedule-table text-center session-card my-3" @onclick="() => OnSessionClick(session.Id)">
                     @if (session.SessionExercises != null)
                     {
+                        <hr />
                         foreach (var sessionExercise in session.SessionExercises)
                         {
                             <div class="row">
@@ -61,7 +62,9 @@
                                         <div class="statnum">
                                             @($"{sessionExercise?.Sets?.FirstOrDefault()?.TargetRpe}-{sessionExercise?.Sets?.FirstOrDefault()?.TargetRpe + 1} RPE")
                                         </div>
-                                        @($"{sessionExercise?.Sets?.Count()} sets {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.Low} - {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.High} reps")
+                                        <div>
+                                            @($"{sessionExercise?.Sets?.Count()} sets {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.Low} - {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.High} reps")
+                                        </div>
                                     }
                             </div>
                             <hr />
