@@ -173,8 +173,8 @@ namespace LiftTracker.UseCases.Implementation
                 return new List<SessionExercise?>() {
                     quadExercise,
                     posteriorChainExercise,
+                    calfExercise,
                     coreExercise,
-                    calfExercise
                 };
             }
             else
@@ -197,8 +197,8 @@ namespace LiftTracker.UseCases.Implementation
                 return new List<SessionExercise?>() {
                     posteriorChainExercise,
                     quadExercise,
+                    calfExercise,
                     coreExercise,
-                    calfExercise
                 };
             }
 
@@ -291,7 +291,7 @@ namespace LiftTracker.UseCases.Implementation
                 RepRange? repRange;
                 if (exercise.IsCompound)
                 {
-                    repRange = context.RepRanges.FirstOrDefault(x => x.RepRangeType == RepRangeType.StrengthBuilding);
+                    repRange = context.RepRanges.FirstOrDefault(x => x.RepRangeType == RepRangeType.MainLiftHypertrophy);
                 }
                 else
                 {

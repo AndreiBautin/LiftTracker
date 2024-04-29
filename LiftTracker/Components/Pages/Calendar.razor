@@ -11,67 +11,68 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider;
 
 <div class="row">
-    <h1>Calendar</h1>
-    @if (MacroCycle?.TrainingBlocks != null && MacroCycle.TrainingBlocks.Any())
-    {
-        <div class="training-navigation text-center my-3">
-            <div class="row my-3">
-                <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="PreviousTrainingBlock" disabled="@(_currentTrainingBlockIndex <= 0)">← Prev Block</button>
-                <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="NextTrainingBlock" disabled="@(_currentTrainingBlockIndex >= MacroCycle.TrainingBlocks.Count() - 1)">Next Block →</button>
-            </div>
-            <div class="row my-3">
-                <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="PreviousWeek" disabled="@(_currentWeekIndex <= 0)">← Prev Week</button>
-                <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="NextWeek" disabled="@(_currentWeekIndex >= CurrentMesoCycle.MicroCycles.Count() - 1)">Next Week →</button>
-            </div>
-            <div class="row my-3">
-                <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="PreviousDay" disabled="@(_currentDayIndex <= 0)">← Prev Day</button>
-                <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="NextDay" disabled="@(_currentDayIndex >= CurrentWeek.Sessions.Count() - 1)">Next Day →</button>
-            </div>
-        </div>
-        var trainingBlock = MacroCycle.TrainingBlocks.ToArray()[_currentTrainingBlockIndex];
-        var mesoCycle = trainingBlock.MesoCycles.ToArray()[_currentMesoCycleIndex];
-        var microCycle = mesoCycle.MicroCycles.ToArray()[_currentWeekIndex];
-        var session = microCycle.Sessions.ToArray()[_currentDayIndex];
+    <div class="col-12">
+        @if (MacroCycle?.TrainingBlocks != null && MacroCycle.TrainingBlocks.Any())
+        {
+            var trainingBlock = MacroCycle.TrainingBlocks.ToArray()[_currentTrainingBlockIndex];
+            var mesoCycle = trainingBlock.MesoCycles.ToArray()[_currentMesoCycleIndex];
+            var microCycle = mesoCycle.MicroCycles.ToArray()[_currentWeekIndex];
+            var session = microCycle.Sessions.ToArray()[_currentDayIndex];
 
-        <div class="row text-center mb-3">
-            <h1>@($"{trainingBlock.TrainingPhase} Cycle")</h1>
-            <h2>@($"Week {_currentWeekIndex + 1} of {mesoCycle.MicroCycles.Count()}")</h2>
-            <h3>@($"Day: {session.DayOfTheWeek}")</h3>
-        </div>
-        <div class="col-12 col-lg-2">
-            <div class="@(!session.IsComplete ? "card" : "card3") schedule-table text-center col-12 session-card my-3" @onclick="() => OnSessionClick(session.Id)">
-                <table>
-                    @if (session.SessionExercises != null)
-                    {
-                        foreach (var sessionExercise in session.SessionExercises)
-                        {
-                            <tr>
-                                <td>
-                                    @($"{new LiftTrackerContextBuilder(Configuration).Build().Exercises?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.ExerciseId)?.Name}")
-                                    @if (session.IsComplete && sessionExercise?.Sets != null)
-                                    {
-                                        foreach (var set in sessionExercise.Sets)
-                                        {
-                                            <div>
-                                                @($"{set?.Load?.ToString(set.Load.Value % 1 == 0 ? "0" : "0.0")} x {set?.Reps} reps @ {set?.Rpe} RPE")
-                                            </div>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <div class="statnum">
-                                            @($"{sessionExercise?.Sets?.FirstOrDefault()?.TargetRpe}-{sessionExercise?.Sets?.FirstOrDefault()?.TargetRpe + 1} RPE")
-                                        </div>
-                                        @($"{sessionExercise?.Sets?.Count()} sets {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.Low} - {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.High} reps")
-                                    }
-                                </td>
-                            </tr>
-                        }
-                    }
-                </table>
+            <div class="row text-center mb-1">
+                <h1>@($"{trainingBlock.TrainingPhase} Cycle")</h1>
+                <h2>@($"Week {_currentWeekIndex + 1} of {mesoCycle.MicroCycles.Count()}")</h2>
+                <h3>@($"Day: {session.DayOfTheWeek}")</h3>
             </div>
-        </div>
-    }
+            <div class="training-navigation text-center my-1">
+                <div class="row my-3">
+                    <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="PreviousTrainingBlock" disabled="@(_currentTrainingBlockIndex <= 0)">← Prev Block</button>
+                    <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="NextTrainingBlock" disabled="@(_currentTrainingBlockIndex >= MacroCycle.TrainingBlocks.Count() - 1)">Next Block →</button>
+                </div>
+                <div class="row my-3">
+                    <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="PreviousWeek" disabled="@(_currentWeekIndex <= 0)">← Prev Week</button>
+                    <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="NextWeek" disabled="@(_currentWeekIndex >= CurrentMesoCycle.MicroCycles.Count() - 1)">Next Week →</button>
+                </div>
+                <div class="row my-3">
+                    <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="PreviousDay" disabled="@(_currentDayIndex <= 0)">← Prev Day</button>
+                    <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="NextDay" disabled="@(_currentDayIndex >= CurrentWeek.Sessions.Count() - 1)">Next Day →</button>
+                </div>
+            </div>
+            <div class="col-12 col-lg-2">
+                <div class="@(!session.IsComplete ? "card" : "card3") schedule-table text-center col-12 session-card my-3" @onclick="() => OnSessionClick(session.Id)">
+                    <table>
+                        @if (session.SessionExercises != null)
+                        {
+                            foreach (var sessionExercise in session.SessionExercises)
+                            {
+                                <tr>
+                                    <td>
+                                        @($"{new LiftTrackerContextBuilder(Configuration).Build().Exercises?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.ExerciseId)?.Name}")
+                                        @if (session.IsComplete && sessionExercise?.Sets != null)
+                                        {
+                                            foreach (var set in sessionExercise.Sets)
+                                            {
+                                                <div>
+                                                    @($"{set?.Load?.ToString(set.Load.Value % 1 == 0 ? "0" : "0.0")} x {set?.Reps} reps @ {set?.Rpe} RPE")
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <div class="statnum">
+                                                @($"{sessionExercise?.Sets?.FirstOrDefault()?.TargetRpe}-{sessionExercise?.Sets?.FirstOrDefault()?.TargetRpe + 1} RPE")
+                                            </div>
+                                            @($"{sessionExercise?.Sets?.Count()} sets {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.Low} - {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.High} reps")
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
 </div>
 
 @code {
