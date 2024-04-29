@@ -39,14 +39,14 @@
         </div>
         <div class="col-12 col-lg-2">
             <div class="@(!session.IsComplete ? "card" : "card3") schedule-table text-center session-card my-3" @onclick="() => OnSessionClick(session.Id)">
-                <table>
                     @if (session.SessionExercises != null)
                     {
                         foreach (var sessionExercise in session.SessionExercises)
                         {
-                            <tr>
-                                <td>
-                                    @($"{new LiftTrackerContextBuilder(Configuration).Build().Exercises?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.ExerciseId)?.Name}")
+                            <div class="row">
+                                    <div>
+                                        @($"{new LiftTrackerContextBuilder(Configuration).Build().Exercises?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.ExerciseId)?.Name}")
+                                    </div>
                                     @if (session.IsComplete && sessionExercise?.Sets != null)
                                     {
                                         foreach (var set in sessionExercise.Sets)
@@ -63,11 +63,10 @@
                                         </div>
                                         @($"{sessionExercise?.Sets?.Count()} sets {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.Low} - {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.High} reps")
                                     }
-                                </td>
-                            </tr>
+                            </div>
+                            <hr />
                         }
                     }
-                </table>
             </div>
         </div>
     }

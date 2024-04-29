@@ -116,9 +116,13 @@
         using var context = new LiftTrackerContextBuilder(Configuration).Build();
         if (Session != null)
         {
-            Session.IsComplete = true;
-            context.SaveChanges();
-            NavigationManager.NavigateTo("/");
+            var record = context.Sessions.SingleOrDefault(x => x.Id == Session.Id);
+            if (record != null)
+            {
+                record.IsComplete = true;
+                context.SaveChanges();
+                NavigationManager.NavigateTo("/");
+            }
         }
     }
 
