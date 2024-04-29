@@ -15,12 +15,18 @@
     @if (MacroCycle?.TrainingBlocks != null && MacroCycle.TrainingBlocks.Any())
     {
         <div class="training-navigation text-center my-3">
-            <button class="btn-outline-light btn rounded-pill mx-2" @onclick="PreviousTrainingBlock" disabled="@(_currentTrainingBlockIndex <= 0)">← Prev Block</button>
-            <button class="btn-outline-light btn rounded-pill mx-2" @onclick="NextTrainingBlock" disabled="@(_currentTrainingBlockIndex >= MacroCycle.TrainingBlocks.Count() - 1)">Next Block →</button>
-            <button class="btn-outline-light btn rounded-pill mx-2" @onclick="PreviousWeek" disabled="@(_currentWeekIndex <= 0)">← Prev Week</button>
-            <button class="btn-outline-light btn rounded-pill mx-2" @onclick="NextWeek" disabled="@(_currentWeekIndex >= CurrentMesoCycle.MicroCycles.Count() - 1)">Next Week →</button>
-            <button class="btn-outline-light btn rounded-pill mx-2" @onclick="PreviousDay" disabled="@(_currentDayIndex <= 0)">← Prev Day</button>
-            <button class="btn-outline-light btn rounded-pill mx-2" @onclick="NextDay" disabled="@(_currentDayIndex >= CurrentWeek.Sessions.Count() - 1)">Next Day →</button>
+            <div class="row my-3">
+                <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="PreviousTrainingBlock" disabled="@(_currentTrainingBlockIndex <= 0)">← Prev Block</button>
+                <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="NextTrainingBlock" disabled="@(_currentTrainingBlockIndex >= MacroCycle.TrainingBlocks.Count() - 1)">Next Block →</button>
+            </div>
+            <div class="row my-3">
+                <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="PreviousWeek" disabled="@(_currentWeekIndex <= 0)">← Prev Week</button>
+                <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="NextWeek" disabled="@(_currentWeekIndex >= CurrentMesoCycle.MicroCycles.Count() - 1)">Next Week →</button>
+            </div>
+            <div class="row my-3">
+                <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="PreviousDay" disabled="@(_currentDayIndex <= 0)">← Prev Day</button>
+                <button class="btn-outline-light btn rounded-pill mx-2 col-5" @onclick="NextDay" disabled="@(_currentDayIndex >= CurrentWeek.Sessions.Count() - 1)">Next Day →</button>
+            </div>
         </div>
         var trainingBlock = MacroCycle.TrainingBlocks.ToArray()[_currentTrainingBlockIndex];
         var mesoCycle = trainingBlock.MesoCycles.ToArray()[_currentMesoCycleIndex];

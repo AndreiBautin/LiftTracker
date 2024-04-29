@@ -291,11 +291,17 @@ namespace LiftTracker.UseCases.Implementation
                 RepRange? repRange;
                 if (exercise.IsCompound)
                 {
-                    repRange = context.RepRanges.FirstOrDefault(x => x.RepRangeType == RepRangeType.AccessoryHypertrophyCompound);
+                    repRange = context.RepRanges.FirstOrDefault(x => x.RepRangeType == RepRangeType.StrengthBuilding);
                 }
                 else
                 {
-                    repRange = context.RepRanges.FirstOrDefault(x => x.RepRangeType == RepRangeType.AccessoryHypertrophyIsolation);
+                    if (muscleGroupEnum == MuscleGroupEnum.Core)
+                    {
+                        repRange = context.RepRanges.FirstOrDefault(x => x.RepRangeType == RepRangeType.MetaboliteTraining);
+                    }
+                    else { 
+					    repRange = context.RepRanges.FirstOrDefault(x => x.RepRangeType == RepRangeType.AccessoryHypertrophyCompound);
+                    }
                 }
                 result.RepRangeId = repRange?.Id;
             }
@@ -317,38 +323,7 @@ namespace LiftTracker.UseCases.Implementation
                 result.RepRangeId = repRange?.Id;
             }
 
-            var totalVolumeChange = 4;
-            var weeklyChangeRate = totalVolumeChange / (mesoLength - 2);
-            int? weeklyVolume;
-            if (mesoWeek == mesoLength)
-            {
-                weeklyVolume = 4;
-            }
-            else if (phase == TrainingPhase.Peaking)
-            {
-                if (exerciseType == ExerciseType.Primary)
-                {
-                    weeklyVolume = 6 - weeklyChangeRate * (mesoWeek - 1);
-                }
-                else
-                {
-                    weeklyVolume = 6;
-                }
-            }
-            else if (phase == TrainingPhase.Strength)
-            {
-                weeklyVolume = 6;
-            }
-            else
-            {
-                weeklyVolume = 6 + weeklyChangeRate * (mesoWeek - 1);
-            }
-            var sessionVolume = weeklyVolume / 2;
-            if (sessionNumber % 2 == 1 && weeklyVolume % 2 == 1)
-            {
-                sessionVolume = sessionVolume + 1;
-            }
-            var volume = sessionVolume;
+            var volume = mesoLength == mesoWeek ? 2 : 3;
 
             var rpe = 9 - (mesoLength - mesoWeek - 1);
             if (mesoWeek == mesoLength)

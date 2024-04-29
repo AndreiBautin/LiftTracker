@@ -286,7 +286,7 @@ namespace LiftTracker.Data
 					Id = 35,
 					MuscleGroup = MuscleGroupEnum.Core,
 					ExerciseType = ExerciseType.Accessory,
-					Name = "Weighted Decline Situp",
+					Name = "Ab Wheel",
 					IsCompound = false,
 				},
 
@@ -322,6 +322,12 @@ namespace LiftTracker.Data
 					RepRangeType = RepRangeType.AccessoryHypertrophyIsolation,
 					Low = 12,
 					High = 15,
+				},
+				new RepRange(){
+					Id = 6,
+					RepRangeType = RepRangeType.MetaboliteTraining,
+					Low = 15,
+					High = 30,
 				},
 			});
 

@@ -7,5 +7,6 @@
         MainLiftHypertrophy,
         AccessoryHypertrophyCompound,
         AccessoryHypertrophyIsolation,
+        MetaboliteTraining,
     }
 }
