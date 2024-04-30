@@ -65,7 +65,7 @@
 		using var context = new LiftTrackerContextBuilder(Configuration).Build();
 		if (SetId == null)
 		{
-			Set = context.Sets.Include(x => x.SessionExercise).ThenInclude(x => x.Session).ThenInclude(x => x.MicroCycle).ThenInclude(x => x.MesoCycle).ThenInclude(x => x.TrainingBlock).ThenInclude(x => x.MacroCycle).FirstOrDefault(x => !x.IsComplete && x.SessionExercise.Session.MicroCycle.MesoCycle.TrainingBlock.MacroCycle.ApplicationUserId == userId);
+			Set = context.Sets.Include(x => x.SessionExercise).ThenInclude(x => x.Session).ThenInclude(x => x.MicroCycle).ThenInclude(x => x.MesoCycle).ThenInclude(x => x.TrainingBlock).ThenInclude(x => x.MacroCycle).FirstOrDefault(x => !x.IsComplete && !x.IsSkipped && x.SessionExercise.Session.MicroCycle.MesoCycle.TrainingBlock.MacroCycle.ApplicationUserId == userId);
 		}
 		else
 		{

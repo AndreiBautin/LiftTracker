@@ -9,6 +9,7 @@
 @inject IConfiguration Configuration;
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize];
+@inject AuthenticationStateProvider AuthenticationStateProvider;
 
 <div class="row">
     @if (Session != null)
@@ -71,16 +72,20 @@
     public Session? Session { get; set; }
     private int _currentExerciseIndex = 0;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var userId = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
+
         using var context = new LiftTrackerContextBuilder(Configuration).Build();
         if (SessionId != null)
         {
-            Session = context.Sessions?.Include(x => x.SessionExercises).ThenInclude(x => x.Sets).SingleOrDefault(x => x.Id.ToString() == SessionId);
+            Session = context.Sessions.Include(x => x.SessionExercises).ThenInclude(x => x.Sets).Include(x => x.MicroCycle).ThenInclude(x => x.MesoCycle).ThenInclude(x => x.TrainingBlock).ThenInclude(x => x.MacroCycle).SingleOrDefault(x => x.Id.ToString() == SessionId);
         }
         else
         {
-            Session = context.Sessions?.Include(x => x.SessionExercises).ThenInclude(x => x.Sets).FirstOrDefault(x => !x.IsComplete);
+            Session = context.Sessions.Include(x => x.SessionExercises).ThenInclude(x => x.Sets).Include(x => x.MicroCycle).ThenInclude(x => x.MesoCycle).ThenInclude(x => x.TrainingBlock).ThenInclude(x => x.MacroCycle).FirstOrDefault(x => !x.IsComplete && x.MicroCycle.MesoCycle.TrainingBlock.MacroCycle.ApplicationUserId == userId);
         }
 
         if (Session?.SessionExercises != null)
