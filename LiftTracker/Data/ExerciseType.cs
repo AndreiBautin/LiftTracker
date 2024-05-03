@@ -4,6 +4,7 @@
     {
         Primary,
         Supplemental,
-        Accessory
+        Accessory,
+        Technique
     }
 }

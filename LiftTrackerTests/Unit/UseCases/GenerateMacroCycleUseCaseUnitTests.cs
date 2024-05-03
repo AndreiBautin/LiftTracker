@@ -29,9 +29,9 @@ namespace LiftTracker.Tests.Unit.UseCases
 			{
 				TrainingBlockOptions = new List<TrainingBlockOptions>
 				{
-					new TrainingBlockOptions { Phase = TrainingPhase.Hypertrophy, MesoCount = 3 },
-					new TrainingBlockOptions { Phase = TrainingPhase.Strength, MesoCount = 1 },
-					new TrainingBlockOptions { Phase = TrainingPhase.Peaking, MesoCount = 1 }
+					new TrainingBlockOptions { TrainingPhase = TrainingPhase.Hypertrophy, MesoCount = 3 },
+					new TrainingBlockOptions { TrainingPhase = TrainingPhase.Strength, MesoCount = 1 },
+					new TrainingBlockOptions { TrainingPhase = TrainingPhase.Peaking, MesoCount = 1 }
 				}
 			};
 
@@ -90,9 +90,9 @@ namespace LiftTracker.Tests.Unit.UseCases
             {
                 TrainingBlockOptions = new List<TrainingBlockOptions>
                 {
-                    new TrainingBlockOptions { Phase = TrainingPhase.Hypertrophy, MesoCount = 2 },
-                    new TrainingBlockOptions { Phase = TrainingPhase.Strength, MesoCount = 3 },
-                    new TrainingBlockOptions { Phase = TrainingPhase.Peaking, MesoCount = 1 }
+                    new TrainingBlockOptions { TrainingPhase = TrainingPhase.Hypertrophy, MesoCount = 2 },
+                    new TrainingBlockOptions { TrainingPhase = TrainingPhase.Strength, MesoCount = 3 },
+                    new TrainingBlockOptions { TrainingPhase = TrainingPhase.Peaking, MesoCount = 1 }
                 }
             };
 

@@ -11,5 +11,7 @@ namespace LiftTracker.Data
         public ExerciseType? ExerciseType { get; set; }
         public bool IsCompound { get; set; }
         public string? ApplicationUserId { get; set; }
-	}
+        public int? SessionNumber { get; set; }
+        public int? ExerciseNumber { get; set; }
+    }
 }

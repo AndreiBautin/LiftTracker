@@ -2,18 +2,19 @@
 {
     public enum MuscleGroupEnum
     {
+        //Push
         Chest,
+        Delts,
         Triceps,
-        SideDelts,
-        Back,
+
+        //Pull
+        Lats,
         Biceps,
-        RearDelts,
+        UpperBack,
+
+        //Legs
         Quads,
         PosteriorChain,
-        Core,
-        FrontDelts,
-        Traps,
-        Forearms,
-        Calves
+        Calves,
     }
 }

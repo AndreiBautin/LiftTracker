@@ -4,6 +4,7 @@ using LiftTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiftTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240501032424_UpdateDb6")]
+    partial class UpdateDb6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -249,17 +252,17 @@ namespace LiftTracker.Migrations
                             IsCompound = true,
                             MuscleGroup = 1,
                             Name = "Paused Military Press",
-                            SessionNumber = 2
+                            SessionNumber = 1
                         },
                         new
                         {
                             Id = 114,
                             ExerciseNumber = 1,
-                            ExerciseType = 3,
+                            ExerciseType = 0,
                             IsCompound = true,
                             MuscleGroup = 1,
                             Name = "Technique Sets Paused Military Press",
-                            SessionNumber = 1
+                            SessionNumber = 2
                         },
                         new
                         {
@@ -569,7 +572,7 @@ namespace LiftTracker.Migrations
                             IsCompound = true,
                             MuscleGroup = 7,
                             Name = "Hip Thurst",
-                            SessionNumber = 2
+                            SessionNumber = 1
                         },
                         new
                         {
@@ -579,7 +582,7 @@ namespace LiftTracker.Migrations
                             IsCompound = true,
                             MuscleGroup = 7,
                             Name = "Back Raise",
-                            SessionNumber = 1
+                            SessionNumber = 2
                         },
                         new
                         {

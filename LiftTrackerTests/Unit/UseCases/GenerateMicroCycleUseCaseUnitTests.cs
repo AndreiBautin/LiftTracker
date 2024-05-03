@@ -23,7 +23,7 @@ namespace LiftTracker.Tests.Unit.UseCases
         [TestMethod]
         public void GenerateMicroCycle_WithValidOptions_ReturnsCompleteMicroCycle()
         {
-            var options = new TrainingBlockOptions { Phase = TrainingPhase.Hypertrophy, MesoLength = 4, MesoCount = 4 };
+            var options = new TrainingBlockOptions { TrainingPhase = TrainingPhase.Hypertrophy, MesoLength = 4, MesoCount = 4 };
             var result = _useCase.GenerateMicroCycle(options, 1);
 
             Assert.IsNotNull(result);
@@ -45,7 +45,7 @@ namespace LiftTracker.Tests.Unit.UseCases
         [TestMethod]
         public void GenerateMicroCycle_WithMaxWeekNumber_ReturnsExpectedMicroCycle()
         {
-            var options = new TrainingBlockOptions { Phase = TrainingPhase.Peaking, MesoLength = 5 };
+            var options = new TrainingBlockOptions { TrainingPhase = TrainingPhase.Peaking, MesoLength = 5 };
             var result = _useCase.GenerateMicroCycle(options, 5);
 
             Assert.IsNotNull(result);
