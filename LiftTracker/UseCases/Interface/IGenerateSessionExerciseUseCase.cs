@@ -11,7 +11,7 @@ public interface IGenerateSessionExerciseUseCase
 	/// <param name="mesoLength">Length of the mesocycle in weeks.</param>
 	/// <param name="mesoWeek">Current week number within the mesocycle.</param>
 	/// <returns>An enumerable of session exercises.</returns>
-	IEnumerable<SessionExercise?> Generate(DayOfTheWeek? dayOfTheWeek, TrainingPhase? phase, int? mesoLength, int? mesoWeek, TrainingSplit trainingSplit);
+	IEnumerable<SessionExercise?> Generate(DayOfTheWeek? dayOfTheWeek, TrainingPhase? phase, int mesoWeek);
 
 	/// <summary>
 	/// Generates "push" session exercises based on provided criteria.
@@ -21,7 +21,7 @@ public interface IGenerateSessionExerciseUseCase
 	/// <param name="mesoLength">Mesocycle length.</param>
 	/// <param name="mesoWeek">Week number in the mesocycle.</param>
 	/// <returns>An enumerable of session exercises for push workouts.</returns>
-	IEnumerable<SessionExercise?> GeneratePush(int sessionNumber, TrainingPhase? phase, int? mesoLength, int? mesoWeek);
+	IEnumerable<SessionExercise?> GeneratePush(int sessionNumber, TrainingPhase? phase, int mesoWeek);
 
 	/// <summary>
 	/// Generates "pull" session exercises based on provided criteria.
@@ -31,7 +31,7 @@ public interface IGenerateSessionExerciseUseCase
 	/// <param name="mesoLength">Mesocycle length.</param>
 	/// <param name="mesoWeek">Week number in the mesocycle.</param>
 	/// <returns>An enumerable of session exercises for pull workouts.</returns>
-	IEnumerable<SessionExercise?> GeneratePull(int sessionNumber, TrainingPhase? phase, int? mesoLength, int? mesoWeek);
+	IEnumerable<SessionExercise?> GeneratePull(int sessionNumber, TrainingPhase? phase, int mesoWeek);
 
 	/// <summary>
 	/// Generates "legs" session exercises based on provided criteria.
@@ -41,5 +41,5 @@ public interface IGenerateSessionExerciseUseCase
 	/// <param name="mesoLength">Mesocycle length.</param>
 	/// <param name="mesoWeek">Week number in the mesocycle.</param>
 	/// <returns>An enumerable of session exercises for leg workouts.</returns>
-	IEnumerable<SessionExercise?> GenerateLegs(int sessionNumber, TrainingPhase? phase, int? mesoLength, int? mesoWeek);
+	IEnumerable<SessionExercise?> GenerateLegs(int sessionNumber, TrainingPhase? phase, int mesoWeek);
 }

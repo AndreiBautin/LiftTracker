@@ -18,494 +18,344 @@ namespace LiftTracker.Data
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 			base.OnModelCreating(modelBuilder);
 			modelBuilder.Entity<Exercise>().HasData(new List<Exercise>() {
-                //Chest
+				// Chest
                 new Exercise(){
-					Id = 101,
-					MuscleGroup = MuscleGroupEnum.Chest,
-					ExerciseType = ExerciseType.Primary,
-					Name = "Paused Bench Press",
-					IsCompound = true,
-					SessionNumber = 1,
-					ExerciseNumber = 1,
-				},
-                new Exercise(){
-                    Id = 102,
-                    MuscleGroup = MuscleGroupEnum.Chest,
-                    ExerciseType = ExerciseType.Technique,
-                    Name = "Technique Sets Paused Bench Press",
+                    Id = 1,
+                    MuscleGroup = MuscleGroup.Chest,
+                    Name = "Bench Press",
                     IsCompound = true,
-                    SessionNumber = 2,
-                    ExerciseNumber = 1,
+                    IsCompetition = true,
+                    EquipmentType = EquipmentType.Barbell
                 },
                 new Exercise(){
-					Id = 103,
-					MuscleGroup = MuscleGroupEnum.Chest,
-					ExerciseType = ExerciseType.Supplemental,
-					Name = "Incline Bench Press",
-					IsCompound = true,
-                    SessionNumber = 1,
-                    ExerciseNumber = 1,
-                },
-                new Exercise(){
-                    Id = 104,
-                    MuscleGroup = MuscleGroupEnum.Chest,
-                    ExerciseType = ExerciseType.Supplemental,
-                    Name = "Touch-and-Go Bench Press",
+                    Id = 2,
+                    MuscleGroup = MuscleGroup.Chest,
+                    Name = "Incline Bench Press",
                     IsCompound = true,
-                    SessionNumber = 2,
-                    ExerciseNumber = 1,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Barbell
                 },
                 new Exercise(){
-					Id = 105,
-					MuscleGroup = MuscleGroupEnum.Chest,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Incline DB Bench Press",
-					IsCompound = true,
-                    SessionNumber = 1,
-                    ExerciseNumber = 1,
-                },
-                new Exercise(){
-                    Id = 106,
-                    MuscleGroup = MuscleGroupEnum.Chest,
-                    ExerciseType = ExerciseType.Accessory,
-                    Name = "DB Bench Press",
+                    Id = 3,
+                    MuscleGroup = MuscleGroup.Chest,
+                    Name = "Incline DB Bench Press",
                     IsCompound = true,
-                    SessionNumber = 2,
-                    ExerciseNumber = 1,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Dumbbell
                 },
                 new Exercise(){
-                    Id = 107,
-                    MuscleGroup = MuscleGroupEnum.Chest,
-                    ExerciseType = ExerciseType.Accessory,
+                    Id = 4,
+                    MuscleGroup = MuscleGroup.Chest,
+                    Name = "Dips",
+                    IsCompound = true,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Bodyweight
+                },
+                new Exercise(){
+                    Id = 5,
+                    MuscleGroup = MuscleGroup.Chest,
                     Name = "Pec Deck",
                     IsCompound = false,
-                    SessionNumber = 1,
-                    ExerciseNumber = 2,
-                },
-				new Exercise(){
-					Id = 108,
-					MuscleGroup = MuscleGroupEnum.Chest,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Incline Fly",
-					IsCompound = false,
-                    SessionNumber = 2,
-                    ExerciseNumber = 2,
-                },
-
-                //Triceps
-				new Exercise(){
-					Id = 109,
-					MuscleGroup = MuscleGroupEnum.Triceps,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Rope Pushdown",
-					IsCompound = false,
-                    SessionNumber = 1,
-                    ExerciseNumber = 1,
-                },
-				new Exercise(){
-					Id = 110,
-					MuscleGroup = MuscleGroupEnum.Triceps,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Overhead Rope Extension",
-					IsCompound = false,
-                    SessionNumber = 1,
-                    ExerciseNumber = 2,
+                    IsCompetition = false,
+                    EquipmentType= EquipmentType.MachineNautilus
                 },
                 new Exercise(){
-                    Id = 111,
-                    MuscleGroup = MuscleGroupEnum.Triceps,
-                    ExerciseType = ExerciseType.Accessory,
+                    Id = 6,
+                    MuscleGroup = MuscleGroup.Chest,
+                    Name = "Incline Fly",
+                    IsCompound = false,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Dumbbell
+                },
+
+                // Triceps
+                new Exercise(){
+                    Id = 7,
+                    MuscleGroup = MuscleGroup.Triceps,
+                    Name = "Rope Pushdown",
+                    IsCompound = false,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineCable
+                },
+                new Exercise(){
+                    Id = 8,
+                    MuscleGroup = MuscleGroup.Triceps,
+                    Name = "Machine Tricep Extension",
+                    IsCompound = false,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineNautilus
+                },
+                new Exercise(){
+                    Id = 9,
+                    MuscleGroup = MuscleGroup.Triceps,
                     Name = "Skullcrusher",
                     IsCompound = false,
-                    SessionNumber = 2,
-                    ExerciseNumber = 1,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Barbell
                 },
                 new Exercise(){
-                    Id = 112,
-                    MuscleGroup = MuscleGroupEnum.Triceps,
-                    ExerciseType = ExerciseType.Accessory,
+                    Id = 10,
+                    MuscleGroup = MuscleGroup.Triceps,
                     Name = "DB Overhead Extension",
                     IsCompound = false,
-                    SessionNumber = 2,
-                    ExerciseNumber = 2,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Dumbbell
                 },
 
-                //Front Delts
+                // Front Delts
                 new Exercise(){
-					Id = 113,
-					MuscleGroup = MuscleGroupEnum.Delts,
-					ExerciseType = ExerciseType.Primary,
-					Name = "Paused Military Press",
-					IsCompound= true,
-                    SessionNumber = 2,
-                    ExerciseNumber = 1,
+                    Id = 11,
+                    MuscleGroup = MuscleGroup.Delts,
+                    Name = "DB Shoulder Press",
+                    IsCompound = true,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Dumbbell
                 },
                 new Exercise(){
-                    Id = 114,
-                    MuscleGroup = MuscleGroupEnum.Delts,
-                    ExerciseType = ExerciseType.Technique,
-                    Name = "Technique Sets Paused Military Press",
-                    IsCompound= true,
-                    SessionNumber = 1,
-                    ExerciseNumber = 1,
-                },
-                new Exercise(){
-					Id = 115,
-					MuscleGroup = MuscleGroupEnum.Delts,
-					ExerciseType = ExerciseType.Supplemental,
-					Name = "Seated Military Press",
-					IsCompound= true,
-                    SessionNumber = 1,
-                    ExerciseNumber = 1,
-                },
-                new Exercise(){
-                    Id = 116,
-                    MuscleGroup = MuscleGroupEnum.Delts,
-                    ExerciseType = ExerciseType.Supplemental,
-                    Name = "Touch-And-Go Military Press",
-                    IsCompound= true,
-                    SessionNumber = 2,
-                    ExerciseNumber = 1,
-                },
-                new Exercise(){
-					Id = 117,
-					MuscleGroup = MuscleGroupEnum.Delts,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "DB Shoulder Press",
-					IsCompound= true,
-                    SessionNumber = 1,
-                    ExerciseNumber = 1,
-                },
-                new Exercise(){
-                    Id = 118,
-                    MuscleGroup = MuscleGroupEnum.Delts,
-                    ExerciseType = ExerciseType.Accessory,
+                    Id = 12,
+                    MuscleGroup = MuscleGroup.Delts,
                     Name = "Hammer Strength Shoulder Press",
-                    IsCompound= true,
-                    SessionNumber = 2,
-                    ExerciseNumber = 1,
+                    IsCompound = true,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineHammerStrength
                 },
                 new Exercise(){
-					Id = 119,
-					MuscleGroup = MuscleGroupEnum.Delts,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "DB Lateral Raise",
-					IsCompound= false,
-					SessionNumber = 1,
-                    ExerciseNumber = 2,
+                    Id = 13,
+                    MuscleGroup = MuscleGroup.Delts,
+                    Name = "DB Lateral Raise",
+                    IsCompound = false,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Dumbbell
                 },
                 new Exercise(){
-                    Id = 120,
-                    MuscleGroup = MuscleGroupEnum.Delts,
-                    ExerciseType = ExerciseType.Accessory,
+                    Id = 14,
+                    MuscleGroup = MuscleGroup.Delts,
                     Name = "Machine Lateral Raise",
-                    IsCompound= false,
-                    SessionNumber = 2,
-                    ExerciseNumber = 2,
+                    IsCompound = false,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineNautilus
                 },
 
-                //Back
+                // Back
                 new Exercise(){
-					Id = 121,
-					MuscleGroup = MuscleGroupEnum.Lats,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "DB Row",
-					IsCompound = true,
-					SessionNumber = 1,
-					ExerciseNumber = 1,
-				},
+                    Id = 15,
+                    MuscleGroup = MuscleGroup.Lats,
+                    Name = "DB Row",
+                    IsCompound = true,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Dumbbell
+                },
                 new Exercise(){
-                    Id = 122,
-                    MuscleGroup = MuscleGroupEnum.Lats,
-                    ExerciseType = ExerciseType.Accessory,
+                    Id = 16,
+                    MuscleGroup = MuscleGroup.Lats,
                     Name = "Neutral Grip Pulldowns",
                     IsCompound = true,
-                    SessionNumber = 1,
-                    ExerciseNumber = 2,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineCable
                 },
-				new Exercise(){
-					Id = 123,
-					MuscleGroup = MuscleGroupEnum.Lats,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Chin-Ups",
-					IsCompound = true,
-					SessionNumber = 2,
-					ExerciseNumber = 1,
-				},
                 new Exercise(){
-                    Id = 124,
-                    MuscleGroup = MuscleGroupEnum.Lats,
-                    ExerciseType = ExerciseType.Accessory,
+                    Id = 17,
+                    MuscleGroup = MuscleGroup.Lats,
+                    Name = "Chin-Ups",
+                    IsCompound = true,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Bodyweight
+                },
+                new Exercise(){
+                    Id = 18,
+                    MuscleGroup = MuscleGroup.Lats,
                     Name = "Hammer Strength Row",
                     IsCompound = true,
-                    SessionNumber = 2,
-                    ExerciseNumber = 2,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineHammerStrength
                 },
 
-                //Biceps
+                // Biceps
                 new Exercise(){
-					Id = 125,
-					MuscleGroup = MuscleGroupEnum.Biceps,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Hammer Curl",
-					IsCompound = false,
-					SessionNumber = 1,
-					ExerciseNumber = 1,
-				},
-				new Exercise(){
-					Id = 126,
-					MuscleGroup = MuscleGroupEnum.Biceps,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Preacher Curl",
-					IsCompound = false,
-					SessionNumber = 1,
-					ExerciseNumber = 2,
-				},
+                    Id = 19,
+                    MuscleGroup = MuscleGroup.Biceps,
+                    Name = "Hammer Curl",
+                    IsCompound = false,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Dumbbell
+                },
                 new Exercise(){
-                    Id = 127,
-                    MuscleGroup = MuscleGroupEnum.Biceps,
-                    ExerciseType = ExerciseType.Accessory,
+                    Id = 20,
+                    MuscleGroup = MuscleGroup.Biceps,
+                    Name = "Preacher Curl",
+                    IsCompound = false,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineHammerStrength
+                },
+                new Exercise(){
+                    Id = 21,
+                    MuscleGroup = MuscleGroup.Biceps,
                     Name = "Barbell Curl",
                     IsCompound = false,
-					SessionNumber = 2,
-					ExerciseNumber = 1,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Barbell
                 },
                 new Exercise(){
-                    Id = 128,
-                    MuscleGroup = MuscleGroupEnum.Biceps,
-                    ExerciseType = ExerciseType.Accessory,
+                    Id = 22,
+                    MuscleGroup = MuscleGroup.Biceps,
                     Name = "Cable Curl",
                     IsCompound = false,
-					SessionNumber = 2,
-					ExerciseNumber = 2
-
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineCable
                 },
 
-                //Upper Back
+                // Upper Back
                 new Exercise(){
-					Id = 129,
-					MuscleGroup = MuscleGroupEnum.UpperBack,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Reverse Pec Deck",
-					IsCompound = false,
-					SessionNumber = 1,
-					ExerciseNumber = 1
-				},
-				new Exercise(){
-					Id = 130,
-					MuscleGroup = MuscleGroupEnum.UpperBack,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "DB Shrugs",
-					IsCompound = false,
-					SessionNumber = 1,
-					ExerciseNumber = 2
-				},
-				new Exercise(){
-					Id = 131,
-					MuscleGroup = MuscleGroupEnum.UpperBack,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Face Pull",
-					IsCompound = false,
-					SessionNumber = 2,
-					ExerciseNumber = 1
-				},
-				new Exercise(){
-					Id = 132,
-					MuscleGroup = MuscleGroupEnum.UpperBack,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Smith Machine Shrugs",
-					IsCompound = false,
-					SessionNumber = 2,
-					ExerciseNumber = 2
-				},
+                    Id = 23,
+                    MuscleGroup = MuscleGroup.UpperBack,
+                    Name = "Reverse Pec Deck",
+                    IsCompound = false,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineNautilus
+                },
+                new Exercise(){
+                    Id = 24,
+                    MuscleGroup = MuscleGroup.UpperBack,
+                    Name = "DB Shrugs",
+                    IsCompound = false,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Dumbbell
+                },
+                new Exercise(){
+                    Id = 25,
+                    MuscleGroup = MuscleGroup.UpperBack,
+                    Name = "Face Pull",
+                    IsCompound = false,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineCable
+                },
+                new Exercise(){
+                    Id = 26,
+                    MuscleGroup = MuscleGroup.UpperBack,
+                    Name = "Barbell Shrugs",
+                    IsCompound = false,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Barbell
+                },
 
-                //Quads
+                // Quads
                 new Exercise(){
-					Id = 133,
-					MuscleGroup = MuscleGroupEnum.Quads,
-					ExerciseType = ExerciseType.Primary,
-					Name = "Low Bar Squat",
-					IsCompound = true,
-                    SessionNumber = 1,
-                    ExerciseNumber = 1
-                },
-                new Exercise(){
-                    Id = 134,
-                    MuscleGroup = MuscleGroupEnum.Quads,
-                    ExerciseType = ExerciseType.Technique,
-                    Name = "Technique Low Bar Squat",
+                    Id = 27,
+                    MuscleGroup = MuscleGroup.Quads,
+                    Name = "Low Bar Squat",
                     IsCompound = true,
-                    SessionNumber = 2,
-                    ExerciseNumber = 1
+                    IsCompetition = true,
+                    EquipmentType = EquipmentType.Barbell
                 },
                 new Exercise(){
-					Id = 135,
-					MuscleGroup = MuscleGroupEnum.Quads,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Hack Squat",
-					IsCompound = true,
-                    SessionNumber = 1,
-                    ExerciseNumber = 1
-                },
-                new Exercise(){
-                    Id = 140,
-                    MuscleGroup = MuscleGroupEnum.Quads,
-                    ExerciseType = ExerciseType.Accessory,
-                    Name = "Leg Press",
+                    Id = 28,
+                    MuscleGroup = MuscleGroup.Quads,
+                    Name = "High Bar Squat",
                     IsCompound = true,
-                    SessionNumber = 2,
-                    ExerciseNumber = 1
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Barbell
                 },
                 new Exercise(){
-					Id = 141,
-					MuscleGroup = MuscleGroupEnum.Quads,
-					ExerciseType = ExerciseType.Supplemental,
-					Name = "High Bar Squat",
-					IsCompound = true,
-                    SessionNumber = 1,
-                    ExerciseNumber = 1
-                },
-                new Exercise(){
-                    Id = 142,
-                    MuscleGroup = MuscleGroupEnum.Quads,
-                    ExerciseType = ExerciseType.Supplemental,
-                    Name = "Front Squat",
+                    Id = 29,
+                    MuscleGroup = MuscleGroup.Quads,
+                    Name = "Hack Squat",
                     IsCompound = true,
-                    SessionNumber = 2,
-                    ExerciseNumber = 1
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineHammerStrength
                 },
                 new Exercise(){
-                    Id = 143,
-                    MuscleGroup = MuscleGroupEnum.Quads,
-                    ExerciseType = ExerciseType.Accessory,
+                    Id = 30,
+                    MuscleGroup = MuscleGroup.Quads,
+                    Name = "Split Squat",
+                    IsCompound = true,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Dumbbell
+                },
+                new Exercise(){
+                    Id = 31,
+                    MuscleGroup = MuscleGroup.Quads,
                     Name = "Single Leg Extension",
                     IsCompound = false,
-                    SessionNumber = 1,
-                    ExerciseNumber = 2
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineHammerStrength
                 },
                 new Exercise(){
-					Id = 144,
-					MuscleGroup = MuscleGroupEnum.Quads,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Leg Extension",
-					IsCompound = false,
-                    SessionNumber = 2,
-                    ExerciseNumber = 2
+                    Id = 32,
+                    MuscleGroup = MuscleGroup.Quads,
+                    Name = "Leg Extension",
+                    IsCompound = false,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineNautilus
                 },
 
-                //Posterior Chain
+                // Posterior Chain
                 new Exercise(){
-                    Id = 145,
-                    MuscleGroup = MuscleGroupEnum.PosteriorChain,
-                    ExerciseType = ExerciseType.Technique,
-                    Name = "Technique Sumo Deadlift",
+                    Id = 33,
+                    MuscleGroup = MuscleGroup.PosteriorChain,
+                    Name = "Sumo Deadlift",
                     IsCompound = true,
-					SessionNumber = 1,
-					ExerciseNumber = 1
+                    IsCompetition = true,
+                    EquipmentType = EquipmentType.Barbell
                 },
                 new Exercise(){
-					Id = 146,
-					MuscleGroup = MuscleGroupEnum.PosteriorChain,
-					ExerciseType = ExerciseType.Primary,
-					Name = "Sumo Deadlift",
-					IsCompound = true,
-					SessionNumber = 2,
-					ExerciseNumber = 1
-				},
-                new Exercise(){
-					Id = 147,
-					MuscleGroup = MuscleGroupEnum.PosteriorChain,
-					ExerciseType = ExerciseType.Supplemental,
-					Name = "RDL",
-					IsCompound = true,
-					SessionNumber = 1,
-					ExerciseNumber = 1
-				},
-				new Exercise(){
-					Id = 148,
-					MuscleGroup = MuscleGroupEnum.PosteriorChain,
-					ExerciseType = ExerciseType.Supplemental,
-					Name = "Conventional Deadlift",
-					IsCompound = true,
-					SessionNumber = 2,
-					ExerciseNumber = 1
-				},
-                new Exercise(){
-                    Id = 149,
-                    MuscleGroup = MuscleGroupEnum.PosteriorChain,
-                    ExerciseType = ExerciseType.Accessory,
-                    Name = "Hip Thurst",
+                    Id = 34,
+                    MuscleGroup = MuscleGroup.PosteriorChain,
+                    Name = "Conventional Deadlift",
                     IsCompound = true,
-					SessionNumber = 2,
-					ExerciseNumber = 1
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Barbell
                 },
                 new Exercise(){
-                    Id = 150,
-                    MuscleGroup = MuscleGroupEnum.PosteriorChain,
-                    ExerciseType = ExerciseType.Accessory,
+                    Id = 35,
+                    MuscleGroup = MuscleGroup.PosteriorChain,
+                    Name = "DB RDL",
+                    IsCompound = true,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Dumbbell
+                },
+                new Exercise(){
+                    Id = 36,
+                    MuscleGroup = MuscleGroup.PosteriorChain,
                     Name = "Back Raise",
                     IsCompound = true,
-					SessionNumber = 1,
-					ExerciseNumber = 1
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.Bodyweight
                 },
                 new Exercise(){
-					Id = 151,
-					MuscleGroup = MuscleGroupEnum.PosteriorChain,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Leg Curl",
-					IsCompound = false,
-					SessionNumber = 1,
-					ExerciseNumber = 2
-				},
+                    Id = 37,
+                    MuscleGroup = MuscleGroup.PosteriorChain,
+                    Name = "Leg Curl",
+                    IsCompound = false,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineHammerStrength
+                },
                 new Exercise(){
-                    Id = 152,
-                    MuscleGroup = MuscleGroupEnum.PosteriorChain,
-                    ExerciseType = ExerciseType.Accessory,
+                    Id = 38,
+                    MuscleGroup = MuscleGroup.PosteriorChain,
                     Name = "Lying Leg Curl",
                     IsCompound = false,
-					SessionNumber = 2,
-					ExerciseNumber = 2
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineNautilus
                 },
 
-                //Calves
+                // Calves
                 new Exercise(){
-					Id = 153,
-					MuscleGroup = MuscleGroupEnum.Calves,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Standing Calf Raise",
-					IsCompound = false,
-					SessionNumber = 1,
-					ExerciseNumber = 1
-				},
-				new Exercise(){
-					Id = 154,
-					MuscleGroup = MuscleGroupEnum.Calves,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Seated Calf Raise",
-					IsCompound = false,
-					SessionNumber = 1,
-					ExerciseNumber = 2
-				},
-				new Exercise(){
-					Id = 155,
-					MuscleGroup = MuscleGroupEnum.Calves,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Hammer Strength Calf Raise",
-					IsCompound = false,
-					SessionNumber = 2,
-					ExerciseNumber = 1
-				},
-				new Exercise(){
-					Id = 156,
-					MuscleGroup = MuscleGroupEnum.Calves,
-					ExerciseType = ExerciseType.Accessory,
-					Name = "Seated Calf Extension",
-					IsCompound = false,
-					SessionNumber = 2,
-					ExerciseNumber = 2
-				},
-
-			});
+                    Id = 39,
+                    MuscleGroup = MuscleGroup.Calves,
+                    Name = "Standing Calf Raise",
+                    IsCompound = false,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineNautilus
+                },
+                new Exercise(){
+                    Id = 40,
+                    MuscleGroup = MuscleGroup.Calves,
+                    Name = "Seated Calf Raise",
+                    IsCompound = false,
+                    IsCompetition = false,
+                    EquipmentType = EquipmentType.MachineHammerStrength
+                }
+            });
 
 			modelBuilder.Entity<RepRange>().HasData(new List<RepRange>() {
 				new RepRange(){

@@ -17,16 +17,16 @@
 		<input @bind="NewExercise.Name" type="text" class="form-control bg-dark text-white my-2" placeholder="Name" aria-label="Name" aria-describedby="basic-addon1">
 		<select class="form-select d-inline-block col-6 my-2" @bind="NewExerciseMuscleGroupEnum">
 			<option value="">Muscle Group</option>
-			@foreach (var muscleGroupEnum in ((IEnumerable<MuscleGroupEnum>)Enum.GetValues(typeof(MuscleGroupEnum))))
+			@foreach (var muscleGroupEnum in ((IEnumerable<MuscleGroup>)Enum.GetValues(typeof(MuscleGroup))))
 			{
 				<option value="@muscleGroupEnum">@muscleGroupEnum.ToString()</option>
 			}
 		</select>
-		<select class="form-select d-inline-block col-6 my-2" @bind="NewExerciseType">
-			<option value="0">Exercise Type</option>
-			@foreach (var exerciseType in ((IEnumerable<ExerciseType>)Enum.GetValues(typeof(ExerciseType))))
+		<select class="form-select d-inline-block col-6 my-2" @bind="NewEquipmentType">
+			<option value="0">Equipment Type</option>
+			@foreach (var equipmentType in ((IEnumerable<EquipmentType>)Enum.GetValues(typeof(EquipmentType))))
 			{
-				<option value="@exerciseType">@exerciseType.ToString()</option>
+				<option value="@equipmentType">@equipmentType.ToString()</option>
 			}
 		</select>
 		<div>
@@ -43,8 +43,8 @@
 	[Parameter]
 	public string? SessionExerciseId { get; set; }
 	public Exercise? NewExercise { get; set; }
-	public MuscleGroupEnum? NewExerciseMuscleGroupEnum { get; set; }
-	public ExerciseType? NewExerciseType { get; set; }
+	public MuscleGroup? NewExerciseMuscleGroupEnum { get; set; }
+	public EquipmentType? NewEquipmentType { get; set; }
 
 	protected override void OnInitialized()
 	{
@@ -52,7 +52,7 @@
 		NewExercise = new Exercise();
 
 		NewExerciseMuscleGroupEnum = 0;
-		NewExerciseType = 0;
+		NewEquipmentType = 0;
 	}
 
 	protected async Task Create()
@@ -66,7 +66,7 @@
 		{
 			NewExercise.ApplicationUserId = userId;
 			NewExercise.MuscleGroup = NewExerciseMuscleGroupEnum;
-			NewExercise.ExerciseType = NewExerciseType;
+			NewExercise.EquipmentType = NewEquipmentType;
 			context.Exercises.Add(NewExercise);
 			context.SaveChanges();
 			NavigationManager.NavigateTo("/Exercises");

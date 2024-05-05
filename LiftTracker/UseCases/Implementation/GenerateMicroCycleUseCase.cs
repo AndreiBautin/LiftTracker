@@ -52,7 +52,7 @@ namespace LiftTracker.UseCases.Implementation
 
 			foreach (var session in sessions)
             {
-                session.SessionExercises = SessionExerciseUseCase.Generate(session.DayOfTheWeek, options?.TrainingPhase, options?.MesoLength, week, options.TrainingSplit);
+                session.SessionExercises = SessionExerciseUseCase.Generate(session.DayOfTheWeek, options?.TrainingPhase, week);
             }
 
             result.Sessions = sessions;

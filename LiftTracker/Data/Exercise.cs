@@ -7,11 +7,10 @@ namespace LiftTracker.Data
         [Key]
         public int Id { get; set; }
         public string? Name { get; set; }
-        public MuscleGroupEnum? MuscleGroup { get; set; }
-        public ExerciseType? ExerciseType { get; set; }
+        public MuscleGroup? MuscleGroup { get; set; }
+        public EquipmentType? EquipmentType { get; set; }
         public bool IsCompound { get; set; }
+        public bool IsCompetition { get; set; }
         public string? ApplicationUserId { get; set; }
-        public int? SessionNumber { get; set; }
-        public int? ExerciseNumber { get; set; }
     }
 }

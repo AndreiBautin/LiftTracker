@@ -109,7 +109,6 @@
 @code {
 	private Session? LastSession;
 	private Session? NextSession;
-	private IEnumerable<MuscleGroupVolumeModifiers>? MuscleGroupVolumeModifiers { get; set; }
 	private MicroCycle? CurrentMicroCycle { get; set; }
 	private int? Week { get; set; }
 	private bool IsGenerating { get; set; }
@@ -122,10 +121,6 @@
 		var userId = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
 
 		using var context = new LiftTrackerContextBuilder(Configuration).Build();
-
-		MuscleGroupVolumeModifiers = ((IEnumerable<MuscleGroupEnum>)Enum.GetValues(typeof(MuscleGroupEnum))).Select(x => new MuscleGroupVolumeModifiers() { 
-			MuscleGroup = x
-		}).ToList();
 
 		var userSessions = context
 			.Sessions?

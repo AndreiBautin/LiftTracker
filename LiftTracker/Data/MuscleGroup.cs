@@ -1,6 +1,6 @@
 ﻿namespace LiftTracker.Data
 {
-    public enum MuscleGroupEnum
+    public enum MuscleGroup
     {
         //Push
         Chest,
