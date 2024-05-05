@@ -39,37 +39,44 @@
         </div>
         <div class="col-12 col-lg-2">
             <div class="@(!session.IsComplete ? "card" : "card3") schedule-table text-center session-card my-3" @onclick="() => OnSessionClick(session.Id)">
-                    @if (session.SessionExercises != null)
+                @if (session.SessionExercises != null)
+                {
+                    <hr />
+                    foreach (var sessionExercise in session.SessionExercises)
                     {
-                        <hr />
-                        foreach (var sessionExercise in session.SessionExercises)
-                        {
-                            <div class="row">
-                                    <div>
-                                        @($"{new LiftTrackerContextBuilder(Configuration).Build().Exercises?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.ExerciseId)?.Name}")
-                                    </div>
-                                    @if (session.IsComplete && sessionExercise?.Sets != null)
-                                    {
-                                        foreach (var set in sessionExercise.Sets)
-                                        {
-                                            <div>
-                                                @($"{set?.Load?.ToString(set.Load.Value % 1 == 0 ? "0" : "0.0")} x {set?.Reps} reps @ {set?.Rpe} RPE")
-                                            </div>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <div class="statnum">
-                                            @($"{sessionExercise?.Sets?.FirstOrDefault()?.TargetRpe}-{sessionExercise?.Sets?.FirstOrDefault()?.TargetRpe + 1} RPE")
-                                        </div>
-                                        <div>
-                                            @($"{sessionExercise?.Sets?.Count()} sets {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.Low} - {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.High} reps")
-                                        </div>
-                                    }
+                        <div class="row">
+                            <div>
+                                @($"{new LiftTrackerContextBuilder(Configuration).Build().Exercises?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.ExerciseId)?.Name}")
                             </div>
-                            <hr />
-                        }
+                            @if (session.IsComplete && sessionExercise?.Sets != null)
+                            {
+                                foreach (var set in sessionExercise.Sets)
+                                {
+                                    <div>
+                                        @if (set.IsSkipped)
+                                        {
+                                            @("Skipped")
+                                        }
+                                        else
+                                        {
+                                            @($"{set?.Load?.ToString(set.Load.Value % 1 == 0 ? "0" : "0.0")} x {set?.Reps} reps @ {set?.Rpe} RPE")
+                                        }
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="statnum">
+                                    @($"{sessionExercise?.Sets?.FirstOrDefault()?.TargetRpe}-{sessionExercise?.Sets?.FirstOrDefault()?.TargetRpe + 1} RPE")
+                                </div>
+                                <div>
+                                    @($"{sessionExercise?.Sets?.Count()} sets {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.Low} - {new LiftTrackerContextBuilder(Configuration)?.Build()?.RepRanges?.FirstOrDefault(x => sessionExercise != null && x.Id == sessionExercise.RepRangeId)?.High} reps")
+                                </div>
+                            }
+                        </div>
+                        <hr />
                     }
+                }
             </div>
         </div>
     }
