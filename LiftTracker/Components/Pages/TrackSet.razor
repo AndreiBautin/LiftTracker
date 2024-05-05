@@ -29,11 +29,11 @@
 			<h1>@ExerciseName</h1>
 			<h2>Load</h2>
 			<div class="input-group-sm my-3">
-				<input @bind="Set.Load" type="number" class="form-control bg-dark text-white" aria-label="Load" placeholder="@(PreviousSet != null && PreviousSet.Load != 0 ? PreviousSet.Load : "Load")" aria-describedby="basic-addon1">
+				<input @bind="Set.Load" type="number" class="form-control bg-dark text-white" aria-label="Load" placeholder="@(PreviousSet != null && PreviousSet.Load != 0 && PreviousSet.Load.HasValue ? PreviousSet.Load : "Load")" aria-describedby="basic-addon1">
 			</div>
 			<h2>Reps</h2>
 			<div class="input-group-sm my-3">
-				<input @bind="Set.Reps" type="number" class="form-control bg-dark text-white" placeholder="@(PreviousSet != null && PreviousSet.Reps != 0 ? PreviousSet.Reps : $"{RepRange?.Low}-{RepRange?.High}")" aria-label="Reps" aria-describedby="basic-addon1">
+				<input @bind="Set.Reps" type="number" class="form-control bg-dark text-white" placeholder="@(PreviousSet != null && PreviousSet.Reps != 0 && PreviousSet.Reps.HasValue ? PreviousSet.Reps : $"{RepRange?.Low}-{RepRange?.High}")" aria-label="Reps" aria-describedby="basic-addon1">
 			</div>
 			<h2>RPE</h2>
 			<div class="input-group-sm my-3">
