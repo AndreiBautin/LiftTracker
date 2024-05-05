@@ -109,6 +109,23 @@
 
         MacroCycle = userMacroCycles
             .SingleOrDefault(x => x.TrainingBlocks.Any(x => x.MesoCycles.Any(x => x.MicroCycles.Any(x => x.Sessions.Any(x => !x.IsComplete)))));
+
+        // foreach (var microCycle in MacroCycle.TrainingBlocks.FirstOrDefault().MesoCycles.FirstOrDefault().MicroCycles.Take(2))
+        // {
+        //     foreach (var session in microCycle.Sessions)
+        //     {
+        //         foreach (var sessionExercise in session.SessionExercises)
+        //         {
+        //             foreach (var set in sessionExercise.Sets)
+        //             {
+        //                 set.IsSkipped = true;
+        //             }
+        //         }
+        //         session.IsComplete = true;
+        //     }
+        // }
+        // context.SaveChanges();
+        // NavigationManager.NavigateTo("/", true);
     }
 
     private void PreviousTrainingBlock()

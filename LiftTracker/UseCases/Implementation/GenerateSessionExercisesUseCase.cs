@@ -107,7 +107,7 @@ namespace LiftTracker.UseCases.Implementation
                 }
                 if (phase == TrainingPhase.Peaking)
                 {
-                    primaryQuadExercise = GenerateSessionExercise(MuscleGroup.Quads, phase, EquipmentType.Barbell, RepRangeType.MainLiftHypertrophy, true, mesoWeek, true);
+                    primaryQuadExercise = GenerateSessionExercise(MuscleGroup.Quads, phase, EquipmentType.Barbell, RepRangeType.Peaking, true, mesoWeek, true);
                 }
                 return new List<SessionExercise?>() {
                     primaryQuadExercise,
@@ -130,7 +130,7 @@ namespace LiftTracker.UseCases.Implementation
             }
             if (phase == TrainingPhase.Peaking)
             {
-                primaryPosteriorChainExercise = GenerateSessionExercise(MuscleGroup.PosteriorChain, phase, EquipmentType.Barbell, RepRangeType.MainLiftHypertrophy, true, mesoWeek, true);
+                primaryPosteriorChainExercise = GenerateSessionExercise(MuscleGroup.PosteriorChain, phase, EquipmentType.Barbell, RepRangeType.Peaking, true, mesoWeek, true);
             }
             return new List<SessionExercise?>() {
                 primaryPosteriorChainExercise,
